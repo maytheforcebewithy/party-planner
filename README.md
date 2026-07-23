@@ -1,50 +1,79 @@
 # Party Planner
 
-Frontend for a party & event planning app. Built with Nuxt 4, Vue 3, TypeScript and Pinia.
-Designed to run in the browser and, later, as a native Android/iOS app via Capacitor.
+App zur Organisation privater Veranstaltungen. **Ausschließlich eine mobile App
+für Android und iOS**, ausgeliefert als native Capacitor-App. Es gibt keine
+öffentliche Web-Version — der Browser dient nur der lokalen Entwicklung.
 
-> This repository contains **only the frontend**. The backend is developed
-> separately as a REST API and is not part of this repository.
+## Stack
 
-## Tech Stack
+Nuxt 4 · Vue 3 · TypeScript · Capacitor · Pinia · VueUse · ESLint · Vitest ·
+eigenes CSS. Kein SSR, keine Server-Routen, kein Backend (die REST-API entsteht
+separat).
 
-- [Nuxt 4](https://nuxt.com/) / [Vue 3](https://vuejs.org/) (Composition API, `<script setup>`)
-- TypeScript (strict)
-- [Pinia](https://pinia.vuejs.org/) for state management
-- [VueUse](https://vueuse.org/)
-- ESLint (flat config, stylistic + type-aware)
-- Vitest for unit tests
-- Plain, hand-written CSS (no UI library, no Tailwind)
-
-## Requirements
+## Voraussetzungen
 
 - Node.js `>= 20`
-- npm `>= 10`
+- pnpm (via `corepack enable`)
+- Android: Android Studio / Android SDK
+- iOS: macOS mit Xcode (nur dort baubar)
 
-## Getting started
+## Installation
 
 ```bash
-npm install
-npm run dev
+corepack enable
+pnpm install
 ```
 
-## Scripts
+## Lokale Entwicklung
 
-| Script                 | Description                                  |
-| ---------------------- | -------------------------------------------- |
-| `npm run dev`          | Start the dev server                         |
-| `npm run build`        | Build for production                         |
-| `npm run generate`     | Generate a static SPA (used for Capacitor)   |
-| `npm run preview`      | Preview the production build                 |
-| `npm run lint`         | Lint the codebase                            |
-| `npm run lint:fix`     | Lint and auto-fix                            |
-| `npm run typecheck`    | Type-check the project                       |
-| `npm run test`         | Run unit tests                               |
-| `npm run test:coverage`| Run unit tests with coverage                 |
+```bash
+pnpm dev
+```
 
-## Architecture
+Optional reproduzierbar im Container: siehe `.devcontainer/` bzw. `Dockerfile`
+(Web-Toolchain; native Builds laufen weiterhin auf dem Host).
 
-The project follows a feature-based clean architecture. See
-[`.claude/CLAUDE.md`](./.claude/CLAUDE.md) for the binding coding standards
-(that file lives only in the local dev environment and is not committed).
-An overview also lives in [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
+## Tests
+
+```bash
+pnpm test        # Watch-Modus
+pnpm test:run    # einmalig
+pnpm typecheck
+pnpm lint
+```
+
+## Build (statischer Client für Capacitor)
+
+```bash
+pnpm generate    # erzeugt .output/public
+```
+
+## Capacitor-Sync
+
+```bash
+pnpm app:sync         # generate + cap sync
+pnpm capacitor:sync   # nur cap sync
+```
+
+## Android starten
+
+```bash
+pnpm capacitor:android   # öffnet das Projekt in Android Studio
+```
+
+## iOS starten
+
+Nur auf macOS. Einmalig das iOS-Projekt erzeugen, danach öffnen:
+
+```bash
+pnpm exec cap add ios
+pnpm capacitor:ios       # öffnet das Projekt in Xcode
+```
+
+## Hinweis
+
+Die Anwendung ist ausschließlich als mobile Capacitor-App gedacht. Es ist keine
+Website und keine eigenständige Web-App geplant.
+
+Die App-ID ist zentral in `capacitor.config.ts` gesetzt
+(`de.kikimika.partyplanner`) und über `CAPACITOR_APP_ID` überschreibbar.
