@@ -7,8 +7,9 @@ für Android und iOS**, ausgeliefert als native Capacitor-App. Es gibt keine
 ## Stack
 
 Nuxt 4 · Vue 3 · TypeScript · Capacitor · Pinia · VueUse · ESLint · Vitest ·
-eigenes CSS. Kein SSR, keine Server-Routen, kein Backend (die REST-API entsteht
-separat).
+eigenes CSS. Kein SSR, keine Server-Routen. Die App ist **offline-first** und
+speichert alle Daten lokal auf dem Gerät — kein Backend, keine REST-API, keine
+Cloud, keine Benutzerkonten.
 
 ## Voraussetzungen
 
