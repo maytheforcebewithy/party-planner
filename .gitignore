@@ -3,6 +3,7 @@ node_modules
 
 # Nuxt / build output
 .nuxt
+.nuxtrc
 .output
 .data
 dist
