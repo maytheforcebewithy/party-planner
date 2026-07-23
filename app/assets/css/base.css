@@ -1,0 +1,15 @@
+/**
+ * Base element styling built on the design tokens.
+ */
+html {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+body {
+  /* Native-app feel inside the Capacitor webview. */
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}

@@ -1,0 +1,19 @@
+# Normalize line endings to LF for all text files across every platform.
+* text=auto eol=lf
+
+# Keep platform-native line endings for scripts that require them.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+gradlew.bat text eol=crlf
+
+# Binary assets must not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.jar binary
+*.keystore binary

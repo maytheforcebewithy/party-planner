@@ -1,0 +1,28 @@
+/**
+ * A few central CSS variables. Intentionally not a full design system — colors
+ * and scales will grow as features are built.
+ */
+:root {
+  /* Color */
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #666666;
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+
+  /* Typography */
+  --font-family-base: system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --line-height-base: 1.5;
+
+  /* iOS safe areas (notch, home indicator). Resolve to 0 outside a device with
+     insets; require `viewport-fit=cover` (set in nuxt.config). */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+}
