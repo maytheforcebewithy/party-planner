@@ -34,6 +34,17 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-07-15',
 
+  vite: {
+    server: {
+      watch: {
+        // Bind-mounted source (Docker on Windows/macOS) doesn't emit native FS
+        // events, so hot reload needs polling. Enabled via env in the container
+        // (see compose.yaml); off by default for native local dev.
+        usePolling: process.env.VITE_USE_POLLING === 'true',
+      },
+    },
+  },
+
   typescript: {
     strict: true,
     // Type checking runs via the dedicated `pnpm typecheck` script.

@@ -1,0 +1,22 @@
+# Local development environment. Start with:  docker compose up --build
+# One service only — no database, no backend, no extra containers.
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      # Nuxt dev server → http://localhost:3000
+      # Override the host port if 3000 is taken:  APP_PORT=3001 docker compose up
+      - "${APP_PORT:-3000}:3000"
+    volumes:
+      # Live source for hot reload.
+      - .:/app
+      # Keep the container's own node_modules and .nuxt (don't shadow them with
+      # the host's, which may be Windows/macOS-built).
+      - /app/node_modules
+      - /app/.nuxt
+    environment:
+      # Poll the bind-mounted filesystem so hot reload works cross-platform.
+      VITE_USE_POLLING: "true"
+    command: pnpm dev --host 0.0.0.0
