@@ -1,0 +1,22 @@
+node_modules
+.nuxt
+.nuxtrc
+.output
+.data
+dist
+.nitro
+.cache
+coverage
+.git
+.claude
+.idea
+.vscode
+
+# Native projects and their build artifacts are not part of the web toolchain image.
+android
+ios
+
+# Local env
+.env
+.env.*
+!.env.example
