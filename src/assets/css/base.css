@@ -1,0 +1,19 @@
+/**
+ * Base element styling built on the design tokens.
+ */
+html {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+body {
+  /* Prevent overscroll bounce in the Capacitor webview. */
+  overscroll-behavior: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
