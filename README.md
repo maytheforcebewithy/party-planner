@@ -12,28 +12,43 @@ separat).
 
 ## Voraussetzungen
 
-- Node.js `>= 20`
-- pnpm (via `corepack enable`)
-- Android: Android Studio / Android SDK
-- iOS: macOS mit Xcode (nur dort baubar)
+- **Docker** + Docker Compose (empfohlener Weg für die lokale Entwicklung)
+- Für native Builds ohne Container: Node.js `>= 20`, pnpm (`corepack enable`),
+  Android Studio / Android SDK, sowie macOS mit Xcode für iOS.
 
-## Installation
+## Lokale Entwicklung mit Docker (empfohlen)
+
+Die komplette Web-Entwicklung läuft über Docker — ein einziger Befehl:
+
+```bash
+docker compose up --build     # startet den Nuxt-Dev-Server auf http://localhost:3000
+```
+
+Weitere Befehle:
+
+```bash
+docker compose up             # starten (ohne Neubau)
+docker compose up -d          # im Hintergrund starten
+docker compose down           # Container stoppen und entfernen
+docker compose logs -f        # Logs live anzeigen
+docker compose exec app sh    # Shell im Container öffnen
+```
+
+Hot Reload ist aktiv: Änderungen im Arbeitsverzeichnis werden per Volume in den
+Container gespiegelt (Dateiänderungen via Polling erkannt, siehe `VITE_USE_POLLING`).
+`node_modules` und `.nuxt` bleiben im Container.
+
+## Lokale Entwicklung ohne Docker
 
 ```bash
 corepack enable
 pnpm install
-```
-
-## Lokale Entwicklung
-
-```bash
 pnpm dev
 ```
 
-Optional reproduzierbar im Container: siehe `.devcontainer/` bzw. `Dockerfile`
-(Web-Toolchain; native Builds laufen weiterhin auf dem Host).
+## Tests & Qualität
 
-## Tests
+Im Container (`docker compose exec app <cmd>`) oder lokal:
 
 ```bash
 pnpm test        # Watch-Modus
