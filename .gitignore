@@ -3,6 +3,7 @@ node_modules
 
 # Nuxt / build output
 .nuxt
+.nuxtrc
 .output
 .data
 dist
@@ -35,6 +36,9 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Capacitor (native projects generated later)
-/android
-/ios
+# Capacitor
+# The native projects (android/, ios/) ARE versioned. Their own generated
+# .gitignore files exclude local build artifacts. We only ignore the web assets
+# that Capacitor copies into them on sync (regenerated from the Nuxt build).
+android/app/src/main/assets/public
+ios/App/App/public

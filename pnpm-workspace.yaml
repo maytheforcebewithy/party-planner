@@ -1,0 +1,10 @@
+# pnpm project settings (pnpm 10.15+/11 reads config from here, not package.json).
+
+# Nuxt expects a flatter node_modules layout so tools like vue-tsc's Volar plugin
+# can resolve vue-router. Recommended by Nuxt for pnpm.
+shamefullyHoist: true
+
+# Allow the native/binary packages that legitimately need install scripts.
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true
