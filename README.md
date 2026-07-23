@@ -1,7 +1,8 @@
 # Party Planner
 
 Frontend for a party & event planning app. Built with Nuxt 4, Vue 3, TypeScript and Pinia.
-Designed to run in the browser and, later, as a native Android/iOS app via Capacitor.
+It is a **mobile app for Android and iOS**, delivered via Capacitor. There is no
+public web version — the browser is used only for local development.
 
 > This repository contains **only the frontend**. The backend is developed
 > separately as a REST API and is not part of this repository.
