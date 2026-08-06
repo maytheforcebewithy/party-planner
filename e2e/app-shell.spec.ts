@@ -1,8 +1,7 @@
 import { expect, test } from '@playwright/test'
 
-test('renders the start view', async ({ page }) => {
+test('home shows the party list with a way to add one', async ({ page }) => {
   await page.goto('/')
 
-  await expect(page.getByText('Party Planner')).toBeVisible()
-  await expect(page.getByText('App setup successful')).toBeVisible()
+  await expect(page.getByTestId('new-party')).toBeVisible()
 })

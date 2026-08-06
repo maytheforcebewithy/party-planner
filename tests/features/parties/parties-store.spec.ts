@@ -54,6 +54,17 @@ describe('parties store', () => {
     expect(store.findById(created.id)?.name).toBe('New')
   })
 
+  it('ensureLoaded loads once and then is a no-op', async () => {
+    const store = usePartiesStore()
+    expect(store.loaded).toBe(false)
+
+    await store.ensureLoaded()
+    expect(store.loaded).toBe(true)
+
+    await store.ensureLoaded()
+    expect(store.loaded).toBe(true)
+  })
+
   it('removes a party from the list', async () => {
     const store = usePartiesStore()
     const created = await store.create({ name: 'Doomed' })
