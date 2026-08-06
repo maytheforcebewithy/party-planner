@@ -1,0 +1,53 @@
+{
+  "app": {
+    "title": "Party Planner"
+  },
+  "nav": {
+    "back": "Zurück"
+  },
+  "list": {
+    "title": "Deine Partys",
+    "new": "Neue Party",
+    "empty": {
+      "title": "Noch keine Partys",
+      "hint": "Plane deine erste Feier – ganz ohne Account, alles bleibt auf deinem Gerät.",
+      "cta": "Feier planen"
+    }
+  },
+  "create": {
+    "title": "Neue Party",
+    "submit": "Party erstellen"
+  },
+  "edit": {
+    "title": "Party bearbeiten",
+    "submit": "Änderungen speichern",
+    "notFound": "Diese Party gibt es nicht (mehr)."
+  },
+  "detail": {
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirm": "Diese Party wirklich löschen?",
+    "notFound": "Diese Party gibt es nicht (mehr).",
+    "notes": "Notizen",
+    "noDate": "Kein Datum festgelegt"
+  },
+  "form": {
+    "name": {
+      "label": "Name",
+      "placeholder": "z. B. Sommerfest",
+      "required": "Bitte gib einen Namen ein."
+    },
+    "date": {
+      "label": "Datum"
+    },
+    "location": {
+      "label": "Ort",
+      "placeholder": "z. B. Park"
+    },
+    "description": {
+      "label": "Notizen",
+      "placeholder": "Details zur Feier …"
+    },
+    "cancel": "Abbrechen"
+  }
+}

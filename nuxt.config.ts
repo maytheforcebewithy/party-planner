@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxt/test-utils/module',
+    '@nuxtjs/i18n',
   ],
 
   // The product is a native mobile app (Android/iOS) packaged with Capacitor.
@@ -44,5 +45,16 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+
+  // Local, single-user app: no locale in the URL (`no_prefix`), German default.
+  // Locale messages live in `i18n/locales/*.json` and must stay at key parity.
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'de',
+    locales: [
+      { code: 'de', language: 'de-DE', name: 'Deutsch', file: 'de.json' },
+      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+    ],
   },
 })

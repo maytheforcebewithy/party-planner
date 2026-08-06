@@ -1,0 +1,53 @@
+{
+  "app": {
+    "title": "Party Planner"
+  },
+  "nav": {
+    "back": "Back"
+  },
+  "list": {
+    "title": "Your parties",
+    "new": "New party",
+    "empty": {
+      "title": "No parties yet",
+      "hint": "Plan your first celebration — no account, everything stays on your device.",
+      "cta": "Plan a party"
+    }
+  },
+  "create": {
+    "title": "New party",
+    "submit": "Create party"
+  },
+  "edit": {
+    "title": "Edit party",
+    "submit": "Save changes",
+    "notFound": "This party no longer exists."
+  },
+  "detail": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Really delete this party?",
+    "notFound": "This party no longer exists.",
+    "notes": "Notes",
+    "noDate": "No date set"
+  },
+  "form": {
+    "name": {
+      "label": "Name",
+      "placeholder": "e.g. Summer party",
+      "required": "Please enter a name."
+    },
+    "date": {
+      "label": "Date"
+    },
+    "location": {
+      "label": "Location",
+      "placeholder": "e.g. Park"
+    },
+    "description": {
+      "label": "Notes",
+      "placeholder": "Details about the celebration …"
+    },
+    "cancel": "Cancel"
+  }
+}
