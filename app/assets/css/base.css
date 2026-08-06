@@ -6,10 +6,47 @@ html {
   font-size: var(--font-size-base);
   color: var(--color-text);
   background-color: var(--color-bg);
+  /* Let the UA render native controls/scrollbars in the active scheme. */
+  color-scheme: light dark;
 }
 
 body {
   /* Native-app feel inside the Capacitor webview. */
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-primary-contrast);
+}
+
+a {
+  color: var(--color-primary-text);
+  text-decoration: none;
+}
+
+/* Keyboard-visible focus only, so touch/click doesn't show a ring. */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Page wrapper: satisfies the single-root-element rule while staying invisible
+   to layout, so the app bar and `.page` remain direct flex children of the shell. */
+.screen {
+  display: contents;
+}
+
+/* Shared page content container: centred, width-capped, respects side insets.
+   The app bar sits outside this so it can stay full-bleed and sticky. */
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+  padding-block: var(--space-6) var(--space-10);
+  padding-inline:
+    max(var(--space-5), var(--safe-area-inset-left))
+    max(var(--space-5), var(--safe-area-inset-right));
 }

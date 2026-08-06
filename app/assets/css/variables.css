@@ -1,23 +1,76 @@
 /**
- * A few central CSS variables. Intentionally not a full design system — colors
- * and scales will grow as features are built.
+ * Design tokens — "Fête Nocturne": an elegant, evening/celebration theme.
+ * Violet primary, pink accent, gold tertiary. Light by default; dark is applied
+ * automatically via `prefers-color-scheme` (no manual toggle yet — YAGNI). A
+ * future toggle can add `:root[data-theme='dark']` overrides on top of this.
+ *
+ * Surface tokens are always opaque so cards/overlays stay readable in dark mode.
  */
 :root {
-  /* Color */
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-text-muted: #666666;
+  /* Brand */
+  --color-primary: #6d28d9;
+  --color-primary-hover: #5b21b6;
+  --color-primary-contrast: #ffffff;
+  /* Brand colour for text/icons on a surface (needs more contrast than the button fill). */
+  --color-primary-text: #6d28d9;
+  --color-accent: #ec4899;
+  --color-accent-hover: #db2777;
+  --color-gold: #f5b301;
 
-  /* Spacing scale (4px base) */
+  /* Semantic */
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --color-danger-contrast: #ffffff;
+
+  /* Surfaces & text */
+  --color-bg: #fbfaff;
+  --surface-card: #ffffff;
+  --surface-sunken: #f3f1fb;
+  --color-text: #1a1730;
+  --color-text-muted: #6b6580;
+  --color-border: #e6e2f2;
+  --color-border-strong: #d3cce8;
+
+  /* Focus ring — used for keyboard-visible focus outlines. */
+  --color-focus: #a78bfa;
+
+  /* Elevation. The glow is the celebratory accent on primary CTAs. */
+  --shadow-card: 0 1px 2px rgb(26 23 48 / 6%), 0 4px 16px rgb(109 40 217 / 8%);
+  --shadow-glow: 0 6px 20px rgb(236 72 153 / 35%);
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 999px;
+
+  /* Spacing scale (4px base: --space-n = n × 0.25rem). */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
+  --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
 
   /* Typography */
   --font-family-base: system-ui, -apple-system, "Segoe UI", roboto, sans-serif;
+  --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
   --line-height-base: 1.5;
+  --line-height-tight: 1.2;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Motion */
+  --transition-fast: 150ms ease;
 
   /* iOS safe areas (notch, home indicator). Resolve to 0 outside a device with
      insets; require `viewport-fit=cover` (set in nuxt.config). */
@@ -25,4 +78,33 @@
   --safe-area-inset-right: env(safe-area-inset-right, 0px);
   --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
   --safe-area-inset-left: env(safe-area-inset-left, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #7c3aed;
+    --color-primary-hover: #8b5cf6;
+    --color-primary-contrast: #ffffff;
+    --color-primary-text: #a78bfa;
+    --color-accent: #f472b6;
+    --color-accent-hover: #ec4899;
+    --color-gold: #fbcb3a;
+
+    --color-danger: #f87171;
+    --color-danger-hover: #ef4444;
+    --color-danger-contrast: #1a1730;
+
+    --color-bg: #100e1b;
+    --surface-card: #1b1830;
+    --surface-sunken: #15121f;
+    --color-text: #ece9f5;
+    --color-text-muted: #a29db8;
+    --color-border: #2c2740;
+    --color-border-strong: #3a3355;
+
+    --color-focus: #c4b5fd;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 40%), 0 4px 18px rgb(0 0 0 / 45%);
+    --shadow-glow: 0 6px 22px rgb(244 114 182 / 30%);
+  }
 }
