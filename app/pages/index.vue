@@ -1,36 +1,73 @@
+<script setup lang="ts">
+import PartyListItem from '~/features/parties/components/PartyListItem.vue'
+import { useParties } from '~/features/parties/composables/use-parties'
+
+const store = useParties()
+</script>
+
 <template>
-  <main class="setup">
-    <p class="setup__title">
-      Party Planner
-    </p>
-    <p class="setup__hint">
-      App setup successful
-    </p>
-  </main>
+  <div class="screen">
+    <AppBar :title="$t('list.title')">
+      <template #action>
+        <NuxtLink
+          to="/parties/create"
+          :aria-label="$t('list.new')"
+          class="add"
+          data-testid="new-party"
+        >
+          <span aria-hidden="true">＋</span>
+        </NuxtLink>
+      </template>
+    </AppBar>
+
+    <main class="page">
+      <BaseEmptyState
+        v-if="store.loaded && store.partyCount === 0"
+        :title="$t('list.empty.title')"
+        :hint="$t('list.empty.hint')"
+      >
+        <template #action>
+          <BaseButton
+            to="/parties/create"
+            data-testid="empty-cta"
+          >
+            {{ $t('list.empty.cta') }}
+          </BaseButton>
+        </template>
+      </BaseEmptyState>
+
+      <ul
+        v-else
+        class="list"
+      >
+        <li
+          v-for="party in store.parties"
+          :key="party.id"
+        >
+          <PartyListItem :party="party" />
+        </li>
+      </ul>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-.setup {
+.add {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: var(--font-size-xl);
+  color: var(--color-primary-contrast);
+  background-color: var(--color-primary);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-glow);
+}
+
+.list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  align-items: center;
-  justify-content: center;
-  min-height: 100dvh;
-  padding:
-    var(--safe-area-inset-top)
-    var(--safe-area-inset-right)
-    var(--safe-area-inset-bottom)
-    var(--safe-area-inset-left);
-  text-align: center;
-}
-
-.setup__title {
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-}
-
-.setup__hint {
-  color: var(--color-text-muted);
+  gap: var(--space-3);
+  list-style: none;
 }
 </style>
