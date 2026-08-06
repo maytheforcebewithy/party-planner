@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import PartyHero from '~/features/parties/components/PartyHero.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 
@@ -36,14 +37,23 @@ function onDelete(): void {
         v-if="party"
         class="detail"
       >
-        <p class="detail__date">
-          <span aria-hidden="true">📅</span> {{ displayDate(party.date) }}
-        </p>
+        <PartyHero :date-label="displayDate(party.date)" />
+
         <p
           v-if="party.location"
-          class="detail__meta"
+          class="detail__location"
         >
-          <span aria-hidden="true">📍</span> {{ party.location }}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="detail__icon"
+          >
+            <path
+              fill="currentColor"
+              d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"
+            />
+          </svg>
+          {{ party.location }}
         </p>
 
         <section
@@ -121,13 +131,17 @@ function onDelete(): void {
   gap: var(--space-4);
 }
 
-.detail__date {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+.detail__location {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  color: var(--color-text-muted);
 }
 
-.detail__meta {
-  color: var(--color-text-muted);
+.detail__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--color-primary-text);
 }
 
 .detail__notes {

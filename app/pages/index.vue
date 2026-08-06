@@ -59,7 +59,7 @@ const store = useParties()
   height: 2.5rem;
   font-size: var(--font-size-xl);
   color: var(--color-primary-contrast);
-  background-color: var(--color-primary);
+  background-image: linear-gradient(135deg, var(--color-primary), var(--color-accent));
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-glow);
 }
