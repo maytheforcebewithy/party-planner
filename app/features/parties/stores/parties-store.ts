@@ -11,6 +11,7 @@ export const usePartiesStore = defineStore('parties', () => {
 
   const parties = ref<Party[]>([])
   const isLoading = ref(false)
+  const loaded = ref(false)
 
   const partyCount = computed(() => parties.value.length)
 
@@ -18,10 +19,17 @@ export const usePartiesStore = defineStore('parties', () => {
     isLoading.value = true
     try {
       parties.value = [...await repository.findAll()]
+      loaded.value = true
     }
     finally {
       isLoading.value = false
     }
+  }
+
+  /** Load once per session; subsequent calls are a no-op. */
+  async function ensureLoaded(): Promise<void> {
+    if (loaded.value) return
+    await loadAll()
   }
 
   function findById(id: string): Party | undefined {
@@ -45,5 +53,5 @@ export const usePartiesStore = defineStore('parties', () => {
     parties.value = parties.value.filter(party => party.id !== id)
   }
 
-  return { parties, isLoading, partyCount, loadAll, findById, create, update, remove }
+  return { parties, isLoading, loaded, partyCount, loadAll, ensureLoaded, findById, create, update, remove }
 })
