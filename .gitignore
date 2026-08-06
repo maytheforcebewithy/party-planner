@@ -13,6 +13,9 @@ dist
 # Local dev environment (personal, must never be committed)
 .claude
 
+# Design reference images (personal, temporary — never commit)
+docs
+
 # Test / coverage
 coverage
 .vitest

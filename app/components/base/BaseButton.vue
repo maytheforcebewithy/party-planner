@@ -66,12 +66,11 @@ const classes = computed(() => [`btn--${props.variant}`, { 'btn--block': props.b
 
 .btn--primary {
   color: var(--color-primary-contrast);
-  background-image: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  box-shadow: var(--shadow-glow);
+  background-color: var(--color-primary);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background-image: linear-gradient(135deg, var(--color-primary-hover), var(--color-accent-hover));
+  background-color: var(--color-primary-hover);
 }
 
 .btn--ghost {

@@ -4,8 +4,8 @@ import { usePartyFormatting } from '../composables/use-party-formatting'
 
 const props = defineProps<{ party: Party }>()
 
-const { subtitle } = usePartyFormatting()
-const sub = computed(() => subtitle(props.party))
+const { displayDate } = usePartyFormatting()
+const dateLabel = computed(() => (props.party.date ? displayDate(props.party.date) : ''))
 </script>
 
 <template>
@@ -21,9 +21,13 @@ const sub = computed(() => subtitle(props.party))
     <span class="row__body">
       <span class="row__name">{{ party.name }}</span>
       <span
-        v-if="sub"
-        class="row__sub"
-      >{{ sub }}</span>
+        v-if="dateLabel"
+        class="row__date"
+      >{{ dateLabel }}</span>
+      <span
+        v-if="party.location"
+        class="row__location"
+      >{{ party.location }}</span>
     </span>
     <span
       aria-hidden="true"
@@ -61,8 +65,8 @@ const sub = computed(() => subtitle(props.party))
   width: 2.75rem;
   height: 2.75rem;
   font-size: var(--font-size-lg);
-  background: var(--surface-sunken);
-  border-radius: var(--radius-pill);
+  background-color: var(--surface-sunken);
+  border-radius: var(--radius-md);
 }
 
 .row__body {
@@ -80,9 +84,18 @@ const sub = computed(() => subtitle(props.party))
   white-space: nowrap;
 }
 
-.row__sub {
+.row__date {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-text);
+}
+
+.row__location {
+  overflow: hidden;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .row__chevron {

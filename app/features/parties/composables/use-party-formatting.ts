@@ -1,4 +1,3 @@
-import type { Party } from '../types/party'
 import { formatEventDate } from '../services/format-party'
 
 /**
@@ -13,13 +12,5 @@ export function usePartyFormatting() {
     return iso ? formatEventDate(iso, locale.value) : t('detail.noDate')
   }
 
-  /** Compact "date · location" line for list rows; empty when neither is set. */
-  function subtitle(party: Party): string {
-    const parts: string[] = []
-    if (party.date) parts.push(formatEventDate(party.date, locale.value))
-    if (party.location) parts.push(party.location)
-    return parts.join(' · ')
-  }
-
-  return { displayDate, subtitle }
+  return { displayDate }
 }

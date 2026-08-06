@@ -77,7 +77,7 @@ const errorId = computed(() => (props.error ? `${id}-error` : undefined))
 }
 
 .field__req {
-  color: var(--color-accent);
+  color: var(--color-primary-text);
 }
 
 .field__control {

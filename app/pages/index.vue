@@ -15,7 +15,19 @@ const store = useParties()
           class="add"
           data-testid="new-party"
         >
-          <span aria-hidden="true">＋</span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="add__icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              d="M12 5v14M5 12h14"
+            />
+          </svg>
         </NuxtLink>
       </template>
     </AppBar>
@@ -57,11 +69,15 @@ const store = useParties()
   place-items: center;
   width: 2.5rem;
   height: 2.5rem;
-  font-size: var(--font-size-xl);
   color: var(--color-primary-contrast);
-  background-image: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  background-color: var(--color-primary);
   border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-card);
+}
+
+.add__icon {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .list {

@@ -27,17 +27,17 @@ function onDelete(): void {
 
 <template>
   <div class="screen">
-    <AppBar
-      :title="party ? party.name : $t('app.title')"
-      back-to="/"
-    />
+    <AppBar back-to="/" />
 
     <main class="page">
       <article
         v-if="party"
         class="detail"
       >
-        <PartyHero :date-label="displayDate(party.date)" />
+        <PartyHero
+          :name="party.name"
+          :date-label="displayDate(party.date)"
+        />
 
         <p
           v-if="party.location"

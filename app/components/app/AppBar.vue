@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
-  title: string
+  /** Optional centred nav title. Omit on screens that carry their own hero title. */
+  title?: string
   /** When set, shows a back link pointing at this route. */
   backTo?: string
 }>()
@@ -20,9 +21,12 @@ defineProps<{
       </NuxtLink>
     </div>
 
-    <h1 class="app-bar__title">
+    <p
+      v-if="title"
+      class="app-bar__title"
+    >
       {{ title }}
-    </h1>
+    </p>
 
     <div class="app-bar__slot app-bar__slot--end">
       <slot name="action" />
@@ -37,8 +41,12 @@ defineProps<{
   z-index: 10;
   display: grid;
   grid-template-columns: 2.75rem 1fr 2.75rem;
+  gap: var(--space-2);
   align-items: center;
-  padding-top: var(--safe-area-inset-top);
+  padding-top: calc(var(--safe-area-inset-top) + var(--space-2));
+  padding-right: max(var(--space-4), var(--safe-area-inset-right));
+  padding-bottom: var(--space-2);
+  padding-left: max(var(--space-4), var(--safe-area-inset-left));
   background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
   border-bottom: 1px solid var(--color-border);
   backdrop-filter: blur(12px);
