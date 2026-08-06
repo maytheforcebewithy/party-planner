@@ -16,6 +16,9 @@ dist
 # Test / coverage
 coverage
 .vitest
+test-results
+playwright-report
+.playwright
 
 # Logs
 logs
