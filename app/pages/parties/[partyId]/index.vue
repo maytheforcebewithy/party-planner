@@ -45,7 +45,7 @@ function onShare(): void {
 }
 
 function onExport(): void {
-  if (party.value) exportParty(party.value)
+  if (party.value) void exportParty(party.value)
 }
 
 async function startConfirm(): Promise<void> {
