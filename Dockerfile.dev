@@ -1,0 +1,23 @@
+# Development image for the Nuxt web toolchain (dev server with hot reload).
+# Native builds are out of scope: Android needs the Android SDK, iOS needs macOS.
+# The working tree is bind-mounted at runtime (see compose.yaml); node_modules
+# and .nuxt stay inside the container.
+
+FROM node:22-bookworm-slim
+
+# Corepack ships with Node and pins the pnpm version from package.json.
+RUN corepack enable
+
+WORKDIR /app
+
+# Dependency layer — cached until the manifests change.
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile --ignore-scripts
+
+# App sources, then generate Nuxt's type stubs (postinstall equivalent).
+COPY . .
+RUN pnpm exec nuxt prepare
+
+EXPOSE 3000
+
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]
