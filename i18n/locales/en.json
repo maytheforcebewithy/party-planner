@@ -36,7 +36,27 @@
   },
   "settings": {
     "title": "Settings",
-    "placeholder": "Settings are coming in a later step."
+    "language": {
+      "title": "Language",
+      "de": "Deutsch",
+      "en": "English"
+    },
+    "data": {
+      "title": "Data",
+      "text": "All parties live on this device only. You can delete them permanently.",
+      "action": "Delete all data ({count})",
+      "confirm": "Really delete all parties? This cannot be undone.",
+      "confirmAction": "Delete everything",
+      "cleared": "All data has been deleted."
+    },
+    "about": {
+      "text": "Party Planner is local-first: no accounts, no cloud. Your data stays on your device.",
+      "version": "Version {version}",
+      "share": "Share app",
+      "shareText": "Plan your parties with Party Planner!\nAndroid: {android}\niOS: {ios}",
+      "android": "Google Play",
+      "ios": "App Store"
+    }
   },
   "list": {
     "title": "My parties",

@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { version } from './package.json'
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -30,6 +32,12 @@ export default defineNuxtConfig({
     '~/assets/css/variables.css',
     '~/assets/css/base.css',
   ],
+  // Surface the app version (single source: package.json) to the client.
+  runtimeConfig: {
+    public: {
+      appVersion: version,
+    },
+  },
 
   future: {
     compatibilityVersion: 4,

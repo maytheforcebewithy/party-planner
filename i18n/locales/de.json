@@ -36,7 +36,27 @@
   },
   "settings": {
     "title": "Einstellungen",
-    "placeholder": "Einstellungen folgen in einem späteren Schritt."
+    "language": {
+      "title": "Sprache",
+      "de": "Deutsch",
+      "en": "English"
+    },
+    "data": {
+      "title": "Daten",
+      "text": "Alle Partys liegen nur auf diesem Gerät. Du kannst sie unwiderruflich löschen.",
+      "action": "Alle Daten löschen ({count})",
+      "confirm": "Wirklich alle Partys löschen? Das kann nicht rückgängig gemacht werden.",
+      "confirmAction": "Alles löschen",
+      "cleared": "Alle Daten wurden gelöscht."
+    },
+    "about": {
+      "text": "Party Planner ist lokal-first: keine Accounts, keine Cloud. Deine Daten bleiben auf deinem Gerät.",
+      "version": "Version {version}",
+      "share": "App teilen",
+      "shareText": "Plane deine Partys mit Party Planner!\nAndroid: {android}\niOS: {ios}",
+      "android": "Google Play",
+      "ios": "App Store"
+    }
   },
   "list": {
     "title": "Meine Partys",

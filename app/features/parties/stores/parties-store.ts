@@ -53,5 +53,13 @@ export const usePartiesStore = defineStore('parties', () => {
     parties.value = parties.value.filter(party => party.id !== id)
   }
 
-  return { parties, isLoading, loaded, partyCount, loadAll, ensureLoaded, findById, create, update, remove }
+  /** Delete every party (used by the "delete all data" setting). */
+  async function clearAll(): Promise<void> {
+    for (const party of [...parties.value]) {
+      await repository.delete(party.id)
+    }
+    parties.value = []
+  }
+
+  return { parties, isLoading, loaded, partyCount, loadAll, ensureLoaded, findById, create, update, remove, clearAll }
 })
