@@ -16,7 +16,12 @@
   },
   "invitations": {
     "title": "Invitations",
-    "placeholder": "You'll manage your invitations here soon."
+    "intro": "Share invitations to your upcoming parties.",
+    "none": "No upcoming parties to invite to.",
+    "empty": {
+      "title": "No parties yet",
+      "hint": "Create a party first — then you can invite from here."
+    }
   },
   "importExport": {
     "title": "Import / Export",

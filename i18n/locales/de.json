@@ -16,7 +16,12 @@
   },
   "invitations": {
     "title": "Einladungen",
-    "placeholder": "Hier verwaltest du bald deine Einladungen."
+    "intro": "Teile Einladungen zu deinen kommenden Partys.",
+    "none": "Keine kommenden Partys zum Einladen.",
+    "empty": {
+      "title": "Noch keine Partys",
+      "hint": "Leg zuerst eine Party an – dann kannst du hier einladen."
+    }
   },
   "importExport": {
     "title": "Import / Export",
