@@ -37,8 +37,8 @@ describe('addPartyLinkImage migration', () => {
 
     const result = await runMigrations(database, migrations)
 
-    expect(result.version).toBe(5)
     expect(result.applied).toContain(addPartyLinkImage)
-    expect(await database.getSchemaVersion()).toBe(5)
+    expect(result.version).toBeGreaterThanOrEqual(5)
+    expect(await database.getSchemaVersion()).toBe(result.version)
   })
 })

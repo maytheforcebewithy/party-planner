@@ -66,6 +66,7 @@ describe('PartyForm', () => {
           color: 'sky',
           image: null,
           link: 'https://open.spotify.com/x',
+          received: false,
           guests: [],
           shopping: [],
           createdAt: '',

@@ -31,6 +31,16 @@ describe('useExportImport', () => {
 
     expect(result).toEqual({ ok: true, imported: 2 })
     expect(store.partyCount).toBe(2)
+    expect(store.parties.every(party => party.received === false)).toBe(true)
+  })
+
+  it('flags imported parties as received when requested', async () => {
+    const store = usePartiesStore()
+    const { importParties } = useExportImport()
+
+    await importParties(fileOf(exportDoc(['Invited'])), { received: true })
+
+    expect(store.parties.every(party => party.received === true)).toBe(true)
   })
 
   it('reports an invalid file without creating parties', async () => {

@@ -16,6 +16,7 @@ function party(id: string, date: string | null): Party {
     color: null,
     image: null,
     link: null,
+    received: false,
     guests: [],
     shopping: [],
     createdAt: '',

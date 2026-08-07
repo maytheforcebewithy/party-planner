@@ -20,9 +20,10 @@ const tabOptions = computed(() => [
   { value: 'past', label: t('list.tabs.past') },
 ])
 
-const groups = computed(() => partitionParties(store.parties, today))
+const ownParties = computed(() => store.parties.filter(party => !party.received))
+const groups = computed(() => partitionParties(ownParties.value, today))
 const visible = computed(() => (tab.value === 'past' ? groups.value.past : groups.value.upcoming))
-const isEmpty = computed(() => store.loaded && store.partyCount === 0)
+const isEmpty = computed(() => store.loaded && ownParties.value.length === 0)
 const noneMessage = computed(() => (tab.value === 'past' ? t('list.none.past') : t('list.none.upcoming')))
 </script>
 

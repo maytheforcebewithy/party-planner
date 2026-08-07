@@ -16,7 +16,11 @@
   },
   "invitations": {
     "title": "Invitations",
-    "placeholder": "You'll manage your invitations here soon."
+    "add": "Add invitation",
+    "addSubmit": "Save invitation",
+    "import": "Import invitation",
+    "imported": "{count} invitations imported",
+    "none": "No invitations received yet."
   },
   "importExport": {
     "title": "Import / Export",
