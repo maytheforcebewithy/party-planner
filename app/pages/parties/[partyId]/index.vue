@@ -24,6 +24,8 @@ const timeLabel = computed(() =>
   party.value ? displayTime(party.value.startTime, party.value.endTime) : null,
 )
 const linkLabel = computed(() => (party.value?.link ? linkHost(party.value.link) : ''))
+// A received invitation was reached from the invitations tab, so send back there.
+const backTo = computed(() => (party.value?.received ? '/invitations' : '/'))
 const confirming = ref(false)
 const confirmPanel = ref<HTMLElement | null>(null)
 const shareNotice = ref('')
@@ -68,7 +70,7 @@ function onDelete(): void {
 
 <template>
   <div class="screen">
-    <AppBar back-to="/" />
+    <AppBar :back-to="backTo" />
 
     <main class="page">
       <article
