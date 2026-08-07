@@ -5,7 +5,7 @@ import PartyListToggle from './PartyListToggle.vue'
 import { usePartyLists } from '../composables/use-party-lists'
 import { useCollapsibleList } from '../composables/use-collapsible-list'
 
-const props = defineProps<{ partyId: string }>()
+const props = defineProps<{ partyId: string, received?: boolean }>()
 
 const { t } = useI18n()
 const {
@@ -19,8 +19,11 @@ const {
 } = usePartyLists(() => props.partyId)
 const { visible, collapsible, expanded, hiddenCount, toggle } = useCollapsibleList(shopping)
 
+// On a received invitation the list is "what to bring", not a host's shopping list.
+const keys = computed(() => (props.received ? 'shopping.bring' : 'shopping'))
+
 const summary = computed(() =>
-  shoppingStats.value.total === 0 ? '' : t('shopping.count', shoppingStats.value),
+  shoppingStats.value.total === 0 ? '' : t(`${keys.value}.count`, shoppingStats.value),
 )
 
 function onAdd(name: string): void {
@@ -43,7 +46,7 @@ function onAssign(id: string, event: Event): void {
 
 <template>
   <PartyListSection
-    :title="t('shopping.title')"
+    :title="t(`${keys}.title`)"
     :summary="summary"
   >
     <ul
@@ -128,7 +131,7 @@ function onAssign(id: string, event: Event): void {
       v-else
       class="empty"
     >
-      {{ t('shopping.empty') }}
+      {{ t(`${keys}.empty`) }}
     </p>
 
     <PartyListToggle
@@ -139,8 +142,8 @@ function onAssign(id: string, event: Event): void {
     />
 
     <PartyListAddRow
-      :placeholder="t('shopping.add')"
-      :action-label="t('shopping.addAction')"
+      :placeholder="t(`${keys}.add`)"
+      :action-label="t(`${keys}.addAction`)"
       @add="onAdd"
     />
   </PartyListSection>

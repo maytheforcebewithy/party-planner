@@ -18,7 +18,18 @@
     "title": "Invitations",
     "import": "Import invitation",
     "imported": "{count} invitations imported",
-    "none": "No invitations received yet."
+    "none": "No invitations received yet.",
+    "paste": {
+      "action": "Paste invitation",
+      "intro": "Paste the message you received. We'll try to detect the date, time and location automatically.",
+      "clipboard": "Paste from clipboard",
+      "empty": "Clipboard is empty — paste the message below.",
+      "or": "or",
+      "placeholder": "Paste the message here …",
+      "parse": "Read it",
+      "review": "Please check the detected details and fill in anything that's missing.",
+      "submit": "Save invitation"
+    }
   },
   "importExport": {
     "title": "Import / Export",
@@ -137,7 +148,14 @@
     "remove": "Remove {name}",
     "toggle": "Mark {name} as done",
     "assign": "Who brings it?",
-    "assignNone": "Open"
+    "assignNone": "Open",
+    "bring": {
+      "title": "What to bring",
+      "count": "{done} of {total} done",
+      "empty": "Nothing noted yet.",
+      "add": "What to bring? …",
+      "addAction": "Add"
+    }
   },
   "lists": {
     "showMore": "+{count} more",

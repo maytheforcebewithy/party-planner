@@ -39,18 +39,41 @@ function onImport(event: Event): void {
       </h1>
 
       <div class="actions">
-        <label class="upload">
+        <NuxtLink
+          to="/invitations/paste"
+          class="action action--primary"
+          data-testid="invite-paste"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="action__icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1ZM7 6h10a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
+            />
+          </svg>
+          {{ t('invitations.paste.action') }}
+        </NuxtLink>
+
+        <label class="action action--import">
           <input
             type="file"
             accept="application/json,.json"
-            class="upload__input"
+            class="action__input"
             data-testid="invite-import"
+            :aria-label="t('invitations.import')"
             @change="onImport"
           >
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
-            class="upload__icon"
+            class="action__icon"
           >
             <path
               fill="none"
@@ -61,7 +84,6 @@ function onImport(event: Event): void {
               d="M12 15V3m0 12-4-4m4 4 4-4M5 17v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2"
             />
           </svg>
-          {{ t('invitations.import') }}
         </label>
       </div>
 
@@ -112,27 +134,51 @@ function onImport(event: Event): void {
 
 .actions {
   display: flex;
+  gap: var(--space-3);
+  align-items: stretch;
 }
 
-.upload {
+.action {
   display: inline-flex;
   gap: var(--space-2);
   align-items: center;
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-text);
   cursor: pointer;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
 }
 
-.upload__icon {
+/* The primary "paste" action is the important one: wider and filled. */
+.action--primary {
+  flex: 1;
+  color: var(--color-primary-contrast);
+  background-color: var(--color-primary);
+  border-color: transparent;
+}
+
+/* Import is the rare, secondary action — a compact icon-only button. */
+.action--import {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  padding: 0;
+}
+
+.action--import .action__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.action__icon {
   width: 1.05rem;
   height: 1.05rem;
 }
 
-.upload__input {
+.action__input {
   position: absolute;
   width: 1px;
   height: 1px;

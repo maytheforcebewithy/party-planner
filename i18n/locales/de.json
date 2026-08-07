@@ -18,7 +18,18 @@
     "title": "Einladungen",
     "import": "Einladung importieren",
     "imported": "{count} Einladungen importiert",
-    "none": "Noch keine Einladungen erhalten."
+    "none": "Noch keine Einladungen erhalten.",
+    "paste": {
+      "action": "Einladung einfügen",
+      "intro": "Füge die Nachricht ein, die du bekommen hast. Wir versuchen, Datum, Uhrzeit und Ort automatisch zu erkennen.",
+      "clipboard": "Aus Zwischenablage einfügen",
+      "empty": "Zwischenablage ist leer – füge die Nachricht unten ein.",
+      "or": "oder",
+      "placeholder": "Nachricht hier einfügen …",
+      "parse": "Auswerten",
+      "review": "Bitte prüfe die erkannten Angaben und ergänze, was fehlt.",
+      "submit": "Einladung speichern"
+    }
   },
   "importExport": {
     "title": "Import / Export",
@@ -137,7 +148,14 @@
     "remove": "{name} entfernen",
     "toggle": "{name} als erledigt markieren",
     "assign": "Wer bringt es mit?",
-    "assignNone": "Offen"
+    "assignNone": "Offen",
+    "bring": {
+      "title": "Mitbringen",
+      "count": "{done} von {total} erledigt",
+      "empty": "Noch nichts notiert.",
+      "add": "Was mitbringen? …",
+      "addAction": "Hinzufügen"
+    }
   },
   "lists": {
     "showMore": "+{count} weitere",
