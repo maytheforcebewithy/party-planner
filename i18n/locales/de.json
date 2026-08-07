@@ -92,6 +92,18 @@
     "showMore": "+{count} weitere",
     "showLess": "Weniger anzeigen"
   },
+  "share": {
+    "action": "Teilen",
+    "copied": "Einladung in die Zwischenablage kopiert",
+    "unavailable": "Teilen ist auf diesem Gerät nicht möglich",
+    "invitation": {
+      "title": "Einladung zu {name}",
+      "heading": "🎉 Einladung: {name}",
+      "date": "📅 {value}",
+      "time": "🕒 {value}",
+      "location": "📍 {value}"
+    }
+  },
   "form": {
     "name": {
       "label": "Name",
