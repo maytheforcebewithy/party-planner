@@ -16,8 +16,6 @@
   },
   "invitations": {
     "title": "Einladungen",
-    "add": "Einladung anlegen",
-    "addSubmit": "Einladung speichern",
     "import": "Einladung importieren",
     "imported": "{count} Einladungen importiert",
     "none": "Noch keine Einladungen erhalten."

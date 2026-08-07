@@ -16,8 +16,6 @@
   },
   "invitations": {
     "title": "Invitations",
-    "add": "Add invitation",
-    "addSubmit": "Save invitation",
     "import": "Import invitation",
     "imported": "{count} invitations imported",
     "none": "No invitations received yet."

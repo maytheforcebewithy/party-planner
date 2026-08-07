@@ -43,6 +43,6 @@ test('key screens have no structural accessibility violations', async ({ page })
   await scan(page)
 
   await page.getByRole('link', { name: 'Einladungen' }).click()
-  await page.getByTestId('invite-add').waitFor()
+  await page.getByTestId('invite-import').waitFor()
   await scan(page)
 })

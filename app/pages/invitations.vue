@@ -39,12 +39,6 @@ function onImport(event: Event): void {
       </h1>
 
       <div class="actions">
-        <BaseButton
-          to="/parties/create?received=1"
-          data-testid="invite-add"
-        >
-          {{ t('invitations.add') }}
-        </BaseButton>
         <label class="upload">
           <input
             type="file"
@@ -53,6 +47,20 @@ function onImport(event: Event): void {
             data-testid="invite-import"
             @change="onImport"
           >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="upload__icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 15V3m0 12-4-4m4 4 4-4M5 17v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2"
+            />
+          </svg>
           {{ t('invitations.import') }}
         </label>
       </div>
@@ -104,22 +112,24 @@ function onImport(event: Event): void {
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
 }
 
 .upload {
   display: inline-flex;
+  gap: var(--space-2);
   align-items: center;
-  justify-content: center;
-  min-height: 2.75rem;
-  padding: 0 var(--space-5);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
   color: var(--color-primary-text);
   cursor: pointer;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
+}
+
+.upload__icon {
+  width: 1.05rem;
+  height: 1.05rem;
 }
 
 .upload__input {
