@@ -137,7 +137,14 @@
     "remove": "Remove {name}",
     "toggle": "Mark {name} as done",
     "assign": "Who brings it?",
-    "assignNone": "Open"
+    "assignNone": "Open",
+    "bring": {
+      "title": "What to bring",
+      "count": "{done} of {total} done",
+      "empty": "Nothing noted yet.",
+      "add": "What to bring? …",
+      "addAction": "Add"
+    }
   },
   "lists": {
     "showMore": "+{count} more",

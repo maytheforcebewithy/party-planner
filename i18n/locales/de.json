@@ -137,7 +137,14 @@
     "remove": "{name} entfernen",
     "toggle": "{name} als erledigt markieren",
     "assign": "Wer bringt es mit?",
-    "assignNone": "Offen"
+    "assignNone": "Offen",
+    "bring": {
+      "title": "Mitbringen",
+      "count": "{done} von {total} erledigt",
+      "empty": "Noch nichts notiert.",
+      "add": "Was mitbringen? …",
+      "addAction": "Hinzufügen"
+    }
   },
   "lists": {
     "showMore": "+{count} weitere",
