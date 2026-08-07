@@ -50,7 +50,7 @@ describe('useExportImport', () => {
     vi.stubGlobal('URL', { createObjectURL, revokeObjectURL: vi.fn() })
 
     const { exportParties } = useExportImport()
-    const count = exportParties()
+    const count = await exportParties()
 
     expect(count).toBe(1)
     expect(createObjectURL).toHaveBeenCalledOnce()
@@ -70,7 +70,7 @@ describe('useExportImport', () => {
     })
 
     const { exportParty } = useExportImport()
-    exportParty(party)
+    await exportParty(party)
 
     expect(captured).toBeDefined()
     const text = await (captured as Blob).text()

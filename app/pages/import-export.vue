@@ -12,8 +12,12 @@ onMounted(() => {
   void store.ensureLoaded()
 })
 
+async function runExport(): Promise<void> {
+  notice.value = t('importExport.exported', { count: await exportParties() })
+}
+
 function onExport(): void {
-  notice.value = t('importExport.exported', { count: exportParties() })
+  void runExport()
 }
 
 async function runImport(file: File): Promise<void> {
