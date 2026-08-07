@@ -73,4 +73,16 @@ describe('parties store', () => {
 
     expect(store.findById(created.id)).toBeUndefined()
   })
+
+  it('clears every party', async () => {
+    const store = usePartiesStore()
+    const first = await store.create({ name: 'One' })
+    const second = await store.create({ name: 'Two' })
+
+    await store.clearAll()
+
+    expect(store.partyCount).toBe(0)
+    expect(await repository.findById(first.id)).toBeNull()
+    expect(await repository.findById(second.id)).toBeNull()
+  })
 })
