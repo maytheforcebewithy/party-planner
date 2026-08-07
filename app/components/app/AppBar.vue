@@ -21,12 +21,12 @@ defineProps<{
       </NuxtLink>
     </div>
 
-    <p
+    <h1
       v-if="title"
       class="app-bar__title"
     >
       {{ title }}
-    </p>
+    </h1>
 
     <div class="app-bar__slot app-bar__slot--end">
       <slot name="action" />
