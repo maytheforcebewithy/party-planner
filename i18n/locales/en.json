@@ -2,6 +2,9 @@
   "app": {
     "title": "Party Planner"
   },
+  "ads": {
+    "placeholder": "Advertisement"
+  },
   "nav": {
     "back": "Back",
     "tabs": {
@@ -36,7 +39,6 @@
     },
     "empty": {
       "title": "No parties yet",
-      "hint": "Plan your first celebration — no account, everything stays on your device.",
       "cta": "Plan a party"
     }
   },

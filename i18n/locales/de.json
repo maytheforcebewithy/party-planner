@@ -2,6 +2,9 @@
   "app": {
     "title": "Party Planner"
   },
+  "ads": {
+    "placeholder": "Werbung"
+  },
   "nav": {
     "back": "Zurück",
     "tabs": {
@@ -36,7 +39,6 @@
     },
     "empty": {
       "title": "Noch keine Partys",
-      "hint": "Plane deine erste Feier – ganz ohne Account, alles bleibt auf deinem Gerät.",
       "cta": "Feier planen"
     }
   },

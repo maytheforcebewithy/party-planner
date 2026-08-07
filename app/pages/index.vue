@@ -58,7 +58,6 @@ const noneMessage = computed(() => (tab.value === 'past' ? t('list.none.past') :
       <BaseEmptyState
         v-if="isEmpty"
         :title="$t('list.empty.title')"
-        :hint="$t('list.empty.hint')"
       >
         <template #action>
           <BaseButton
