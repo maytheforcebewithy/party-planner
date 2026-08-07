@@ -100,6 +100,15 @@
       "bread": "Bread & dips",
       "drinks": "Drinks",
       "tableware": "Napkins & plates"
+    },
+    "invitation": {
+      "name": "Clara's birthday",
+      "location": "Clara's place",
+      "description": "A small get-together with cake and music. Come by!",
+      "bring": {
+        "dessert": "Vegan dessert",
+        "drinks": "Soft drinks"
+      }
     }
   },
   "create": {
@@ -125,6 +134,12 @@
       "from": "from {start}",
       "until": "until {end}"
     }
+  },
+  "attendance": {
+    "title": "Your reply",
+    "yes": "I'm going",
+    "maybe": "Maybe",
+    "no": "Can't make it"
   },
   "guests": {
     "title": "Guests",

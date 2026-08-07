@@ -37,8 +37,8 @@ describe('addPartyReceived migration', () => {
 
     const result = await runMigrations(database, migrations)
 
-    expect(result.version).toBe(6)
+    expect(result.version).toBeGreaterThanOrEqual(6)
     expect(result.applied).toContain(addPartyReceived)
-    expect(await database.getSchemaVersion()).toBe(6)
+    expect(await database.getSchemaVersion()).toBe(result.version)
   })
 })

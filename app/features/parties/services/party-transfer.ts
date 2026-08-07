@@ -1,4 +1,5 @@
 import { coerceGuests, coerceShopping } from './party-lists'
+import { coerceAttendance } from './party-attendance'
 import type { CreateParty, Party } from '../types/party'
 
 /**
@@ -52,6 +53,7 @@ function toCreateParty(entry: unknown): CreateParty[] {
     color: asString(entry.color),
     image: asString(entry.image),
     link: asString(entry.link),
+    attendance: coerceAttendance(entry.attendance),
     guests: coerceGuests(entry.guests),
     shopping: coerceShopping(entry.shopping),
   }]

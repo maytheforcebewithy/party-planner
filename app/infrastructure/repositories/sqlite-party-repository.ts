@@ -1,4 +1,5 @@
 import { coerceGuests, coerceShopping } from '~/features/parties/services/party-lists'
+import { coerceAttendance } from '~/features/parties/services/party-attendance'
 import type { PartyRepository } from '~/features/parties/repositories/party-repository'
 import { PartyNotFoundError } from '~/features/parties/repositories/party-repository'
 import type { CreateParty, Party, UpdateParty } from '~/features/parties/types/party'
@@ -6,7 +7,7 @@ import type { Database } from '~/infrastructure/database/database'
 import { createId } from '~/shared/utils/id'
 
 /** Column list shared by SELECT/INSERT; order matches {@link PartyRow}. */
-const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, image, link, received, guests, shopping, created_at, updated_at'
+const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, image, link, received, attendance, guests, shopping, created_at, updated_at'
 
 /** Raw row shape as stored in SQLite (snake_case columns). */
 interface PartyRow {
@@ -24,6 +25,8 @@ interface PartyRow {
   readonly link: string | null
   /** Stored as 0/1 (INTEGER); `null` for rows created before v6. */
   readonly received: number | null
+  /** Your reply ('yes' | 'maybe' | 'no'); `null` when unanswered or pre-v7. */
+  readonly attendance: string | null
   /** JSON-encoded sub-collections; `null` for rows created before v4. */
   readonly guests: string | null
   readonly shopping: string | null
@@ -62,6 +65,7 @@ function toParty(row: PartyRow): Party {
     image: row.image,
     link: row.link,
     received: row.received === 1,
+    attendance: coerceAttendance(row.attendance),
     guests: coerceGuests(parseArray(row.guests)),
     shopping: coerceShopping(parseArray(row.shopping)),
     createdAt: row.created_at,
@@ -112,13 +116,14 @@ export class SqlitePartyRepository implements PartyRepository {
       image: data.image ?? null,
       link: data.link ?? null,
       received: data.received ?? false,
+      attendance: data.attendance ?? null,
       guests: data.guests ?? [],
       shopping: data.shopping ?? [],
       createdAt: now,
       updatedAt: now,
     }
     await this.#database.execute(
-      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         party.id,
         party.name,
@@ -133,6 +138,7 @@ export class SqlitePartyRepository implements PartyRepository {
         party.image,
         party.link,
         party.received ? 1 : 0,
+        party.attendance,
         serialize(party.guests),
         serialize(party.shopping),
         party.createdAt,
@@ -160,12 +166,13 @@ export class SqlitePartyRepository implements PartyRepository {
       image: changes.image === undefined ? existing.image : changes.image,
       link: changes.link === undefined ? existing.link : changes.link,
       received: changes.received === undefined ? existing.received : changes.received,
+      attendance: changes.attendance === undefined ? existing.attendance : changes.attendance,
       guests: changes.guests === undefined ? existing.guests : changes.guests,
       shopping: changes.shopping === undefined ? existing.shopping : changes.shopping,
       updatedAt: new Date().toISOString(),
     }
     await this.#database.execute(
-      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, image = ?, link = ?, received = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
+      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, image = ?, link = ?, received = ?, attendance = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
       [
         updated.name,
         updated.date,
@@ -179,6 +186,7 @@ export class SqlitePartyRepository implements PartyRepository {
         updated.image,
         updated.link,
         updated.received ? 1 : 0,
+        updated.attendance,
         serialize(updated.guests),
         serialize(updated.shopping),
         updated.updatedAt,

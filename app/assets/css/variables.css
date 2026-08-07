@@ -35,6 +35,10 @@
   --color-danger-hover: #ef4444;
   --color-danger-contrast: #1a0f0f;
   --color-danger-soft: rgb(242 109 109 / 16%);
+  --color-warning: #fbbf24;
+  --color-warning-contrast: #2a1e00;
+  --color-warning-soft: rgb(245 158 11 / 16%);
+  --color-warning-text: #fcd34d;
 
   /* Surfaces & text */
   --color-bg: #0c0e0d;
@@ -123,6 +127,10 @@
     --color-danger-hover: #b91c1c;
     --color-danger-contrast: #ffffff;
     --color-danger-soft: rgb(220 38 38 / 10%);
+    --color-warning: #b45309;
+    --color-warning-contrast: #ffffff;
+    --color-warning-soft: rgb(180 83 9 / 12%);
+    --color-warning-text: #b45309;
 
     --color-bg: #f6faf7;
     --surface-card: #ffffff;
