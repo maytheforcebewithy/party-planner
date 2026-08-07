@@ -6,6 +6,7 @@ import PartyShoppingList from '~/features/parties/components/PartyShoppingList.v
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
+import { useExportImport } from '~/features/parties/composables/use-export-import'
 import { linkHost } from '~/features/parties/services/party-link'
 import type { Party } from '~/features/parties/types/party'
 
@@ -13,6 +14,7 @@ const route = useRoute()
 const store = usePartiesStore()
 const { displayDate, displayTime } = usePartyFormatting()
 const { shareInvitation } = useShareInvitation()
+const { exportParty } = useExportImport()
 const { t } = useI18n()
 
 const partyId = computed(() => String(route.params.partyId))
@@ -40,6 +42,10 @@ async function share(target: Party): Promise<void> {
 
 function onShare(): void {
   if (party.value) void share(party.value)
+}
+
+function onExport(): void {
+  if (party.value) exportParty(party.value)
 }
 
 async function startConfirm(): Promise<void> {
@@ -171,6 +177,29 @@ function onDelete(): void {
         >
           {{ shareNotice }}
         </p>
+
+        <BaseButton
+          variant="ghost"
+          block
+          data-testid="export-party"
+          @click="onExport"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="detail__share-icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 3v12m0 0-4-4m4 4 4-4M5 17v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2"
+            />
+          </svg>
+          {{ $t('detail.export') }}
+        </BaseButton>
 
         <div class="detail__actions">
           <BaseButton

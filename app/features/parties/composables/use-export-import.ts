@@ -1,5 +1,6 @@
 import { usePartiesStore } from '../stores/parties-store'
 import { InvalidImportError, parseImport, serializeParties } from '../services/party-transfer'
+import type { Party } from '../types/party'
 
 export type ImportResult = { ok: true, imported: number } | { ok: false }
 
@@ -19,6 +20,12 @@ export function useExportImport() {
     return parties.length
   }
 
+  /** Download a single party as a file (named after the party). */
+  function exportParty(party: Party): void {
+    const json = serializeParties([party], new Date().toISOString())
+    downloadFile(json, `party-planner-${fileSlug(party.name)}.json`)
+  }
+
   async function importParties(file: File): Promise<ImportResult> {
     try {
       const drafts = parseImport(await file.text())
@@ -31,7 +38,12 @@ export function useExportImport() {
     }
   }
 
-  return { exportParties, importParties }
+  return { exportParties, exportParty, importParties }
+}
+
+/** A filesystem-safe slug from a party name, or `party` when it reduces to nothing. */
+function fileSlug(name: string): string {
+  return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'party'
 }
 
 function downloadFile(content: string, filename: string): void {
