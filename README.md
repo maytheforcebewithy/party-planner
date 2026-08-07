@@ -1,100 +1,102 @@
 # Party Planner
 
-App zur Organisation privater Veranstaltungen. **Ausschließlich eine mobile App
-für Android und iOS**, ausgeliefert als native Capacitor-App. Es gibt keine
-öffentliche Web-Version — der Browser dient nur der lokalen Entwicklung.
+App for organising private events. **A mobile-only app for Android and iOS**,
+shipped as a native Capacitor app. There is no public web version — the browser
+is only used for local development.
 
 ## Stack
 
 Nuxt 4 · Vue 3 · TypeScript · Capacitor · Pinia · VueUse · ESLint · Vitest ·
-eigenes CSS. Kein SSR, keine Server-Routen, kein Backend (die REST-API entsteht
-separat).
+hand-written CSS. No SSR, no server routes, no backend (a REST API, if ever
+needed, is a separate concern).
 
-## Voraussetzungen
+## Requirements
 
 - Node.js `>= 20`
 - pnpm (via `corepack enable`)
 - Android: Android Studio / Android SDK
-- iOS: macOS mit Xcode (nur dort baubar)
+- iOS: macOS with Xcode (only buildable there)
 
-## Installation
+## Install
 
 ```bash
 corepack enable
 pnpm install
 ```
 
-## Lokale Entwicklung
+## Local development
 
 ```bash
 pnpm dev
 ```
 
-Optional reproduzierbar im Container: siehe `.devcontainer/` bzw. `Dockerfile`
-(Web-Toolchain; native Builds laufen weiterhin auf dem Host).
+Optionally reproducible in a container: see `.devcontainer/` or `Dockerfile`
+(web toolchain; native builds still run on the host). For a hot-reload dev
+container, `docker compose up --build` uses `Dockerfile.dev` and `compose.yaml`
+(override the host port with `APP_PORT`).
 
 ## Tests
 
 ```bash
-pnpm test        # Watch-Modus
-pnpm test:run    # einmalig
+pnpm test        # watch mode
+pnpm test:run    # single run
 pnpm typecheck
 pnpm lint
 ```
 
-## Build (statischer Client für Capacitor)
+## Build (static client for Capacitor)
 
 ```bash
-pnpm generate    # erzeugt .output/public
+pnpm generate    # produces .output/public
 ```
 
-## Capacitor-Sync
+## Capacitor sync
 
 ```bash
 pnpm app:sync         # generate + cap sync
-pnpm capacitor:sync   # nur cap sync
+pnpm capacitor:sync   # cap sync only
 ```
 
-## Android starten
+## Run on Android
 
 ```bash
-pnpm capacitor:android   # öffnet das Projekt in Android Studio
+pnpm capacitor:android   # opens the project in Android Studio
 ```
 
-## iOS starten
+## Run on iOS
 
-Nur auf macOS. Einmalig das iOS-Projekt erzeugen, danach öffnen:
+macOS only. Generate the iOS project once, then open it:
 
 ```bash
 pnpm exec cap add ios
-pnpm capacitor:ios       # öffnet das Projekt in Xcode
+pnpm capacitor:ios       # opens the project in Xcode
 ```
 
-## Lokale Datenhaltung
+## Local data storage
 
-Alle fachlichen Daten liegen **ausschließlich lokal auf dem Gerät**. Die App ist
-offline-first und funktioniert ohne Internet.
+All business data lives **exclusively on the device**. The app is offline-first
+and works without an internet connection.
 
-- **Warum SQLite?** Party-Daten wachsen (Listen, Aufgaben, Gäste, Budget,
-  Ablauf) und brauchen strukturierte, abfragbare Speicherung. SQLite (über das
-  Plugin `@capacitor-community/sqlite`) ist dafür robuster als `LocalStorage`
-  oder Preferences. Preferences sind später nur für einfache Einstellungen
-  vorgesehen, nicht für fachliche Daten.
-- **Warum keine Cloud?** Privatsphäre ist ein Kernmerkmal: keine Accounts, keine
-  zentrale Speicherung, keine Synchronisierung. Die Daten gehören dem Nutzer und
-  bleiben auf seinem Gerät. Geteilt wird nur bewusst (Einladung/Export).
-- **Warum keine REST-API?** Ohne Cloud und ohne geteilten Zustand gibt es nichts
-  serverseitig zu bedienen. Der Kern kommt vollständig ohne Netzwerk aus.
+- **Why SQLite?** Party data grows (lists, tasks, guests, budget, schedule) and
+  needs structured, queryable storage. SQLite (via the
+  `@capacitor-community/sqlite` plugin) is more robust for this than
+  `LocalStorage` or Preferences. Preferences are reserved for simple settings
+  later on, not for business data.
+- **Why no cloud?** Privacy is a core feature: no accounts, no central storage,
+  no synchronisation. The data belongs to the user and stays on their device.
+  Sharing only happens deliberately (invitation/export).
+- **Why no REST API?** Without a cloud and without shared state there is nothing
+  to serve. The core works entirely without a network.
 
-Der Zugriff ist gekapselt: `Page → Composable/Store → Repository-Interface →
-Persistence Layer`. Komponenten kennen weder SQLite noch Capacitor. SQLite läuft
-nur in der **nativen** App; im Browser (Entwicklung/Tests) wird ein nicht
-persistierender In-Memory-Treiber genutzt (siehe Pull-Request-Hinweise).
+Access is encapsulated: `Page → Composable/Store → repository interface →
+persistence layer`. Components know nothing about SQLite or Capacitor. SQLite
+runs only in the **native** app; in the browser (development/tests) a
+non-persistent in-memory driver is used.
 
-## Hinweis
+## Note
 
-Die Anwendung ist ausschließlich als mobile Capacitor-App gedacht. Es ist keine
-Website und keine eigenständige Web-App geplant.
+The application is intended solely as a mobile Capacitor app. No website and no
+standalone web app is planned.
 
-Die App-ID ist zentral in `capacitor.config.ts` gesetzt
-(`de.kikimika.partyplanner`) und über `CAPACITOR_APP_ID` überschreibbar.
+The app ID is set centrally in `capacitor.config.ts`
+(`de.kikimika.partyplanner`) and overridable via `CAPACITOR_APP_ID`.
