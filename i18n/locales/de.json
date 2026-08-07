@@ -6,8 +6,16 @@
     "back": "Zurück"
   },
   "list": {
-    "title": "Deine Partys",
+    "title": "Meine Partys",
     "new": "Neue Party",
+    "tabs": {
+      "upcoming": "Kommende",
+      "past": "Vergangene"
+    },
+    "none": {
+      "upcoming": "Keine kommenden Partys.",
+      "past": "Keine vergangenen Partys."
+    },
     "empty": {
       "title": "Noch keine Partys",
       "hint": "Plane deine erste Feier – ganz ohne Account, alles bleibt auf deinem Gerät.",
