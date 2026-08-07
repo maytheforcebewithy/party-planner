@@ -156,6 +156,12 @@
       "link": "🔗 {value}"
     }
   },
+  "reminder": {
+    "on": "Reminder on",
+    "off": "Set reminder",
+    "title": "Party reminder",
+    "body": "Tomorrow: {name}"
+  },
   "form": {
     "name": {
       "label": "Name",
