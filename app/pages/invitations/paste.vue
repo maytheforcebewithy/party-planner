@@ -24,19 +24,26 @@ function parse(source: string): void {
   }
 }
 
-async function fromClipboard(): Promise<void> {
+async function fromClipboard(showEmptyHint: boolean): Promise<void> {
   const clip = await readClipboard()
   if (clip.trim()) {
     text.value = clip
     parse(clip)
   }
-  else {
+  else if (showEmptyHint) {
     empty.value = true
   }
 }
 
+// Read the clipboard as soon as the screen opens, so on a device "paste
+// invitation" is a single tap straight to the pre-filled form. In the browser
+// this silently no-ops (no user gesture) and the manual fallback below is used.
+onMounted(() => {
+  void fromClipboard(false)
+})
+
 function onClipboard(): void {
-  void fromClipboard()
+  void fromClipboard(true)
 }
 
 function onParse(): void {
