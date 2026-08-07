@@ -69,4 +69,31 @@ export function guestName(guests: readonly Guest[], guestId: string | null): str
   return guests.find(guest => guest.id === guestId)?.name ?? null
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+/**
+ * Validate an untrusted value (from storage or an imported file) into a clean
+ * guest list, dropping malformed entries and coercing the RSVP to a known state.
+ */
+export function coerceGuests(value: unknown): Guest[] {
+  if (!Array.isArray(value)) return []
+  return value.flatMap((entry) => {
+    if (!isRecord(entry) || typeof entry.id !== 'string' || typeof entry.name !== 'string') return []
+    const rsvp = RSVP_CYCLE.includes(entry.rsvp as GuestRsvp) ? (entry.rsvp as GuestRsvp) : 'pending'
+    return [{ id: entry.id, name: entry.name, rsvp }]
+  })
+}
+
+/** Validate an untrusted value into a clean shopping list (see {@link coerceGuests}). */
+export function coerceShopping(value: unknown): ShoppingItem[] {
+  if (!Array.isArray(value)) return []
+  return value.flatMap((entry) => {
+    if (!isRecord(entry) || typeof entry.id !== 'string' || typeof entry.name !== 'string') return []
+    const guestId = typeof entry.guestId === 'string' ? entry.guestId : null
+    return [{ id: entry.id, name: entry.name, done: entry.done === true, guestId }]
+  })
+}
+
 export type { GuestRsvp }

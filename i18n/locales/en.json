@@ -20,7 +20,19 @@
   },
   "importExport": {
     "title": "Import / Export",
-    "placeholder": "Soon you'll be able to back up whole parties as a file and import them again."
+    "export": {
+      "title": "Export",
+      "text": "Back up all parties as a file on your device.",
+      "action": "Export all parties ({count})"
+    },
+    "import": {
+      "title": "Import",
+      "text": "Load a previously exported file — its parties are added as new copies.",
+      "action": "Choose file"
+    },
+    "exported": "{count} parties exported",
+    "imported": "{count} parties imported",
+    "invalid": "That file is not a valid Party Planner export."
   },
   "settings": {
     "title": "Settings",

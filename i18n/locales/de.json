@@ -20,7 +20,19 @@
   },
   "importExport": {
     "title": "Import / Export",
-    "placeholder": "Bald kannst du hier ganze Partys als Datei sichern und wieder importieren."
+    "export": {
+      "title": "Exportieren",
+      "text": "Sichere alle Partys als Datei auf deinem Gerät.",
+      "action": "Alle Partys exportieren ({count})"
+    },
+    "import": {
+      "title": "Importieren",
+      "text": "Lade eine zuvor exportierte Datei – die Partys werden als neue Kopien hinzugefügt.",
+      "action": "Datei wählen"
+    },
+    "exported": "{count} Partys exportiert",
+    "imported": "{count} Partys importiert",
+    "invalid": "Die Datei ist keine gültige Party-Planner-Export-Datei."
   },
   "settings": {
     "title": "Einstellungen",

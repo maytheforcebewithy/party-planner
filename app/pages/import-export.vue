@@ -1,6 +1,151 @@
+<script setup lang="ts">
+import { usePartiesStore } from '~/features/parties/stores/parties-store'
+import { useExportImport } from '~/features/parties/composables/use-export-import'
+
+const { t } = useI18n()
+const store = usePartiesStore()
+const { exportParties, importParties } = useExportImport()
+
+const notice = ref('')
+
+onMounted(() => {
+  void store.ensureLoaded()
+})
+
+function onExport(): void {
+  notice.value = t('importExport.exported', { count: exportParties() })
+}
+
+async function runImport(file: File): Promise<void> {
+  const result = await importParties(file)
+  notice.value = result.ok
+    ? t('importExport.imported', { count: result.imported })
+    : t('importExport.invalid')
+}
+
+function onImport(event: Event): void {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) void runImport(file)
+  input.value = ''
+}
+</script>
+
 <template>
-  <AppSectionScreen
-    :title="$t('importExport.title')"
-    :placeholder="$t('importExport.placeholder')"
-  />
+  <div class="screen">
+    <main class="page">
+      <h1 class="title">
+        {{ t('importExport.title') }}
+      </h1>
+
+      <section class="card">
+        <h2 class="card__title">
+          {{ t('importExport.export.title') }}
+        </h2>
+        <p class="card__text">
+          {{ t('importExport.export.text') }}
+        </p>
+        <BaseButton
+          block
+          :disabled="store.partyCount === 0"
+          data-testid="export"
+          @click="onExport"
+        >
+          {{ t('importExport.export.action', { count: store.partyCount }) }}
+        </BaseButton>
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">
+          {{ t('importExport.import.title') }}
+        </h2>
+        <p class="card__text">
+          {{ t('importExport.import.text') }}
+        </p>
+        <label class="upload">
+          <input
+            type="file"
+            accept="application/json,.json"
+            class="upload__input"
+            data-testid="import-input"
+            @change="onImport"
+          >
+          {{ t('importExport.import.action') }}
+        </label>
+      </section>
+
+      <p
+        v-if="notice"
+        class="notice"
+        role="status"
+        data-testid="ie-notice"
+      >
+        {{ notice }}
+      </p>
+    </main>
+  </div>
 </template>
+
+<style scoped>
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.card__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.upload {
+  display: inline-flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-5);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-text);
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.upload__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.notice {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+</style>

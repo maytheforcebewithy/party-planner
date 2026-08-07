@@ -1,14 +1,12 @@
+import { coerceGuests, coerceShopping } from '~/features/parties/services/party-lists'
 import type { PartyRepository } from '~/features/parties/repositories/party-repository'
 import { PartyNotFoundError } from '~/features/parties/repositories/party-repository'
 import type { CreateParty, Party, UpdateParty } from '~/features/parties/types/party'
-import type { Guest, GuestRsvp, ShoppingItem } from '~/features/parties/types/party-lists'
 import type { Database } from '~/infrastructure/database/database'
 import { createId } from '~/shared/utils/id'
 
 /** Column list shared by SELECT/INSERT; order matches {@link PartyRow}. */
 const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, image, link, guests, shopping, created_at, updated_at'
-
-const RSVP_VALUES: readonly GuestRsvp[] = ['yes', 'pending', 'no']
 
 /** Raw row shape as stored in SQLite (snake_case columns). */
 interface PartyRow {
@@ -31,10 +29,7 @@ interface PartyRow {
   readonly updated_at: string
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
-
+/** Parse a stored JSON array column, tolerating null and malformed values. */
 function parseArray(raw: string | null): unknown[] {
   if (!raw) return []
   try {
@@ -44,23 +39,6 @@ function parseArray(raw: string | null): unknown[] {
   catch {
     return []
   }
-}
-
-/** Parse stored guests, dropping malformed entries and coercing the RSVP. */
-function parseGuests(raw: string | null): Guest[] {
-  return parseArray(raw).flatMap((entry) => {
-    if (!isRecord(entry) || typeof entry.id !== 'string' || typeof entry.name !== 'string') return []
-    const rsvp = RSVP_VALUES.includes(entry.rsvp as GuestRsvp) ? (entry.rsvp as GuestRsvp) : 'pending'
-    return [{ id: entry.id, name: entry.name, rsvp }]
-  })
-}
-
-function parseShopping(raw: string | null): ShoppingItem[] {
-  return parseArray(raw).flatMap((entry) => {
-    if (!isRecord(entry) || typeof entry.id !== 'string' || typeof entry.name !== 'string') return []
-    const guestId = typeof entry.guestId === 'string' ? entry.guestId : null
-    return [{ id: entry.id, name: entry.name, done: entry.done === true, guestId }]
-  })
 }
 
 function serialize(list: readonly unknown[]): string {
@@ -81,8 +59,8 @@ function toParty(row: PartyRow): Party {
     color: row.color,
     image: row.image,
     link: row.link,
-    guests: parseGuests(row.guests),
-    shopping: parseShopping(row.shopping),
+    guests: coerceGuests(parseArray(row.guests)),
+    shopping: coerceShopping(parseArray(row.shopping)),
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   }

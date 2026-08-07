@@ -1,0 +1,45 @@
+import { usePartiesStore } from '../stores/parties-store'
+import { InvalidImportError, parseImport, serializeParties } from '../services/party-transfer'
+
+export type ImportResult = { ok: true, imported: number } | { ok: false }
+
+/**
+ * Back up all parties to a JSON file and import parties from one. Import adds
+ * the file's parties as fresh local copies (new ids) alongside the existing
+ * ones. Browser file IO for now; the app is a client-rendered SPA.
+ */
+export function useExportImport() {
+  const store = usePartiesStore()
+
+  /** Download all parties as a file; returns how many were exported. */
+  function exportParties(): number {
+    const parties = store.parties
+    const json = serializeParties(parties, new Date().toISOString())
+    downloadFile(json, `party-planner-${new Date().toISOString().slice(0, 10)}.json`)
+    return parties.length
+  }
+
+  async function importParties(file: File): Promise<ImportResult> {
+    try {
+      const drafts = parseImport(await file.text())
+      for (const draft of drafts) await store.create(draft)
+      return { ok: true, imported: drafts.length }
+    }
+    catch (error) {
+      if (error instanceof InvalidImportError) return { ok: false }
+      throw error
+    }
+  }
+
+  return { exportParties, importParties }
+}
+
+function downloadFile(content: string, filename: string): void {
+  const blob = new Blob([content], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = filename
+  anchor.click()
+  URL.revokeObjectURL(url)
+}
