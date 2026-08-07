@@ -63,6 +63,31 @@
       "until": "bis {end} Uhr"
     }
   },
+  "guests": {
+    "title": "Gäste",
+    "count": "{yes} von {total} zugesagt",
+    "empty": "Noch keine Gäste.",
+    "add": "Gast hinzufügen …",
+    "addAction": "Gast hinzufügen",
+    "remove": "{name} entfernen",
+    "rsvpToggle": "{name}: {status} – tippen zum Ändern",
+    "rsvp": {
+      "yes": "Zugesagt",
+      "pending": "Offen",
+      "no": "Abgesagt"
+    }
+  },
+  "shopping": {
+    "title": "Einkaufsliste",
+    "count": "{done} von {total} besorgt",
+    "empty": "Noch nichts auf der Liste.",
+    "add": "Eintrag hinzufügen …",
+    "addAction": "Eintrag hinzufügen",
+    "remove": "{name} entfernen",
+    "toggle": "{name} als erledigt markieren",
+    "assign": "Wer bringt es mit?",
+    "assignNone": "Offen"
+  },
   "form": {
     "name": {
       "label": "Name",

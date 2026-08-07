@@ -62,6 +62,8 @@ describe('PartyForm', () => {
           hinweise: 'Dress code: green',
           icon: 'star',
           color: 'sky',
+          guests: [],
+          shopping: [],
           createdAt: '',
           updatedAt: '',
         },

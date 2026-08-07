@@ -34,6 +34,7 @@
   --color-danger: #f26d6d;
   --color-danger-hover: #ef4444;
   --color-danger-contrast: #1a0f0f;
+  --color-danger-soft: rgb(242 109 109 / 16%);
 
   /* Surfaces & text */
   --color-bg: #0c0e0d;
@@ -121,6 +122,7 @@
     --color-danger: #dc2626;
     --color-danger-hover: #b91c1c;
     --color-danger-contrast: #ffffff;
+    --color-danger-soft: rgb(220 38 38 / 10%);
 
     --color-bg: #f6faf7;
     --surface-card: #ffffff;

@@ -63,6 +63,31 @@
       "until": "until {end}"
     }
   },
+  "guests": {
+    "title": "Guests",
+    "count": "{yes} of {total} confirmed",
+    "empty": "No guests yet.",
+    "add": "Add guest …",
+    "addAction": "Add guest",
+    "remove": "Remove {name}",
+    "rsvpToggle": "{name}: {status} – tap to change",
+    "rsvp": {
+      "yes": "Confirmed",
+      "pending": "Pending",
+      "no": "Declined"
+    }
+  },
+  "shopping": {
+    "title": "Shopping list",
+    "count": "{done} of {total} bought",
+    "empty": "Nothing on the list yet.",
+    "add": "Add item …",
+    "addAction": "Add item",
+    "remove": "Remove {name}",
+    "toggle": "Mark {name} as done",
+    "assign": "Who brings it?",
+    "assignNone": "Open"
+  },
   "form": {
     "name": {
       "label": "Name",

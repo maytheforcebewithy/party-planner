@@ -37,8 +37,8 @@ describe('addPartyAppearance migration', () => {
 
     const result = await runMigrations(database, migrations)
 
-    expect(result.version).toBe(3)
     expect(result.applied).toContain(addPartyAppearance)
-    expect(await database.getSchemaVersion()).toBe(3)
+    expect(result.version).toBeGreaterThanOrEqual(3)
+    expect(await database.getSchemaVersion()).toBe(result.version)
   })
 })

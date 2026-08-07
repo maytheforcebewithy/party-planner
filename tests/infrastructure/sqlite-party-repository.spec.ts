@@ -62,6 +62,8 @@ const sampleRow = {
   hinweise: 'No glass bottles',
   icon: 'star',
   color: 'sky',
+  guests: '[{"id":"g1","name":"Anna","rsvp":"yes"}]',
+  shopping: '[{"id":"s1","name":"Brot","done":false,"guestId":"g1"}]',
   created_at: '2026-08-01T10:00:00.000Z',
   updated_at: '2026-08-01T10:00:00.000Z',
 }
@@ -91,6 +93,8 @@ describe('SqlitePartyRepository', () => {
       hinweise: 'No glass bottles',
       icon: 'star',
       color: 'sky',
+      guests: [{ id: 'g1', name: 'Anna', rsvp: 'yes' }],
+      shopping: [{ id: 's1', name: 'Brot', done: false, guestId: 'g1' }],
       createdAt: '2026-08-01T10:00:00.000Z',
       updatedAt: '2026-08-01T10:00:00.000Z',
     })
@@ -132,10 +136,34 @@ describe('SqlitePartyRepository', () => {
       'No glass bottles',
       null,
       null,
+      '[]',
+      '[]',
       party.createdAt,
       party.updatedAt,
     ])
     expect(party.id).toBeTruthy()
+  })
+
+  it('serialises the guest and shopping lists to JSON on create', async () => {
+    const party = await repository.create({
+      name: 'Picnic',
+      guests: [{ id: 'g1', name: 'Anna', rsvp: 'yes' }],
+      shopping: [{ id: 's1', name: 'Brot', done: false, guestId: 'g1' }],
+    })
+
+    const insert = database.executed.at(-1)
+    expect(insert?.params).toContain('[{"id":"g1","name":"Anna","rsvp":"yes"}]')
+    expect(insert?.params).toContain('[{"id":"s1","name":"Brot","done":false,"guestId":"g1"}]')
+    expect(party.guests).toHaveLength(1)
+  })
+
+  it('tolerates malformed list JSON when mapping a row', async () => {
+    database.queueQueryResult([{ ...sampleRow, guests: 'not json', shopping: null }])
+
+    const party = await repository.findById('party-1')
+
+    expect(party?.guests).toEqual([])
+    expect(party?.shopping).toEqual([])
   })
 
   it('updates only provided fields and issues an UPDATE with the id last', async () => {

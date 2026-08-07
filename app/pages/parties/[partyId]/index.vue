@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import PartyHero from '~/features/parties/components/PartyHero.vue'
 import PartyInfoCard from '~/features/parties/components/PartyInfoCard.vue'
+import PartyGuestList from '~/features/parties/components/PartyGuestList.vue'
+import PartyShoppingList from '~/features/parties/components/PartyShoppingList.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 
@@ -89,6 +91,9 @@ function onDelete(): void {
             :value="party.hinweise"
           />
         </div>
+
+        <PartyGuestList :party-id="party.id" />
+        <PartyShoppingList :party-id="party.id" />
 
         <div class="detail__actions">
           <BaseButton

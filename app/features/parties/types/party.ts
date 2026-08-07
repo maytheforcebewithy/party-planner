@@ -1,3 +1,5 @@
+import type { Guest, ShoppingItem } from './party-lists'
+
 /**
  * A locally-stored party/event. Every field lives on-device; the `id` is a
  * locally generated UUID so an imported copy can be safely re-keyed (see the
@@ -19,6 +21,9 @@ export interface Party {
   /** Chosen icon/colour keys for the party's badge; `null` uses the defaults. */
   readonly icon: string | null
   readonly color: string | null
+  /** Embedded sub-collections; empty arrays when unused. */
+  readonly guests: readonly Guest[]
+  readonly shopping: readonly ShoppingItem[]
   readonly createdAt: string
   readonly updatedAt: string
 }
@@ -37,6 +42,8 @@ export interface CreateParty {
   readonly hinweise?: string | null
   readonly icon?: string | null
   readonly color?: string | null
+  readonly guests?: readonly Guest[]
+  readonly shopping?: readonly ShoppingItem[]
 }
 
 /** Mutable fields on an existing party. Omitted fields are left unchanged. */

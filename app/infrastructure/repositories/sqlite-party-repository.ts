@@ -1,11 +1,14 @@
 import type { PartyRepository } from '~/features/parties/repositories/party-repository'
 import { PartyNotFoundError } from '~/features/parties/repositories/party-repository'
 import type { CreateParty, Party, UpdateParty } from '~/features/parties/types/party'
+import type { Guest, GuestRsvp, ShoppingItem } from '~/features/parties/types/party-lists'
 import type { Database } from '~/infrastructure/database/database'
 import { createId } from '~/shared/utils/id'
 
 /** Column list shared by SELECT/INSERT; order matches {@link PartyRow}. */
-const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, created_at, updated_at'
+const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, guests, shopping, created_at, updated_at'
+
+const RSVP_VALUES: readonly GuestRsvp[] = ['yes', 'pending', 'no']
 
 /** Raw row shape as stored in SQLite (snake_case columns). */
 interface PartyRow {
@@ -19,8 +22,47 @@ interface PartyRow {
   readonly hinweise: string | null
   readonly icon: string | null
   readonly color: string | null
+  /** JSON-encoded sub-collections; `null` for rows created before v4. */
+  readonly guests: string | null
+  readonly shopping: string | null
   readonly created_at: string
   readonly updated_at: string
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+function parseArray(raw: string | null): unknown[] {
+  if (!raw) return []
+  try {
+    const parsed: unknown = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  }
+  catch {
+    return []
+  }
+}
+
+/** Parse stored guests, dropping malformed entries and coercing the RSVP. */
+function parseGuests(raw: string | null): Guest[] {
+  return parseArray(raw).flatMap((entry) => {
+    if (!isRecord(entry) || typeof entry.id !== 'string' || typeof entry.name !== 'string') return []
+    const rsvp = RSVP_VALUES.includes(entry.rsvp as GuestRsvp) ? (entry.rsvp as GuestRsvp) : 'pending'
+    return [{ id: entry.id, name: entry.name, rsvp }]
+  })
+}
+
+function parseShopping(raw: string | null): ShoppingItem[] {
+  return parseArray(raw).flatMap((entry) => {
+    if (!isRecord(entry) || typeof entry.id !== 'string' || typeof entry.name !== 'string') return []
+    const guestId = typeof entry.guestId === 'string' ? entry.guestId : null
+    return [{ id: entry.id, name: entry.name, done: entry.done === true, guestId }]
+  })
+}
+
+function serialize(list: readonly unknown[]): string {
+  return JSON.stringify(list)
 }
 
 function toParty(row: PartyRow): Party {
@@ -35,6 +77,8 @@ function toParty(row: PartyRow): Party {
     hinweise: row.hinweise,
     icon: row.icon,
     color: row.color,
+    guests: parseGuests(row.guests),
+    shopping: parseShopping(row.shopping),
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   }
@@ -80,11 +124,13 @@ export class SqlitePartyRepository implements PartyRepository {
       hinweise: data.hinweise ?? null,
       icon: data.icon ?? null,
       color: data.color ?? null,
+      guests: data.guests ?? [],
+      shopping: data.shopping ?? [],
       createdAt: now,
       updatedAt: now,
     }
     await this.#database.execute(
-      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         party.id,
         party.name,
@@ -96,6 +142,8 @@ export class SqlitePartyRepository implements PartyRepository {
         party.hinweise,
         party.icon,
         party.color,
+        serialize(party.guests),
+        serialize(party.shopping),
         party.createdAt,
         party.updatedAt,
       ],
@@ -118,10 +166,12 @@ export class SqlitePartyRepository implements PartyRepository {
       hinweise: changes.hinweise === undefined ? existing.hinweise : changes.hinweise,
       icon: changes.icon === undefined ? existing.icon : changes.icon,
       color: changes.color === undefined ? existing.color : changes.color,
+      guests: changes.guests === undefined ? existing.guests : changes.guests,
+      shopping: changes.shopping === undefined ? existing.shopping : changes.shopping,
       updatedAt: new Date().toISOString(),
     }
     await this.#database.execute(
-      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, updated_at = ? WHERE id = ?;',
+      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
       [
         updated.name,
         updated.date,
@@ -132,6 +182,8 @@ export class SqlitePartyRepository implements PartyRepository {
         updated.hinweise,
         updated.icon,
         updated.color,
+        serialize(updated.guests),
+        serialize(updated.shopping),
         updated.updatedAt,
         updated.id,
       ],
