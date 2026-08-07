@@ -1,22 +1,41 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@capacitor/core', () => ({ Capacitor: { isNativePlatform: () => false } }))
-vi.mock('@capacitor/clipboard', () => ({ Clipboard: { read: vi.fn() } }))
+const isNativePlatform = vi.fn()
+const read = vi.fn()
+vi.mock('@capacitor/core', () => ({ Capacitor: { isNativePlatform: () => isNativePlatform() } }))
+vi.mock('@capacitor/clipboard', () => ({ Clipboard: { read: () => read() } }))
 
 const { readClipboard } = await import('~/shared/clipboard/read-clipboard')
 
 describe('readClipboard', () => {
   afterEach(() => {
+    vi.clearAllMocks()
     vi.unstubAllGlobals()
   })
 
-  it('reads the web clipboard text', async () => {
-    vi.stubGlobal('navigator', { clipboard: { readText: vi.fn().mockResolvedValue('hello') } })
+  it('reads the device clipboard text', async () => {
+    isNativePlatform.mockReturnValue(true)
+    read.mockResolvedValue({ value: 'hello' })
     expect(await readClipboard()).toBe('hello')
   })
 
-  it('returns an empty string when the read is blocked', async () => {
-    vi.stubGlobal('navigator', { clipboard: { readText: vi.fn().mockRejectedValue(new Error('denied')) } })
+  it('returns an empty string when the device value is not text', async () => {
+    isNativePlatform.mockReturnValue(true)
+    read.mockResolvedValue({ value: undefined })
     expect(await readClipboard()).toBe('')
+  })
+
+  it('returns an empty string when the device read is blocked', async () => {
+    isNativePlatform.mockReturnValue(true)
+    read.mockRejectedValue(new Error('denied'))
+    expect(await readClipboard()).toBe('')
+  })
+
+  it('never touches the web clipboard in the browser (no paste chip)', async () => {
+    isNativePlatform.mockReturnValue(false)
+    const readText = vi.fn()
+    vi.stubGlobal('navigator', { clipboard: { readText } })
+    expect(await readClipboard()).toBe('')
+    expect(readText).not.toHaveBeenCalled()
   })
 })
