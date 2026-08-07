@@ -67,6 +67,9 @@
   /* Motion */
   --transition-fast: 150ms ease;
 
+  /* Layout constants */
+  --tab-bar-height: 3.5rem;
+
   /* iOS safe areas (notch, home indicator). Resolve to 0 outside a device with
      insets; require `viewport-fit=cover` (set in nuxt.config). */
   --safe-area-inset-top: env(safe-area-inset-top, 0px);

@@ -3,7 +3,25 @@
     "title": "Party Planner"
   },
   "nav": {
-    "back": "Back"
+    "back": "Back",
+    "tabs": {
+      "parties": "Parties",
+      "invitations": "Invitations",
+      "importExport": "Import/Export",
+      "settings": "Settings"
+    }
+  },
+  "invitations": {
+    "title": "Invitations",
+    "placeholder": "You'll manage your invitations here soon."
+  },
+  "importExport": {
+    "title": "Import / Export",
+    "placeholder": "Soon you'll be able to back up whole parties as a file and import them again."
+  },
+  "settings": {
+    "title": "Settings",
+    "placeholder": "Settings are coming in a later step."
   },
   "list": {
     "title": "My parties",

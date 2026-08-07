@@ -12,7 +12,9 @@ export default defineNuxtConfig({
   // It runs fully client-side: no SSR, no server routes, no Nitro backend.
   ssr: false,
 
-  devtools: { enabled: true },
+  // Disabled: the floating devtools badge sits bottom-centre and overlaps the
+  // app's bottom tab bar (dev only, but it blocks the nav in review and e2e).
+  devtools: { enabled: false },
 
   app: {
     head: {

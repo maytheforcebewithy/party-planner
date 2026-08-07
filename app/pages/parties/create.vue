@@ -3,6 +3,8 @@ import PartyForm from '~/features/parties/components/PartyForm.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import type { CreateParty } from '~/features/parties/types/party'
 
+definePageMeta({ layout: 'modal' })
+
 const store = usePartiesStore()
 
 async function create(data: CreateParty): Promise<void> {

@@ -3,6 +3,8 @@ import PartyForm from '~/features/parties/components/PartyForm.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import type { UpdateParty } from '~/features/parties/types/party'
 
+definePageMeta({ layout: 'modal' })
+
 const route = useRoute()
 const store = usePartiesStore()
 
