@@ -13,6 +13,9 @@ export interface Party {
   readonly date: string | null
   readonly location: string | null
   readonly description: string | null
+  readonly startTime: string | null
+  readonly endTime: string | null
+  readonly hinweise: string | null
   readonly createdAt: string
   readonly updatedAt: string
 }
@@ -26,6 +29,9 @@ export interface CreateParty {
   readonly date?: string | null
   readonly location?: string | null
   readonly description?: string | null
+  readonly startTime?: string | null
+  readonly endTime?: string | null
+  readonly hinweise?: string | null
 }
 
 /** Mutable fields on an existing party. Omitted fields are left unchanged. */

@@ -35,7 +35,7 @@ describe('createPartiesTable migration', () => {
     const database: Database = new InMemoryDatabase()
     await database.open()
 
-    const result = await runMigrations(database, migrations)
+    const result = await runMigrations(database, [createPartiesTable])
 
     expect(result.version).toBe(1)
     expect(result.applied).toContain(createPartiesTable)

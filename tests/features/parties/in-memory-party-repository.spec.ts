@@ -13,6 +13,9 @@ describe('InMemoryPartyRepository', () => {
     expect(party.date).toBeNull()
     expect(party.location).toBeNull()
     expect(party.description).toBeNull()
+    expect(party.startTime).toBeNull()
+    expect(party.endTime).toBeNull()
+    expect(party.hinweise).toBeNull()
     expect(party.createdAt).toBe(party.updatedAt)
     expect(await repository.findById(party.id)).toEqual(party)
   })
@@ -25,12 +28,18 @@ describe('InMemoryPartyRepository', () => {
       date: '2026-08-15',
       location: 'Park',
       description: 'Bring salad',
+      startTime: '18:00',
+      endTime: '23:30',
+      hinweise: 'No glass bottles',
     })
 
     expect(party).toMatchObject({
       date: '2026-08-15',
       location: 'Park',
       description: 'Bring salad',
+      startTime: '18:00',
+      endTime: '23:30',
+      hinweise: 'No glass bottles',
     })
   })
 
@@ -45,11 +54,20 @@ describe('InMemoryPartyRepository', () => {
     const repository = new InMemoryPartyRepository()
     const created = await repository.create({ name: 'Draft', location: 'Home' })
 
-    const updated = await repository.update(created.id, { name: 'Final', date: '2026-09-01' })
+    const updated = await repository.update(created.id, {
+      name: 'Final',
+      date: '2026-09-01',
+      startTime: '18:00',
+      endTime: '22:00',
+      hinweise: 'Bring ID',
+    })
 
     expect(updated.name).toBe('Final')
     expect(updated.date).toBe('2026-09-01')
     expect(updated.location).toBe('Home')
+    expect(updated.startTime).toBe('18:00')
+    expect(updated.endTime).toBe('22:00')
+    expect(updated.hinweise).toBe('Bring ID')
     expect(updated.createdAt).toBe(created.createdAt)
   })
 

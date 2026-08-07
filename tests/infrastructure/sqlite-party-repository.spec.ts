@@ -57,6 +57,9 @@ const sampleRow = {
   date: '2026-08-15',
   location: 'Park',
   description: 'Bring salad',
+  start_time: '18:00',
+  end_time: '23:30',
+  hinweise: 'No glass bottles',
   created_at: '2026-08-01T10:00:00.000Z',
   updated_at: '2026-08-01T10:00:00.000Z',
 }
@@ -81,6 +84,9 @@ describe('SqlitePartyRepository', () => {
       date: '2026-08-15',
       location: 'Park',
       description: 'Bring salad',
+      startTime: '18:00',
+      endTime: '23:30',
+      hinweise: 'No glass bottles',
       createdAt: '2026-08-01T10:00:00.000Z',
       updatedAt: '2026-08-01T10:00:00.000Z',
     })
@@ -101,8 +107,13 @@ describe('SqlitePartyRepository', () => {
     expect(parties.map(party => party.id)).toEqual(['party-1', 'party-2'])
   })
 
-  it('inserts a generated id and null defaults on create', async () => {
-    const party = await repository.create({ name: 'Picnic' })
+  it('inserts a generated id and optional fields on create', async () => {
+    const party = await repository.create({
+      name: 'Picnic',
+      startTime: '18:00',
+      endTime: '23:30',
+      hinweise: 'No glass bottles',
+    })
 
     const insert = database.executed.at(-1)
     expect(insert?.sql).toContain('INSERT INTO parties')
@@ -112,6 +123,9 @@ describe('SqlitePartyRepository', () => {
       null,
       null,
       null,
+      '18:00',
+      '23:30',
+      'No glass bottles',
       party.createdAt,
       party.updatedAt,
     ])
@@ -126,6 +140,9 @@ describe('SqlitePartyRepository', () => {
     expect(updated.name).toBe('Renamed')
     expect(updated.location).toBeNull()
     expect(updated.date).toBe('2026-08-15')
+    expect(updated.startTime).toBe('18:00')
+    expect(updated.endTime).toBe('23:30')
+    expect(updated.hinweise).toBe('No glass bottles')
     const update = database.executed.at(-1)
     expect(update?.sql).toContain('UPDATE parties')
     expect(update?.params.at(-1)).toBe('party-1')
