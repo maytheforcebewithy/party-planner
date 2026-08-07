@@ -22,9 +22,6 @@
     "paste": {
       "action": "Einladung einfügen",
       "intro": "Füge die Nachricht ein, die du bekommen hast. Wir versuchen, Datum, Uhrzeit und Ort automatisch zu erkennen.",
-      "clipboard": "Aus Zwischenablage einfügen",
-      "empty": "Zwischenablage ist leer – füge die Nachricht unten ein.",
-      "or": "oder",
       "placeholder": "Nachricht hier einfügen …",
       "parse": "Auswerten",
       "review": "Bitte prüfe die erkannten Angaben und ergänze, was fehlt.",

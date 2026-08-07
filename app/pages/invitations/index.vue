@@ -3,10 +3,21 @@ import PartyListItem from '~/features/parties/components/PartyListItem.vue'
 import { useParties } from '~/features/parties/composables/use-parties'
 import { useExportImport } from '~/features/parties/composables/use-export-import'
 import { partitionParties } from '~/features/parties/services/partition-parties'
+import { readClipboard } from '~/shared/clipboard/read-clipboard'
+import { pasteSourceKey } from '~/features/parties/composables/use-paste-source'
 
 const { t } = useI18n()
 const store = useParties()
 const { importParties } = useExportImport()
+
+// The tap is the user gesture that lets us read the clipboard, so do it here and
+// hand the text to the paste screen — one tap goes straight to the filled form.
+const pasteSource = useState<string>(pasteSourceKey, () => '')
+
+async function onPaste(): Promise<void> {
+  pasteSource.value = await readClipboard()
+  await navigateTo('/invitations/paste')
+}
 
 const today = todayIso()
 const received = computed(() => {
@@ -39,10 +50,11 @@ function onImport(event: Event): void {
       </h1>
 
       <div class="actions">
-        <NuxtLink
-          to="/invitations/paste"
+        <button
+          type="button"
           class="action action--primary"
           data-testid="invite-paste"
+          @click="onPaste"
         >
           <svg
             aria-hidden="true"
@@ -59,7 +71,7 @@ function onImport(event: Event): void {
             />
           </svg>
           {{ t('invitations.paste.action') }}
-        </NuxtLink>
+        </button>
 
         <label class="action action--import">
           <input
