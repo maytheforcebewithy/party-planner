@@ -12,6 +12,8 @@ function party(id: string, date: string | null): Party {
     startTime: null,
     endTime: null,
     hinweise: null,
+    icon: null,
+    color: null,
     createdAt: '',
     updatedAt: '',
   }

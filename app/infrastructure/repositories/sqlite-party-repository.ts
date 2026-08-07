@@ -5,7 +5,7 @@ import type { Database } from '~/infrastructure/database/database'
 import { createId } from '~/shared/utils/id'
 
 /** Column list shared by SELECT/INSERT; order matches {@link PartyRow}. */
-const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, created_at, updated_at'
+const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, created_at, updated_at'
 
 /** Raw row shape as stored in SQLite (snake_case columns). */
 interface PartyRow {
@@ -17,6 +17,8 @@ interface PartyRow {
   readonly start_time: string | null
   readonly end_time: string | null
   readonly hinweise: string | null
+  readonly icon: string | null
+  readonly color: string | null
   readonly created_at: string
   readonly updated_at: string
 }
@@ -31,6 +33,8 @@ function toParty(row: PartyRow): Party {
     startTime: row.start_time,
     endTime: row.end_time,
     hinweise: row.hinweise,
+    icon: row.icon,
+    color: row.color,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   }
@@ -74,11 +78,13 @@ export class SqlitePartyRepository implements PartyRepository {
       startTime: data.startTime ?? null,
       endTime: data.endTime ?? null,
       hinweise: data.hinweise ?? null,
+      icon: data.icon ?? null,
+      color: data.color ?? null,
       createdAt: now,
       updatedAt: now,
     }
     await this.#database.execute(
-      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         party.id,
         party.name,
@@ -88,6 +94,8 @@ export class SqlitePartyRepository implements PartyRepository {
         party.startTime,
         party.endTime,
         party.hinweise,
+        party.icon,
+        party.color,
         party.createdAt,
         party.updatedAt,
       ],
@@ -108,10 +116,12 @@ export class SqlitePartyRepository implements PartyRepository {
       startTime: changes.startTime === undefined ? existing.startTime : changes.startTime,
       endTime: changes.endTime === undefined ? existing.endTime : changes.endTime,
       hinweise: changes.hinweise === undefined ? existing.hinweise : changes.hinweise,
+      icon: changes.icon === undefined ? existing.icon : changes.icon,
+      color: changes.color === undefined ? existing.color : changes.color,
       updatedAt: new Date().toISOString(),
     }
     await this.#database.execute(
-      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, updated_at = ? WHERE id = ?;',
+      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, updated_at = ? WHERE id = ?;',
       [
         updated.name,
         updated.date,
@@ -120,6 +130,8 @@ export class SqlitePartyRepository implements PartyRepository {
         updated.startTime,
         updated.endTime,
         updated.hinweise,
+        updated.icon,
+        updated.color,
         updated.updatedAt,
         updated.id,
       ],

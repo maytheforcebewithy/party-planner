@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import PartyAppearancePicker from './PartyAppearancePicker.vue'
+import { DEFAULT_COLOR, DEFAULT_ICON, resolveColor, resolveIcon } from '../config/party-appearance'
 import type { CreateParty, Party } from '../types/party'
 
 const props = defineProps<{
@@ -20,6 +22,8 @@ const endTime = ref(props.initial?.endTime ?? '')
 const location = ref(props.initial?.location ?? '')
 const description = ref(props.initial?.description ?? '')
 const hinweise = ref(props.initial?.hinweise ?? '')
+const icon = ref<string>(props.initial ? resolveIcon(props.initial.icon) : DEFAULT_ICON)
+const color = ref<string>(props.initial ? resolveColor(props.initial.color) : DEFAULT_COLOR)
 const error = ref('')
 
 function onSubmit() {
@@ -37,6 +41,8 @@ function onSubmit() {
     location: location.value.trim() || null,
     description: description.value.trim() || null,
     hinweise: hinweise.value.trim() || null,
+    icon: icon.value,
+    color: color.value,
   })
 }
 </script>
@@ -54,38 +60,48 @@ function onSubmit() {
       :error="error"
       required
     />
+    <PartyAppearancePicker
+      v-model:icon="icon"
+      v-model:color="color"
+    />
     <BaseField
       v-model="date"
       :label="t('form.date.label')"
       type="date"
+      optional
     />
     <div class="form__row">
       <BaseField
         v-model="startTime"
         :label="t('form.startTime.label')"
         type="time"
+        optional
       />
       <BaseField
         v-model="endTime"
         :label="t('form.endTime.label')"
         type="time"
+        optional
       />
     </div>
     <BaseField
       v-model="location"
       :label="t('form.location.label')"
       :placeholder="t('form.location.placeholder')"
+      optional
     />
     <BaseField
       v-model="description"
       :label="t('form.description.label')"
       :placeholder="t('form.description.placeholder')"
+      optional
       multiline
     />
     <BaseField
       v-model="hinweise"
       :label="t('form.hinweise.label')"
       :placeholder="t('form.hinweise.placeholder')"
+      optional
       multiline
     />
 

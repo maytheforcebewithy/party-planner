@@ -31,6 +31,8 @@ export class InMemoryPartyRepository implements PartyRepository {
       startTime: data.startTime ?? null,
       endTime: data.endTime ?? null,
       hinweise: data.hinweise ?? null,
+      icon: data.icon ?? null,
+      color: data.color ?? null,
       createdAt: now,
       updatedAt: now,
     }
@@ -51,6 +53,8 @@ export class InMemoryPartyRepository implements PartyRepository {
       startTime: changes.startTime === undefined ? existing.startTime : changes.startTime,
       endTime: changes.endTime === undefined ? existing.endTime : changes.endTime,
       hinweise: changes.hinweise === undefined ? existing.hinweise : changes.hinweise,
+      icon: changes.icon === undefined ? existing.icon : changes.icon,
+      color: changes.color === undefined ? existing.color : changes.color,
       updatedAt: new Date().toISOString(),
     }
     this.#parties.set(id, updated)

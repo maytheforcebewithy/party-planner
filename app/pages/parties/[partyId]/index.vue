@@ -14,10 +14,22 @@ const timeLabel = computed(() =>
   party.value ? displayTime(party.value.startTime, party.value.endTime) : null,
 )
 const confirming = ref(false)
+const confirmPanel = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   void store.ensureLoaded()
 })
+
+async function startConfirm(): Promise<void> {
+  confirming.value = true
+  // Reveal the confirmation, which renders below the fold on longer parties.
+  await nextTick()
+  confirmPanel.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+function onConfirm(): void {
+  void startConfirm()
+}
 
 async function deleteParty(): Promise<void> {
   await store.remove(partyId.value)
@@ -42,6 +54,8 @@ function onDelete(): void {
           :name="party.name"
           :date-label="displayDate(party.date)"
           :time-label="timeLabel"
+          :icon="party.icon"
+          :color="party.color"
         />
 
         <div class="detail__cards">
@@ -89,7 +103,7 @@ function onDelete(): void {
             v-if="!confirming"
             variant="danger"
             data-testid="delete"
-            @click="confirming = true"
+            @click="onConfirm"
           >
             {{ $t('detail.delete') }}
           </BaseButton>
@@ -97,6 +111,7 @@ function onDelete(): void {
 
         <div
           v-if="confirming"
+          ref="confirmPanel"
           class="detail__confirm"
           data-testid="delete-confirm-panel"
         >

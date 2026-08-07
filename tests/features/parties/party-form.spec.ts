@@ -26,6 +26,8 @@ describe('PartyForm', () => {
       location: null,
       description: null,
       hinweise: null,
+      icon: 'cake',
+      color: 'green',
     })
   })
 
@@ -58,6 +60,8 @@ describe('PartyForm', () => {
           startTime: '19:00',
           endTime: null,
           hinweise: 'Dress code: green',
+          icon: 'star',
+          color: 'sky',
           createdAt: '',
           updatedAt: '',
         },
@@ -66,5 +70,21 @@ describe('PartyForm', () => {
 
     expect(wrapper.find('input').element.value).toBe('Existing')
     expect(wrapper.find('input[type="time"]').element.value).toBe('19:00')
+    expect(wrapper.find('[data-testid="icon-star"]').attributes('aria-pressed')).toBe('true')
+    expect(wrapper.find('[data-testid="color-sky"]').attributes('aria-pressed')).toBe('true')
+  })
+
+  it('emits the chosen icon and colour', async () => {
+    const wrapper = await mountSuspended(PartyForm, { props: { submitLabel: 'Save' } })
+
+    await wrapper.find('input').setValue('Picnic')
+    await wrapper.find('[data-testid="icon-balloon"]').trigger('click')
+    await wrapper.find('[data-testid="color-pink"]').trigger('click')
+    await wrapper.find('form').trigger('submit.prevent')
+
+    expect(wrapper.emitted('submit')?.[0]?.[0]).toMatchObject({
+      icon: 'balloon',
+      color: 'pink',
+    })
   })
 })

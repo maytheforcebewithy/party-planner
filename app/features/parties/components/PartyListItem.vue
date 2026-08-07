@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import PartyIconTile from './PartyIconTile.vue'
 import type { Party } from '../types/party'
 import { usePartyFormatting } from '../composables/use-party-formatting'
 
@@ -14,10 +15,10 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
     class="row"
     data-testid="party-row"
   >
-    <span
-      aria-hidden="true"
-      class="row__badge"
-    >🎉</span>
+    <PartyIconTile
+      :icon="party.icon"
+      :color="party.color"
+    />
     <span class="row__body">
       <span class="row__name">{{ party.name }}</span>
       <span
@@ -27,7 +28,19 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
       <span
         v-if="party.location"
         class="row__location"
-      >{{ party.location }}</span>
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          class="row__location-icon"
+        >
+          <path
+            fill="currentColor"
+            d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"
+          />
+        </svg>
+        <span class="row__location-text">{{ party.location }}</span>
+      </span>
     </span>
     <span
       aria-hidden="true"
@@ -58,17 +71,6 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
   transform: scale(0.99);
 }
 
-.row__badge {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  font-size: var(--font-size-lg);
-  background-color: var(--surface-sunken);
-  border-radius: var(--radius-md);
-}
-
 .row__body {
   display: flex;
   flex: 1;
@@ -91,9 +93,23 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
 }
 
 .row__location {
-  overflow: hidden;
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+  min-width: 0;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+}
+
+.row__location-icon {
+  flex-shrink: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--color-primary-text);
+}
+
+.row__location-text {
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

@@ -90,6 +90,27 @@
       "label": "Notes",
       "placeholder": "e.g. please bring snacks …"
     },
+    "optional": "optional",
+    "appearance": {
+      "icon": "Icon",
+      "color": "Colour",
+      "icons": {
+        "cake": "Cake",
+        "gift": "Gift",
+        "balloon": "Balloon",
+        "music": "Music",
+        "star": "Star",
+        "heart": "Heart"
+      },
+      "colors": {
+        "green": "Green",
+        "amber": "Yellow",
+        "sky": "Blue",
+        "pink": "Pink",
+        "purple": "Purple",
+        "orange": "Orange"
+      }
+    },
     "cancel": "Cancel"
   }
 }

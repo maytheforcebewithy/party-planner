@@ -4,16 +4,19 @@ const props = withDefaults(defineProps<{
   type?: 'text' | 'date' | 'time'
   placeholder?: string
   required?: boolean
+  optional?: boolean
   multiline?: boolean
   error?: string
 }>(), {
   type: 'text',
   required: false,
+  optional: false,
   multiline: false,
 })
 
 const model = defineModel<string>({ required: true })
 
+const { t } = useI18n()
 const id = useId()
 const errorId = computed(() => (props.error ? `${id}-error` : undefined))
 </script>
@@ -29,6 +32,10 @@ const errorId = computed(() => (props.error ? `${id}-error` : undefined))
         aria-hidden="true"
         class="field__req"
       > *</span>
+      <span
+        v-if="optional"
+        class="field__optional"
+      >{{ t('form.optional') }}</span>
     </label>
 
     <textarea
@@ -78,6 +85,13 @@ const errorId = computed(() => (props.error ? `${id}-error` : undefined))
 
 .field__req {
   color: var(--color-primary-text);
+}
+
+.field__optional {
+  margin-left: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-muted);
 }
 
 .field__control {

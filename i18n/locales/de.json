@@ -90,6 +90,27 @@
       "label": "Hinweise",
       "placeholder": "z. B. bitte Snacks mitbringen …"
     },
+    "optional": "optional",
+    "appearance": {
+      "icon": "Symbol",
+      "color": "Farbe",
+      "icons": {
+        "cake": "Kuchen",
+        "gift": "Geschenk",
+        "balloon": "Luftballon",
+        "music": "Musik",
+        "star": "Stern",
+        "heart": "Herz"
+      },
+      "colors": {
+        "green": "Grün",
+        "amber": "Gelb",
+        "sky": "Blau",
+        "pink": "Pink",
+        "purple": "Lila",
+        "orange": "Orange"
+      }
+    },
     "cancel": "Abbrechen"
   }
 }

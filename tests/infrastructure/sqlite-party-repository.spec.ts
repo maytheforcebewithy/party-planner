@@ -60,6 +60,8 @@ const sampleRow = {
   start_time: '18:00',
   end_time: '23:30',
   hinweise: 'No glass bottles',
+  icon: 'star',
+  color: 'sky',
   created_at: '2026-08-01T10:00:00.000Z',
   updated_at: '2026-08-01T10:00:00.000Z',
 }
@@ -87,6 +89,8 @@ describe('SqlitePartyRepository', () => {
       startTime: '18:00',
       endTime: '23:30',
       hinweise: 'No glass bottles',
+      icon: 'star',
+      color: 'sky',
       createdAt: '2026-08-01T10:00:00.000Z',
       updatedAt: '2026-08-01T10:00:00.000Z',
     })
@@ -126,6 +130,8 @@ describe('SqlitePartyRepository', () => {
       '18:00',
       '23:30',
       'No glass bottles',
+      null,
+      null,
       party.createdAt,
       party.updatedAt,
     ])

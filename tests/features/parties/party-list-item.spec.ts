@@ -12,6 +12,8 @@ const party: Party = {
   startTime: null,
   endTime: null,
   hinweise: null,
+  icon: null,
+  color: null,
   createdAt: '',
   updatedAt: '',
 }
