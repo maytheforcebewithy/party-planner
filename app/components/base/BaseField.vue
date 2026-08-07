@@ -90,7 +90,8 @@ const errorId = computed(() => (props.error ? `${id}-error` : undefined))
 .field__optional {
   margin-left: var(--space-2);
   font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
+  font-style: italic;
+  font-weight: var(--font-weight-light);
   color: var(--color-text-muted);
 }
 
