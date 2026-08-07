@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import PartyListItem from '~/features/parties/components/PartyListItem.vue'
 import { useParties } from '~/features/parties/composables/use-parties'
+import { useDemoSeed } from '~/features/parties/composables/use-demo-seed'
 import { partitionParties } from '~/features/parties/services/partition-parties'
 
 const { t } = useI18n()
 const store = useParties()
+const { seedDemo } = useDemoSeed()
+
+function onSeedDemo(): void {
+  void seedDemo()
+}
 
 const today = new Date().toISOString().slice(0, 10)
 const tab = ref('upcoming')
@@ -65,6 +71,13 @@ const noneMessage = computed(() => (tab.value === 'past' ? t('list.none.past') :
             data-testid="empty-cta"
           >
             {{ $t('list.empty.cta') }}
+          </BaseButton>
+          <BaseButton
+            variant="ghost"
+            data-testid="seed-demo"
+            @click="onSeedDemo"
+          >
+            {{ $t('list.empty.demo') }}
           </BaseButton>
         </template>
       </BaseEmptyState>

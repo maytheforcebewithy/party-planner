@@ -71,7 +71,22 @@
     },
     "empty": {
       "title": "No parties yet",
-      "cta": "Plan a party"
+      "cta": "Plan a party",
+      "demo": "Load example"
+    }
+  },
+  "demo": {
+    "name": "Summer garden party",
+    "location": "City park, big lawn",
+    "description": "A relaxed garden party with music, a vegetarian barbecue and a campfire in the evening.",
+    "hinweise": "Please bring a blanket and good vibes. Parking is limited — best to come by bike.",
+    "shopping": {
+      "skewers": "Veggie skewers",
+      "halloumi": "Halloumi for grilling",
+      "salads": "Salads",
+      "bread": "Bread & dips",
+      "drinks": "Drinks",
+      "tableware": "Napkins & plates"
     }
   },
   "create": {
