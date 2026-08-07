@@ -5,8 +5,10 @@ import { resolveColor } from '../config/party-appearance'
 const props = withDefaults(defineProps<{
   icon: string | null
   color: string | null
+  image?: string | null
   size?: 'lg' | 'md'
 }>(), {
+  image: null,
   size: 'md',
 })
 
@@ -20,10 +22,19 @@ const accent = computed(() => ({
   <span
     aria-hidden="true"
     class="tile"
-    :class="`tile--${size}`"
+    :class="[`tile--${size}`, { 'tile--image': image }]"
     :style="accent"
   >
-    <PartyIcon :icon="icon" />
+    <img
+      v-if="image"
+      :src="image"
+      alt=""
+      class="tile__image"
+    >
+    <PartyIcon
+      v-else
+      :icon="icon"
+    />
   </span>
 </template>
 
@@ -32,8 +43,19 @@ const accent = computed(() => ({
   display: grid;
   flex-shrink: 0;
   place-items: center;
+  overflow: hidden;
   color: var(--tile-accent);
   background-color: var(--tile-accent-soft);
+}
+
+.tile--image {
+  background-color: transparent;
+}
+
+.tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .tile--lg {

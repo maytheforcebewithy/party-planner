@@ -4,6 +4,8 @@ const props = withDefaults(defineProps<{
   type?: 'button' | 'submit'
   /** When set, renders a NuxtLink styled as a button (valid markup for navigation). */
   to?: string
+  /** When set, renders an external anchor (opens in the system browser). */
+  href?: string
   disabled?: boolean
   block?: boolean
 }>(), {
@@ -25,6 +27,16 @@ const classes = computed(() => [`btn--${props.variant}`, { 'btn--block': props.b
   >
     <slot />
   </NuxtLink>
+  <a
+    v-else-if="href"
+    :href="href"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="btn"
+    :class="classes"
+  >
+    <slot />
+  </a>
   <button
     v-else
     :type="type"

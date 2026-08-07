@@ -38,8 +38,8 @@ describe('addPartyLists migration', () => {
 
     const result = await runMigrations(database, migrations)
 
-    expect(result.version).toBe(4)
     expect(result.applied).toContain(addPartyLists)
-    expect(await database.getSchemaVersion()).toBe(4)
+    expect(result.version).toBeGreaterThanOrEqual(4)
+    expect(await database.getSchemaVersion()).toBe(result.version)
   })
 })

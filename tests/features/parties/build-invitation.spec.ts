@@ -10,6 +10,7 @@ const t = (key: string, named: Record<string, unknown> = {}): string => {
     'share.invitation.date': `Datum: ${named.value}`,
     'share.invitation.time': `Zeit: ${named.value}`,
     'share.invitation.location': `Ort: ${named.value}`,
+    'share.invitation.link': `Link: ${named.value}`,
     'detail.time.range': `${named.start} – ${named.end} Uhr`,
     'detail.time.from': `ab ${named.start} Uhr`,
     'detail.time.until': `bis ${named.end} Uhr`,
@@ -28,6 +29,8 @@ const base: Party = {
   hinweise: null,
   icon: null,
   color: null,
+  image: null,
+  link: null,
   guests: [],
   shopping: [],
   createdAt: '',
@@ -71,5 +74,10 @@ describe('buildInvitationText', () => {
   it('omits lines for fields that are not set', () => {
     const text = buildInvitationText({ ...base, location: 'Park' }, ctx)
     expect(text).toBe('Einladung: Gartenparty\nOrt: Park')
+  })
+
+  it('includes a link line when a link is set', () => {
+    const text = buildInvitationText({ ...base, link: 'https://open.spotify.com/x' }, ctx)
+    expect(text).toBe('Einladung: Gartenparty\nLink: https://open.spotify.com/x')
   })
 })

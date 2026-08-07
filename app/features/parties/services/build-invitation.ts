@@ -32,6 +32,7 @@ export function buildInvitationText(party: Party, ctx: InvitationContext): strin
   if (time) lines.push(t('share.invitation.time', { value: time }))
 
   if (party.location) lines.push(t('share.invitation.location', { value: party.location }))
+  if (party.link) lines.push(t('share.invitation.link', { value: party.link }))
   if (party.hinweise) lines.push('', party.hinweise)
 
   return lines.join('\n')

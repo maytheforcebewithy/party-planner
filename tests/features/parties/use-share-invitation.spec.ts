@@ -19,6 +19,8 @@ const party: Party = {
   hinweise: null,
   icon: null,
   color: null,
+  image: null,
+  link: null,
   guests: [],
   shopping: [],
   createdAt: '',

@@ -7,6 +7,7 @@ defineProps<{
   timeLabel?: string | null
   icon?: string | null
   color?: string | null
+  image?: string | null
 }>()
 </script>
 
@@ -15,6 +16,7 @@ defineProps<{
     <PartyIconTile
       :icon="icon ?? null"
       :color="color ?? null"
+      :image="image ?? null"
       size="lg"
     />
     <h1 class="hero__name">

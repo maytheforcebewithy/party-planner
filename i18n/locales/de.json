@@ -57,6 +57,7 @@
     "deleteConfirm": "Diese Party wirklich löschen?",
     "notFound": "Diese Party gibt es nicht (mehr).",
     "noDate": "Kein Datum festgelegt",
+    "openLink": "Link öffnen · {host}",
     "time": {
       "range": "{start} – {end} Uhr",
       "from": "ab {start} Uhr",
@@ -101,7 +102,8 @@
       "heading": "🎉 Einladung: {name}",
       "date": "📅 {value}",
       "time": "🕒 {value}",
-      "location": "📍 {value}"
+      "location": "📍 {value}",
+      "link": "🔗 {value}"
     }
   },
   "form": {
@@ -131,10 +133,17 @@
       "label": "Hinweise",
       "placeholder": "z. B. bitte Snacks mitbringen …"
     },
+    "link": {
+      "label": "Link",
+      "placeholder": "z. B. Spotify-Playlist"
+    },
     "optional": "optional",
     "appearance": {
       "icon": "Symbol",
       "color": "Farbe",
+      "imageAdd": "Eigenes Bild",
+      "imageChange": "Bild ändern",
+      "imageRemove": "Entfernen",
       "icons": {
         "cake": "Kuchen",
         "gift": "Geschenk",

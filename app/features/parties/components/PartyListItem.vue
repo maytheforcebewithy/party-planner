@@ -18,6 +18,7 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
     <PartyIconTile
       :icon="party.icon"
       :color="party.color"
+      :image="party.image"
     />
     <span class="row__body">
       <span class="row__name">{{ party.name }}</span>
