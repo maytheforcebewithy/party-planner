@@ -2,11 +2,12 @@
 import PartyAppearancePicker from './PartyAppearancePicker.vue'
 import { DEFAULT_COLOR, DEFAULT_ICON, resolveColor, resolveIcon } from '../config/party-appearance'
 import { normalizeLink } from '../services/party-link'
-import type { CreateParty, Party } from '../types/party'
+import type { CreateParty } from '../types/party'
 
 const props = defineProps<{
   submitLabel: string
-  initial?: Party
+  /** Pre-fill values (an existing party when editing, or a parsed draft). */
+  initial?: CreateParty
 }>()
 
 const emit = defineEmits<{
@@ -23,8 +24,8 @@ const endTime = ref(props.initial?.endTime ?? '')
 const location = ref(props.initial?.location ?? '')
 const description = ref(props.initial?.description ?? '')
 const hinweise = ref(props.initial?.hinweise ?? '')
-const icon = ref<string>(props.initial ? resolveIcon(props.initial.icon) : DEFAULT_ICON)
-const color = ref<string>(props.initial ? resolveColor(props.initial.color) : DEFAULT_COLOR)
+const icon = ref<string>(props.initial ? resolveIcon(props.initial.icon ?? null) : DEFAULT_ICON)
+const color = ref<string>(props.initial ? resolveColor(props.initial.color ?? null) : DEFAULT_COLOR)
 const image = ref<string>(props.initial?.image ?? '')
 const link = ref(props.initial?.link ?? '')
 const error = ref('')
