@@ -56,7 +56,7 @@ const reply = computed(() => {
         v-if="reply"
         class="row__reply"
         data-testid="party-row-reply"
-        :style="{ backgroundColor: reply.colors.soft, color: reply.colors.color }"
+        :style="{ backgroundColor: reply.colors.soft, color: reply.colors.text }"
       >{{ reply.label }}</span>
     </span>
     <span

@@ -50,7 +50,7 @@ describe('PartyListItem', () => {
 
     const chip = wrapper.find('[data-testid="party-row-reply"]')
     expect(chip.exists()).toBe(true)
-    expect(chip.attributes('style')).toContain('var(--color-primary)')
+    expect(chip.attributes('style')).toContain('var(--color-primary-text)')
   })
 
   it('shows no reply chip on an own party or an unanswered invitation', async () => {

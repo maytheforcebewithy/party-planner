@@ -21,6 +21,7 @@ const options = computed(() =>
 // Empty string means "no reply yet" — none of the segments is highlighted.
 const reply = computed<string>({
   get: () => store.findById(props.partyId)?.attendance ?? '',
+  // The segmented control only ever emits an ATTENDANCE_OPTIONS value, so the cast is safe.
   set: (value) => {
     void store.update(props.partyId, { attendance: value as Attendance })
   },
