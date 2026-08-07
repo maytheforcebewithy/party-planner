@@ -15,6 +15,9 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: BASE_URL,
+    // Pin the locale so i18n renders the primary German UI deterministically
+    // (the app auto-detects browser language otherwise).
+    locale: 'de-DE',
     trace: 'on-first-retry',
   },
   // The product is mobile-only; drive a mobile viewport so e2e matches reality.
