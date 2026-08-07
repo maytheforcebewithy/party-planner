@@ -24,6 +24,8 @@ const timeLabel = computed(() =>
   party.value ? displayTime(party.value.startTime, party.value.endTime) : null,
 )
 const linkLabel = computed(() => (party.value?.link ? linkHost(party.value.link) : ''))
+// A received invitation was reached from the invitations tab, so send back there.
+const backTo = computed(() => (party.value?.received ? '/invitations' : '/'))
 const confirming = ref(false)
 const confirmPanel = ref<HTMLElement | null>(null)
 const shareNotice = ref('')
@@ -68,7 +70,7 @@ function onDelete(): void {
 
 <template>
   <div class="screen">
-    <AppBar back-to="/" />
+    <AppBar :back-to="backTo" />
 
     <main class="page">
       <article
@@ -140,40 +142,48 @@ function onDelete(): void {
           {{ $t('detail.openLink', { host: linkLabel }) }}
         </BaseButton>
 
-        <PartyGuestList :party-id="party.id" />
-        <PartyShoppingList :party-id="party.id" />
+        <PartyGuestList
+          v-if="!party.received"
+          :party-id="party.id"
+        />
+        <PartyShoppingList
+          :party-id="party.id"
+          :received="party.received"
+        />
 
-        <BaseButton
-          variant="primary"
-          block
-          data-testid="share"
-          @click="onShare"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="detail__share-icon"
+        <template v-if="!party.received">
+          <BaseButton
+            variant="primary"
+            block
+            data-testid="share"
+            @click="onShare"
           >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 3v13M12 3 8 7M12 3l4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"
-            />
-          </svg>
-          {{ $t('share.action') }}
-        </BaseButton>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="detail__share-icon"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3v13M12 3 8 7M12 3l4 4M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"
+              />
+            </svg>
+            {{ $t('share.action') }}
+          </BaseButton>
 
-        <p
-          v-if="shareNotice"
-          class="detail__share-notice"
-          role="status"
-          data-testid="share-notice"
-        >
-          {{ shareNotice }}
-        </p>
+          <p
+            v-if="shareNotice"
+            class="detail__share-notice"
+            role="status"
+            data-testid="share-notice"
+          >
+            {{ shareNotice }}
+          </p>
+        </template>
 
         <BaseButton
           variant="ghost"
