@@ -2,17 +2,27 @@
 import PartyIconTile from './PartyIconTile.vue'
 import type { Party } from '../types/party'
 import { usePartyFormatting } from '../composables/use-party-formatting'
+import { ATTENDANCE_APPEARANCE } from '../config/attendance-appearance'
 
 const props = defineProps<{ party: Party }>()
 
+const { t } = useI18n()
 const { displayDate } = usePartyFormatting()
 const dateLabel = computed(() => (props.party.date ? displayDate(props.party.date) : ''))
+
+// Colour feedback for a received invitation you have replied to.
+const reply = computed(() => {
+  const { received, attendance } = props.party
+  if (!received || !attendance) return null
+  return { colors: ATTENDANCE_APPEARANCE[attendance], label: t(`attendance.${attendance}`) }
+})
 </script>
 
 <template>
   <NuxtLink
     :to="`/parties/${party.id}`"
     class="row"
+    :style="reply ? { borderColor: reply.colors.color } : undefined"
     data-testid="party-row"
   >
     <PartyIconTile
@@ -42,6 +52,12 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
         </svg>
         <span class="row__location-text">{{ party.location }}</span>
       </span>
+      <span
+        v-if="reply"
+        class="row__reply"
+        data-testid="party-row-reply"
+        :style="{ backgroundColor: reply.colors.soft, color: reply.colors.color }"
+      >{{ reply.label }}</span>
     </span>
     <span
       aria-hidden="true"
@@ -113,6 +129,14 @@ const dateLabel = computed(() => (props.party.date ? displayDate(props.party.dat
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.row__reply {
+  align-self: flex-start;
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-pill);
 }
 
 .row__chevron {

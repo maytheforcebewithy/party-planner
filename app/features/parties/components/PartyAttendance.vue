@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { usePartiesStore } from '../stores/parties-store'
 import { ATTENDANCE_OPTIONS } from '../types/party'
+import { ATTENDANCE_APPEARANCE } from '../config/attendance-appearance'
 import type { Attendance } from '../types/party'
 
 const props = defineProps<{ partyId: string }>()
@@ -9,7 +10,12 @@ const { t } = useI18n()
 const store = usePartiesStore()
 
 const options = computed(() =>
-  ATTENDANCE_OPTIONS.map(value => ({ value, label: t(`attendance.${value}`) })),
+  ATTENDANCE_OPTIONS.map(value => ({
+    value,
+    label: t(`attendance.${value}`),
+    activeColor: ATTENDANCE_APPEARANCE[value].color,
+    activeContrast: ATTENDANCE_APPEARANCE[value].contrast,
+  })),
 )
 
 // Empty string means "no reply yet" — none of the segments is highlighted.

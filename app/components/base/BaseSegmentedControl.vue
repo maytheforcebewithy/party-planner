@@ -2,6 +2,9 @@
 interface Segment {
   value: string
   label: string
+  /** Optional fill/text colour for this segment's active state (default primary). */
+  activeColor?: string
+  activeContrast?: string
 }
 
 defineProps<{ options: readonly Segment[], testIdPrefix?: string }>()
@@ -17,6 +20,9 @@ const model = defineModel<string>({ required: true })
       type="button"
       class="segmented__option"
       :class="{ 'segmented__option--active': model === option.value }"
+      :style="model === option.value && option.activeColor
+        ? { backgroundColor: option.activeColor, color: option.activeContrast }
+        : undefined"
       :aria-pressed="model === option.value"
       :data-testid="testIdPrefix ? `${testIdPrefix}-${option.value}` : undefined"
       @click="model = option.value"

@@ -17,6 +17,7 @@ const party: Party = {
   image: null,
   link: null,
   received: false,
+  attendance: null,
   guests: [],
   shopping: [],
   createdAt: '',
@@ -40,5 +41,25 @@ describe('PartyListItem', () => {
 
     expect(wrapper.find('.row__date').exists()).toBe(false)
     expect(wrapper.find('.row__location').exists()).toBe(false)
+  })
+
+  it('shows a coloured reply chip for a received invitation you have answered', async () => {
+    const wrapper = await mountSuspended(PartyListItem, {
+      props: { party: { ...party, received: true, attendance: 'yes' } },
+    })
+
+    const chip = wrapper.find('[data-testid="party-row-reply"]')
+    expect(chip.exists()).toBe(true)
+    expect(chip.attributes('style')).toContain('var(--color-primary)')
+  })
+
+  it('shows no reply chip on an own party or an unanswered invitation', async () => {
+    const own = await mountSuspended(PartyListItem, { props: { party } })
+    expect(own.find('[data-testid="party-row-reply"]').exists()).toBe(false)
+
+    const unanswered = await mountSuspended(PartyListItem, {
+      props: { party: { ...party, received: true, attendance: null } },
+    })
+    expect(unanswered.find('[data-testid="party-row-reply"]').exists()).toBe(false)
   })
 })
