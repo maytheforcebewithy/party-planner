@@ -21,7 +21,7 @@
     "none": "No invitations received yet.",
     "paste": {
       "action": "Paste invitation",
-      "intro": "Paste the message you received — we'll try to detect the date, time and location automatically.",
+      "intro": "Paste the message you received. We'll try to detect the date, time and location automatically.",
       "clipboard": "Paste from clipboard",
       "empty": "Clipboard is empty — paste the message below.",
       "or": "or",

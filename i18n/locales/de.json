@@ -21,7 +21,7 @@
     "none": "Noch keine Einladungen erhalten.",
     "paste": {
       "action": "Einladung einfügen",
-      "intro": "Füge die Nachricht ein, die du bekommen hast – wir versuchen, Datum, Uhrzeit und Ort automatisch zu erkennen.",
+      "intro": "Füge die Nachricht ein, die du bekommen hast. Wir versuchen, Datum, Uhrzeit und Ort automatisch zu erkennen.",
       "clipboard": "Aus Zwischenablage einfügen",
       "empty": "Zwischenablage ist leer – füge die Nachricht unten ein.",
       "or": "oder",
