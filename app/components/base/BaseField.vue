@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   label: string
-  type?: 'text' | 'date'
+  type?: 'text' | 'date' | 'time'
   placeholder?: string
   required?: boolean
   multiline?: boolean
@@ -94,7 +94,7 @@ const errorId = computed(() => (props.error ? `${id}-error` : undefined))
 .field__control:focus {
   border-color: var(--color-primary);
   outline: none;
-  box-shadow: 0 0 0 3px rgb(109 40 217 / 15%);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
 
 .field__control--area {

@@ -15,8 +15,11 @@ const { t } = useI18n()
 
 const name = ref(props.initial?.name ?? '')
 const date = ref(props.initial?.date ?? '')
+const startTime = ref(props.initial?.startTime ?? '')
+const endTime = ref(props.initial?.endTime ?? '')
 const location = ref(props.initial?.location ?? '')
 const description = ref(props.initial?.description ?? '')
+const hinweise = ref(props.initial?.hinweise ?? '')
 const error = ref('')
 
 function onSubmit() {
@@ -29,8 +32,11 @@ function onSubmit() {
   emit('submit', {
     name: trimmed,
     date: date.value || null,
+    startTime: startTime.value || null,
+    endTime: endTime.value || null,
     location: location.value.trim() || null,
     description: description.value.trim() || null,
+    hinweise: hinweise.value.trim() || null,
   })
 }
 </script>
@@ -53,6 +59,18 @@ function onSubmit() {
       :label="t('form.date.label')"
       type="date"
     />
+    <div class="form__row">
+      <BaseField
+        v-model="startTime"
+        :label="t('form.startTime.label')"
+        type="time"
+      />
+      <BaseField
+        v-model="endTime"
+        :label="t('form.endTime.label')"
+        type="time"
+      />
+    </div>
     <BaseField
       v-model="location"
       :label="t('form.location.label')"
@@ -62,6 +80,12 @@ function onSubmit() {
       v-model="description"
       :label="t('form.description.label')"
       :placeholder="t('form.description.placeholder')"
+      multiline
+    />
+    <BaseField
+      v-model="hinweise"
+      :label="t('form.hinweise.label')"
+      :placeholder="t('form.hinweise.placeholder')"
       multiline
     />
 
@@ -90,6 +114,12 @@ function onSubmit() {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
 }
 
 .form__actions {

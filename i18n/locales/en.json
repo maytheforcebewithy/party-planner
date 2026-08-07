@@ -56,8 +56,12 @@
     "delete": "Delete",
     "deleteConfirm": "Really delete this party?",
     "notFound": "This party no longer exists.",
-    "notes": "Notes",
-    "noDate": "No date set"
+    "noDate": "No date set",
+    "time": {
+      "range": "{start} – {end}",
+      "from": "from {start}",
+      "until": "until {end}"
+    }
   },
   "form": {
     "name": {
@@ -68,13 +72,23 @@
     "date": {
       "label": "Date"
     },
+    "startTime": {
+      "label": "Start time"
+    },
+    "endTime": {
+      "label": "End time"
+    },
     "location": {
       "label": "Location",
       "placeholder": "e.g. Park"
     },
     "description": {
-      "label": "Notes",
+      "label": "Description",
       "placeholder": "Details about the celebration …"
+    },
+    "hinweise": {
+      "label": "Notes",
+      "placeholder": "e.g. please bring snacks …"
     },
     "cancel": "Cancel"
   }

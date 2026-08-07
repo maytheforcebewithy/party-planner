@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{ name: string, dateLabel: string }>()
+defineProps<{ name: string, dateLabel: string, timeLabel?: string | null }>()
 </script>
 
 <template>
@@ -32,6 +32,12 @@ defineProps<{ name: string, dateLabel: string }>()
     </h1>
     <p class="hero__date">
       {{ dateLabel }}
+    </p>
+    <p
+      v-if="timeLabel"
+      class="hero__time"
+    >
+      {{ timeLabel }}
     </p>
   </header>
 </template>
@@ -71,5 +77,10 @@ defineProps<{ name: string, dateLabel: string }>()
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   color: var(--color-primary-text);
+}
+
+.hero__time {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
 }
 </style>

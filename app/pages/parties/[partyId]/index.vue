@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import PartyHero from '~/features/parties/components/PartyHero.vue'
+import PartyInfoCard from '~/features/parties/components/PartyInfoCard.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 
 const route = useRoute()
 const store = usePartiesStore()
-const { displayDate } = usePartyFormatting()
+const { displayDate, displayTime } = usePartyFormatting()
 
 const partyId = computed(() => String(route.params.partyId))
 const party = computed(() => store.findById(partyId.value))
+const timeLabel = computed(() =>
+  party.value ? displayTime(party.value.startTime, party.value.endTime) : null,
+)
 const confirming = ref(false)
 
 onMounted(() => {
@@ -37,36 +41,40 @@ function onDelete(): void {
         <PartyHero
           :name="party.name"
           :date-label="displayDate(party.date)"
+          :time-label="timeLabel"
         />
 
-        <p
-          v-if="party.location"
-          class="detail__location"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="detail__icon"
+        <div class="detail__cards">
+          <PartyInfoCard
+            v-if="party.location"
+            :label="$t('form.location.label')"
+            :value="party.location"
           >
-            <path
-              fill="currentColor"
-              d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"
-            />
-          </svg>
-          {{ party.location }}
-        </p>
+            <template #icon>
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"
+                />
+              </svg>
+            </template>
+          </PartyInfoCard>
 
-        <section
-          v-if="party.description"
-          class="detail__notes"
-        >
-          <h2 class="detail__notes-title">
-            {{ $t('detail.notes') }}
-          </h2>
-          <p class="detail__notes-body">
-            {{ party.description }}
-          </p>
-        </section>
+          <PartyInfoCard
+            v-if="party.description"
+            :label="$t('form.description.label')"
+            :value="party.description"
+          />
+
+          <PartyInfoCard
+            v-if="party.hinweise"
+            :label="$t('form.hinweise.label')"
+            :value="party.hinweise"
+          />
+        </div>
 
         <div class="detail__actions">
           <BaseButton
@@ -131,36 +139,10 @@ function onDelete(): void {
   gap: var(--space-4);
 }
 
-.detail__location {
-  display: inline-flex;
-  gap: var(--space-2);
-  align-items: center;
-  color: var(--color-text-muted);
-}
-
-.detail__icon {
-  width: 1.15rem;
-  height: 1.15rem;
-  color: var(--color-primary-text);
-}
-
-.detail__notes {
+.detail__cards {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-4);
-  background-color: var(--surface-sunken);
-  border-radius: var(--radius-md);
-}
-
-.detail__notes-title {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-muted);
-}
-
-.detail__notes-body {
-  white-space: pre-wrap;
+  gap: var(--space-3);
 }
 
 .detail__actions {

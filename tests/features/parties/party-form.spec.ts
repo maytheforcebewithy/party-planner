@@ -21,8 +21,27 @@ describe('PartyForm', () => {
     expect(wrapper.emitted('submit')?.[0]?.[0]).toEqual({
       name: 'Summer party',
       date: null,
+      startTime: null,
+      endTime: null,
       location: null,
       description: null,
+      hinweise: null,
+    })
+  })
+
+  it('emits the time and hinweise fields when they are filled', async () => {
+    const wrapper = await mountSuspended(PartyForm, { props: { submitLabel: 'Save' } })
+
+    await wrapper.find('input').setValue('Picnic')
+    await wrapper.find('input[type="time"]').setValue('18:00')
+    await wrapper.findAll('input[type="time"]')[1]?.setValue('23:30')
+    await wrapper.findAll('textarea')[1]?.setValue('  Bring a blanket  ')
+    await wrapper.find('form').trigger('submit.prevent')
+
+    expect(wrapper.emitted('submit')?.[0]?.[0]).toMatchObject({
+      startTime: '18:00',
+      endTime: '23:30',
+      hinweise: 'Bring a blanket',
     })
   })
 
@@ -36,6 +55,9 @@ describe('PartyForm', () => {
           date: '2026-09-01',
           location: 'Hall',
           description: 'Notes',
+          startTime: '19:00',
+          endTime: null,
+          hinweise: 'Dress code: green',
           createdAt: '',
           updatedAt: '',
         },
@@ -43,5 +65,6 @@ describe('PartyForm', () => {
     })
 
     expect(wrapper.find('input').element.value).toBe('Existing')
+    expect(wrapper.find('input[type="time"]').element.value).toBe('19:00')
   })
 })

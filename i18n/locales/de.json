@@ -56,8 +56,12 @@
     "delete": "Löschen",
     "deleteConfirm": "Diese Party wirklich löschen?",
     "notFound": "Diese Party gibt es nicht (mehr).",
-    "notes": "Notizen",
-    "noDate": "Kein Datum festgelegt"
+    "noDate": "Kein Datum festgelegt",
+    "time": {
+      "range": "{start} – {end} Uhr",
+      "from": "ab {start} Uhr",
+      "until": "bis {end} Uhr"
+    }
   },
   "form": {
     "name": {
@@ -68,13 +72,23 @@
     "date": {
       "label": "Datum"
     },
+    "startTime": {
+      "label": "Startzeit"
+    },
+    "endTime": {
+      "label": "Endzeit"
+    },
     "location": {
       "label": "Ort",
       "placeholder": "z. B. Park"
     },
     "description": {
-      "label": "Notizen",
+      "label": "Beschreibung",
       "placeholder": "Details zur Feier …"
+    },
+    "hinweise": {
+      "label": "Hinweise",
+      "placeholder": "z. B. bitte Snacks mitbringen …"
     },
     "cancel": "Abbrechen"
   }

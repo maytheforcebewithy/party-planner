@@ -3,7 +3,18 @@ import { partitionParties } from '~/features/parties/services/partition-parties'
 import type { Party } from '~/features/parties/types/party'
 
 function party(id: string, date: string | null): Party {
-  return { id, name: id, date, location: null, description: null, createdAt: '', updatedAt: '' }
+  return {
+    id,
+    name: id,
+    date,
+    location: null,
+    description: null,
+    startTime: null,
+    endTime: null,
+    hinweise: null,
+    createdAt: '',
+    updatedAt: '',
+  }
 }
 
 const TODAY = '2026-08-07'

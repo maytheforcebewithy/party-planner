@@ -9,6 +9,9 @@ const party: Party = {
   date: '2026-08-15',
   location: 'Park',
   description: null,
+  startTime: null,
+  endTime: null,
+  hinweise: null,
   createdAt: '',
   updatedAt: '',
 }
