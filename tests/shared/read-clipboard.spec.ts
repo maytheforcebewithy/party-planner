@@ -31,11 +31,21 @@ describe('readClipboard', () => {
     expect(await readClipboard()).toBe('')
   })
 
-  it('never touches the web clipboard in the browser (no paste chip)', async () => {
+  it('reads the web clipboard text in the browser', async () => {
     isNativePlatform.mockReturnValue(false)
-    const readText = vi.fn()
-    vi.stubGlobal('navigator', { clipboard: { readText } })
+    vi.stubGlobal('navigator', { clipboard: { readText: vi.fn().mockResolvedValue('web text') } })
+    expect(await readClipboard()).toBe('web text')
+  })
+
+  it('returns an empty string when the web read is blocked', async () => {
+    isNativePlatform.mockReturnValue(false)
+    vi.stubGlobal('navigator', { clipboard: { readText: vi.fn().mockRejectedValue(new Error('denied')) } })
     expect(await readClipboard()).toBe('')
-    expect(readText).not.toHaveBeenCalled()
+  })
+
+  it('returns an empty string when the web clipboard API is unavailable', async () => {
+    isNativePlatform.mockReturnValue(false)
+    vi.stubGlobal('navigator', {})
+    expect(await readClipboard()).toBe('')
   })
 })

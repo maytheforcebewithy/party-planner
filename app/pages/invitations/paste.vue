@@ -2,33 +2,46 @@
 import PartyForm from '~/features/parties/components/PartyForm.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { parseInvitationText } from '~/features/parties/services/parse-invitation'
-import { pasteSourceKey } from '~/features/parties/composables/use-paste-source'
+import { readClipboard } from '~/shared/clipboard/read-clipboard'
 import type { CreateParty } from '~/features/parties/types/party'
 
 definePageMeta({ layout: 'modal' })
 
 const { t } = useI18n()
 const store = usePartiesStore()
-const pasteSource = useState<string>(pasteSourceKey, () => '')
 
 const text = ref('')
 const draft = ref<CreateParty | null>(null)
+const empty = ref(false)
 
 function parse(source: string): void {
-  if (source.trim()) draft.value = parseInvitationText(source)
+  if (source.trim()) {
+    draft.value = parseInvitationText(source)
+    empty.value = false
+  }
 }
 
-onMounted(() => {
-  // The invitations tab already read the clipboard for us (its tap was the
-  // required user gesture); jump straight to the pre-filled form when it had
-  // content. Otherwise the textarea below is the manual fallback.
-  const clip = pasteSource.value
-  pasteSource.value = ''
+async function fromClipboard(showEmptyHint: boolean): Promise<void> {
+  const clip = await readClipboard()
   if (clip.trim()) {
     text.value = clip
     parse(clip)
   }
+  else if (showEmptyHint) {
+    empty.value = true
+  }
+}
+
+// On a device the clipboard reads silently, so opening the screen jumps straight
+// to the pre-filled form. In the browser this is blocked without a user gesture,
+// so the explicit button and textarea below are used instead.
+onMounted(() => {
+  void fromClipboard(false)
 })
+
+function onClipboard(): void {
+  void fromClipboard(true)
+}
 
 function onParse(): void {
   parse(text.value)
@@ -60,6 +73,27 @@ function onCancel(): void {
         <p class="intro">
           {{ t('invitations.paste.intro') }}
         </p>
+
+        <BaseButton
+          block
+          data-testid="paste-clipboard"
+          @click="onClipboard"
+        >
+          {{ t('invitations.paste.clipboard') }}
+        </BaseButton>
+
+        <p
+          v-if="empty"
+          class="empty"
+          role="status"
+          data-testid="paste-empty"
+        >
+          {{ t('invitations.paste.empty') }}
+        </p>
+
+        <p class="or">
+          {{ t('invitations.paste.or') }}
+        </p>
         <textarea
           v-model="text"
           :placeholder="t('invitations.paste.placeholder')"
@@ -69,6 +103,7 @@ function onCancel(): void {
         />
         <BaseButton
           block
+          variant="ghost"
           :disabled="!text.trim()"
           data-testid="paste-parse"
           @click="onParse"
@@ -102,6 +137,18 @@ function onCancel(): void {
 .intro {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+}
+
+.empty {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  text-align: center;
+}
+
+.or {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
 }
 
 .paste {
