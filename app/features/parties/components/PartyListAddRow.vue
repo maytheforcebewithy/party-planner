@@ -74,15 +74,22 @@ function submit(): void {
   display: grid;
   flex-shrink: 0;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: var(--color-primary-contrast);
+  cursor: pointer;
   background-color: var(--color-primary);
-  border-radius: var(--radius-md);
+  border: 0;
+  border-radius: var(--radius-pill);
   transition: background-color var(--transition-fast), opacity var(--transition-fast);
 }
 
+.add__button:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
 .add__button:disabled {
+  cursor: not-allowed;
   opacity: 0.4;
 }
 

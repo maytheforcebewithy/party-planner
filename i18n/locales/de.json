@@ -88,6 +88,10 @@
     "assign": "Wer bringt es mit?",
     "assignNone": "Offen"
   },
+  "lists": {
+    "showMore": "+{count} weitere",
+    "showLess": "Weniger anzeigen"
+  },
   "form": {
     "name": {
       "label": "Name",

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import PartyListSection from './PartyListSection.vue'
 import PartyListAddRow from './PartyListAddRow.vue'
+import PartyListToggle from './PartyListToggle.vue'
 import { usePartyLists } from '../composables/use-party-lists'
+import { useCollapsibleList } from '../composables/use-collapsible-list'
 
 const props = defineProps<{ partyId: string }>()
 
 const { t } = useI18n()
 const { guests, guestStats, addGuest, cycleGuestRsvp, removeGuest } = usePartyLists(() => props.partyId)
+const { visible, collapsible, expanded, hiddenCount, toggle } = useCollapsibleList(guests)
 
 const summary = computed(() =>
   guestStats.value.total === 0 ? '' : t('guests.count', guestStats.value),
@@ -35,7 +38,7 @@ function onRemove(id: string): void {
       class="items"
     >
       <li
-        v-for="guest in guests"
+        v-for="guest in visible"
         :key="guest.id"
         class="guest"
       >
@@ -77,6 +80,13 @@ function onRemove(id: string): void {
       {{ t('guests.empty') }}
     </p>
 
+    <PartyListToggle
+      v-if="collapsible"
+      :expanded="expanded"
+      :hidden-count="hiddenCount"
+      @toggle="toggle"
+    />
+
     <PartyListAddRow
       :placeholder="t('guests.add')"
       :action-label="t('guests.addAction')"
@@ -112,8 +122,11 @@ function onRemove(id: string): void {
   padding: var(--space-1) var(--space-3);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  background: none;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .rsvp--yes {
@@ -135,9 +148,19 @@ function onRemove(id: string): void {
   display: grid;
   flex-shrink: 0;
   place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2rem;
+  height: 2rem;
   color: var(--color-text-muted);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.remove:hover {
+  color: var(--color-danger);
+  background-color: var(--surface-sunken);
 }
 
 .remove svg {

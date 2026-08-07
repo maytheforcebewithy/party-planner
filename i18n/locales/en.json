@@ -88,6 +88,10 @@
     "assign": "Who brings it?",
     "assignNone": "Open"
   },
+  "lists": {
+    "showMore": "+{count} more",
+    "showLess": "Show less"
+  },
   "form": {
     "name": {
       "label": "Name",

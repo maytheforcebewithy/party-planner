@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import PartyListSection from './PartyListSection.vue'
 import PartyListAddRow from './PartyListAddRow.vue'
+import PartyListToggle from './PartyListToggle.vue'
 import { usePartyLists } from '../composables/use-party-lists'
+import { useCollapsibleList } from '../composables/use-collapsible-list'
 
 const props = defineProps<{ partyId: string }>()
 
@@ -15,6 +17,7 @@ const {
   assignShoppingItem,
   removeShoppingItem,
 } = usePartyLists(() => props.partyId)
+const { visible, collapsible, expanded, hiddenCount, toggle } = useCollapsibleList(shopping)
 
 const summary = computed(() =>
   shoppingStats.value.total === 0 ? '' : t('shopping.count', shoppingStats.value),
@@ -48,7 +51,7 @@ function onAssign(id: string, event: Event): void {
       class="items"
     >
       <li
-        v-for="item in shopping"
+        v-for="item in visible"
         :key="item.id"
         class="item"
       >
@@ -128,6 +131,13 @@ function onAssign(id: string, event: Event): void {
       {{ t('shopping.empty') }}
     </p>
 
+    <PartyListToggle
+      v-if="collapsible"
+      :expanded="expanded"
+      :hidden-count="hiddenCount"
+      @toggle="toggle"
+    />
+
     <PartyListAddRow
       :placeholder="t('shopping.add')"
       :action-label="t('shopping.addAction')"
@@ -158,6 +168,8 @@ function onAssign(id: string, event: Event): void {
   height: 1.5rem;
   margin-top: 0.1rem;
   color: transparent;
+  cursor: pointer;
+  background: none;
   border: 1.5px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
@@ -208,9 +220,19 @@ function onAssign(id: string, event: Event): void {
   display: grid;
   flex-shrink: 0;
   place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2rem;
+  height: 2rem;
   color: var(--color-text-muted);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.remove:hover {
+  color: var(--color-danger);
+  background-color: var(--surface-sunken);
 }
 
 .remove svg {
