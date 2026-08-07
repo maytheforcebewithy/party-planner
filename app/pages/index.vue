@@ -138,6 +138,7 @@ const noneMessage = computed(() => (tab.value === 'past' ? t('list.none.past') :
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  padding: 0;
   list-style: none;
 }
 

@@ -151,6 +151,7 @@ function onAssign(id: string, event: Event): void {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  padding: 0;
   list-style: none;
 }
 

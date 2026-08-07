@@ -100,6 +100,7 @@ function onRemove(id: string): void {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  padding: 0;
   list-style: none;
 }
 
