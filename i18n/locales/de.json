@@ -50,7 +50,12 @@
       "cleared": "Alle Daten wurden gelöscht."
     },
     "about": {
-      "text": "Party Planner ist lokal-first: keine Accounts, keine Cloud. Deine Daten bleiben auf deinem Gerät."
+      "text": "Party Planner ist lokal-first: keine Accounts, keine Cloud. Deine Daten bleiben auf deinem Gerät.",
+      "version": "Version {version}",
+      "share": "App teilen",
+      "shareText": "Plane deine Partys mit Party Planner!\nAndroid: {android}\niOS: {ios}",
+      "android": "Google Play",
+      "ios": "App Store"
     }
   },
   "list": {

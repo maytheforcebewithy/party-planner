@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { useSettings } from '~/composables/use-settings'
+import { useShareApp } from '~/composables/use-share-app'
+import { APP_STORE_LINKS } from '~/config/app-store'
 
 const { t } = useI18n()
 const store = usePartiesStore()
 const { language } = useSettings()
+const { shareApp } = useShareApp()
+
+const appVersion = useRuntimeConfig().public.appVersion
+const storeLinks = APP_STORE_LINKS
 
 const confirming = ref(false)
 const cleared = ref(false)
+const shareNotice = ref('')
 
 const languageOptions = computed(() => [
   { value: 'de', label: t('settings.language.de') },
@@ -26,6 +33,19 @@ async function deleteAll(): Promise<void> {
 
 function onDeleteAll(): void {
   void deleteAll()
+}
+
+async function runShareApp(): Promise<void> {
+  const result = await shareApp()
+  shareNotice.value = result === 'copied'
+    ? t('share.copied')
+    : result === 'unavailable'
+      ? t('share.unavailable')
+      : ''
+}
+
+function onShareApp(): void {
+  void runShareApp()
 }
 </script>
 
@@ -107,6 +127,46 @@ function onDeleteAll(): void {
         <p class="card__text">
           {{ t('settings.about.text') }}
         </p>
+        <p
+          class="version"
+          data-testid="app-version"
+        >
+          {{ t('settings.about.version', { version: appVersion }) }}
+        </p>
+
+        <BaseButton
+          block
+          data-testid="share-app"
+          @click="onShareApp"
+        >
+          {{ t('settings.about.share') }}
+        </BaseButton>
+
+        <div class="stores">
+          <BaseButton
+            variant="ghost"
+            block
+            :href="storeLinks.android"
+          >
+            {{ t('settings.about.android') }}
+          </BaseButton>
+          <BaseButton
+            variant="ghost"
+            block
+            :href="storeLinks.ios"
+          >
+            {{ t('settings.about.ios') }}
+          </BaseButton>
+        </div>
+
+        <p
+          v-if="shareNotice"
+          class="notice"
+          role="status"
+          data-testid="share-app-notice"
+        >
+          {{ shareNotice }}
+        </p>
       </section>
     </main>
   </div>
@@ -143,6 +203,20 @@ function onDeleteAll(): void {
 .card__text {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
+}
+
+.version {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.stores {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.stores > * {
+  flex: 1;
 }
 
 .confirm {
