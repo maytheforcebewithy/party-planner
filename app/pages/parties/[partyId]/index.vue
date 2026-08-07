@@ -7,6 +7,7 @@ import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
 import { useExportImport } from '~/features/parties/composables/use-export-import'
+import { useReminders } from '~/features/parties/composables/use-reminders'
 import { linkHost } from '~/features/parties/services/party-link'
 import { shareNoticeKey } from '~/shared/sharing/share-text'
 import type { Party } from '~/features/parties/types/party'
@@ -16,6 +17,7 @@ const store = usePartiesStore()
 const { displayDate, displayTime } = usePartyFormatting()
 const { shareInvitation } = useShareInvitation()
 const { exportParty } = useExportImport()
+const reminders = useReminders()
 const { t } = useI18n()
 
 const partyId = computed(() => String(route.params.partyId))
@@ -24,6 +26,7 @@ const timeLabel = computed(() =>
   party.value ? displayTime(party.value.startTime, party.value.endTime) : null,
 )
 const linkLabel = computed(() => (party.value?.link ? linkHost(party.value.link) : ''))
+const hasReminder = computed(() => (party.value ? reminders.has(party.value.id) : false))
 // A received invitation was reached from the invitations tab, so send back there.
 const backTo = computed(() => (party.value?.received ? '/invitations' : '/'))
 const confirming = ref(false)
@@ -47,6 +50,10 @@ function onExport(): void {
   if (party.value) void exportParty(party.value)
 }
 
+function onToggleReminder(): void {
+  if (party.value) void reminders.toggle(party.value)
+}
+
 async function startConfirm(): Promise<void> {
   confirming.value = true
   // Reveal the confirmation, which renders below the fold on longer parties.
@@ -59,6 +66,7 @@ function onConfirm(): void {
 }
 
 async function deleteParty(): Promise<void> {
+  if (party.value) await reminders.disable(party.value)
   await store.remove(partyId.value)
   await navigateTo('/')
 }
@@ -206,6 +214,31 @@ function onDelete(): void {
             />
           </svg>
           {{ $t('detail.export') }}
+        </BaseButton>
+
+        <BaseButton
+          v-if="party.date"
+          :variant="hasReminder ? 'primary' : 'ghost'"
+          block
+          :aria-pressed="hasReminder"
+          data-testid="reminder-toggle"
+          @click="onToggleReminder"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="detail__share-icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"
+            />
+          </svg>
+          {{ hasReminder ? $t('reminder.on') : $t('reminder.off') }}
         </BaseButton>
 
         <div class="detail__actions">

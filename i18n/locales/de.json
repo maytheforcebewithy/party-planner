@@ -174,6 +174,12 @@
       "link": "🔗 {value}"
     }
   },
+  "reminder": {
+    "on": "Erinnerung aktiv",
+    "off": "Erinnerung setzen",
+    "title": "Party-Erinnerung",
+    "body": "Morgen: {name}"
+  },
   "form": {
     "name": {
       "label": "Name",
