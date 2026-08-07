@@ -1,5 +1,6 @@
 import { usePartiesStore } from '../stores/parties-store'
 import { InvalidImportError, parseImport, serializeParties } from '../services/party-transfer'
+import { fileSlug } from '../services/file-slug'
 import type { Party } from '../types/party'
 import { saveOrShareFile } from '~/shared/files/save-file'
 
@@ -46,9 +47,4 @@ export function useExportImport() {
   }
 
   return { exportParties, exportParty, importParties }
-}
-
-/** A filesystem-safe slug from a party name, or `party` when it reduces to nothing. */
-function fileSlug(name: string): string {
-  return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'party'
 }

@@ -7,6 +7,7 @@ import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
 import { useExportImport } from '~/features/parties/composables/use-export-import'
+import { useCalendarExport } from '~/features/parties/composables/use-calendar-export'
 import { useReminders } from '~/features/parties/composables/use-reminders'
 import { linkHost } from '~/features/parties/services/party-link'
 import { shareNoticeKey } from '~/shared/sharing/share-text'
@@ -17,6 +18,7 @@ const store = usePartiesStore()
 const { displayDate, displayTime } = usePartyFormatting()
 const { shareInvitation } = useShareInvitation()
 const { exportParty } = useExportImport()
+const { exportToCalendar } = useCalendarExport()
 const reminders = useReminders()
 const { t } = useI18n()
 
@@ -48,6 +50,10 @@ function onShare(): void {
 
 function onExport(): void {
   if (party.value) void exportParty(party.value)
+}
+
+function onAddToCalendar(): void {
+  if (party.value) void exportToCalendar(party.value)
 }
 
 function onToggleReminder(): void {
@@ -239,6 +245,30 @@ function onDelete(): void {
             />
           </svg>
           {{ hasReminder ? $t('reminder.on') : $t('reminder.off') }}
+        </BaseButton>
+
+        <BaseButton
+          v-if="party.date"
+          variant="ghost"
+          block
+          data-testid="add-to-calendar"
+          @click="onAddToCalendar"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="detail__share-icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M7 4v3m10-3v3M4 8h16M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"
+            />
+          </svg>
+          {{ $t('detail.addToCalendar') }}
         </BaseButton>
 
         <div class="detail__actions">

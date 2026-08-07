@@ -119,6 +119,7 @@
     "noDate": "No date set",
     "openLink": "Open link · {host}",
     "export": "Export as file",
+    "addToCalendar": "Add to calendar",
     "time": {
       "range": "{start} – {end}",
       "from": "from {start}",
