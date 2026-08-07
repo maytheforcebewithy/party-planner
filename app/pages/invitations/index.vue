@@ -67,6 +67,7 @@ function onImport(event: Event): void {
             accept="application/json,.json"
             class="action__input"
             data-testid="invite-import"
+            :aria-label="t('invitations.import')"
             @change="onImport"
           >
           <svg
@@ -83,7 +84,6 @@ function onImport(event: Event): void {
               d="M12 15V3m0 12-4-4m4 4 4-4M5 17v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2"
             />
           </svg>
-          {{ t('invitations.import') }}
         </label>
       </div>
 
@@ -161,11 +161,16 @@ function onImport(event: Event): void {
   border-color: transparent;
 }
 
-/* Import is the smaller, secondary action. */
+/* Import is the rare, secondary action — a compact icon-only button. */
 .action--import {
   flex: 0 0 auto;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  width: 2.75rem;
+  padding: 0;
+}
+
+.action--import .action__icon {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .action__icon {
