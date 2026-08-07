@@ -12,7 +12,7 @@ function onSeedDemo(): void {
   void seedDemo()
 }
 
-const today = new Date().toISOString().slice(0, 10)
+const today = todayIso()
 const tab = ref('upcoming')
 
 const tabOptions = computed(() => [

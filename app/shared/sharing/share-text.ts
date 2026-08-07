@@ -2,6 +2,13 @@ import { Share } from '@capacitor/share'
 
 export type ShareResult = 'shared' | 'cancelled' | 'copied' | 'unavailable'
 
+/** The i18n key for the user notice after a share, or `null` when none is needed. */
+export function shareNoticeKey(result: ShareResult): string | null {
+  if (result === 'copied') return 'share.copied'
+  if (result === 'unavailable') return 'share.unavailable'
+  return null
+}
+
 /**
  * Share plain text through the OS share sheet (Capacitor Share, which uses the
  * Web Share API in the browser), falling back to copying it to the clipboard so

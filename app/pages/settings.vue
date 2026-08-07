@@ -2,6 +2,7 @@
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { useSettings } from '~/composables/use-settings'
 import { useShareApp } from '~/composables/use-share-app'
+import { shareNoticeKey } from '~/shared/sharing/share-text'
 import { APP_STORE_LINKS } from '~/config/app-store'
 
 const { t } = useI18n()
@@ -36,12 +37,8 @@ function onDeleteAll(): void {
 }
 
 async function runShareApp(): Promise<void> {
-  const result = await shareApp()
-  shareNotice.value = result === 'copied'
-    ? t('share.copied')
-    : result === 'unavailable'
-      ? t('share.unavailable')
-      : ''
+  const key = shareNoticeKey(await shareApp())
+  shareNotice.value = key ? t(key) : ''
 }
 
 function onShareApp(): void {

@@ -8,7 +8,7 @@ const { t } = useI18n()
 const store = useParties()
 const { importParties } = useExportImport()
 
-const today = new Date().toISOString().slice(0, 10)
+const today = todayIso()
 const received = computed(() => {
   const groups = partitionParties(store.parties.filter(party => party.received), today)
   return [...groups.upcoming, ...groups.past]
