@@ -2,6 +2,7 @@ import { addPartyAppearance } from './add-party-appearance'
 import { addPartyDetails } from './add-party-details'
 import { addPartyLinkImage } from './add-party-link-image'
 import { addPartyLists } from './add-party-lists'
+import { addPartyReceived } from './add-party-received'
 import { createPartiesTable } from './create-parties-table'
 import type { Migration } from './migration'
 
@@ -10,4 +11,4 @@ import type { Migration } from './migration'
  * greater than the stored schema version, in ascending order. Append new
  * migrations here with a strictly increasing `version`.
  */
-export const migrations: readonly Migration[] = [createPartiesTable, addPartyDetails, addPartyAppearance, addPartyLists, addPartyLinkImage]
+export const migrations: readonly Migration[] = [createPartiesTable, addPartyDetails, addPartyAppearance, addPartyLists, addPartyLinkImage, addPartyReceived]

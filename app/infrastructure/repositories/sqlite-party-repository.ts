@@ -6,7 +6,7 @@ import type { Database } from '~/infrastructure/database/database'
 import { createId } from '~/shared/utils/id'
 
 /** Column list shared by SELECT/INSERT; order matches {@link PartyRow}. */
-const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, image, link, guests, shopping, created_at, updated_at'
+const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, image, link, received, guests, shopping, created_at, updated_at'
 
 /** Raw row shape as stored in SQLite (snake_case columns). */
 interface PartyRow {
@@ -22,6 +22,8 @@ interface PartyRow {
   readonly color: string | null
   readonly image: string | null
   readonly link: string | null
+  /** Stored as 0/1 (INTEGER); `null` for rows created before v6. */
+  readonly received: number | null
   /** JSON-encoded sub-collections; `null` for rows created before v4. */
   readonly guests: string | null
   readonly shopping: string | null
@@ -59,6 +61,7 @@ function toParty(row: PartyRow): Party {
     color: row.color,
     image: row.image,
     link: row.link,
+    received: row.received === 1,
     guests: coerceGuests(parseArray(row.guests)),
     shopping: coerceShopping(parseArray(row.shopping)),
     createdAt: row.created_at,
@@ -108,13 +111,14 @@ export class SqlitePartyRepository implements PartyRepository {
       color: data.color ?? null,
       image: data.image ?? null,
       link: data.link ?? null,
+      received: data.received ?? false,
       guests: data.guests ?? [],
       shopping: data.shopping ?? [],
       createdAt: now,
       updatedAt: now,
     }
     await this.#database.execute(
-      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         party.id,
         party.name,
@@ -128,6 +132,7 @@ export class SqlitePartyRepository implements PartyRepository {
         party.color,
         party.image,
         party.link,
+        party.received ? 1 : 0,
         serialize(party.guests),
         serialize(party.shopping),
         party.createdAt,
@@ -154,12 +159,13 @@ export class SqlitePartyRepository implements PartyRepository {
       color: changes.color === undefined ? existing.color : changes.color,
       image: changes.image === undefined ? existing.image : changes.image,
       link: changes.link === undefined ? existing.link : changes.link,
+      received: changes.received === undefined ? existing.received : changes.received,
       guests: changes.guests === undefined ? existing.guests : changes.guests,
       shopping: changes.shopping === undefined ? existing.shopping : changes.shopping,
       updatedAt: new Date().toISOString(),
     }
     await this.#database.execute(
-      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, image = ?, link = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
+      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, image = ?, link = ?, received = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
       [
         updated.name,
         updated.date,
@@ -172,6 +178,7 @@ export class SqlitePartyRepository implements PartyRepository {
         updated.color,
         updated.image,
         updated.link,
+        updated.received ? 1 : 0,
         serialize(updated.guests),
         serialize(updated.shopping),
         updated.updatedAt,

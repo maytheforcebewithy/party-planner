@@ -8,6 +8,7 @@ import { usePartyFormatting } from '~/features/parties/composables/use-party-for
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
 import { useExportImport } from '~/features/parties/composables/use-export-import'
 import { linkHost } from '~/features/parties/services/party-link'
+import { shareNoticeKey } from '~/shared/sharing/share-text'
 import type { Party } from '~/features/parties/types/party'
 
 const route = useRoute()
@@ -32,12 +33,8 @@ onMounted(() => {
 })
 
 async function share(target: Party): Promise<void> {
-  const result = await shareInvitation(target)
-  shareNotice.value = result === 'copied'
-    ? t('share.copied')
-    : result === 'unavailable'
-      ? t('share.unavailable')
-      : ''
+  const key = shareNoticeKey(await shareInvitation(target))
+  shareNotice.value = key ? t(key) : ''
 }
 
 function onShare(): void {

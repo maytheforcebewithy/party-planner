@@ -28,10 +28,15 @@ export function useExportImport() {
     await saveOrShareFile(json, `party-planner-${fileSlug(party.name)}.json`)
   }
 
-  async function importParties(file: File): Promise<ImportResult> {
+  /**
+   * Import parties from a file. With `received: true` the imported parties are
+   * flagged as received invitations (from someone else); otherwise they are
+   * restored as own parties.
+   */
+  async function importParties(file: File, options: { received?: boolean } = {}): Promise<ImportResult> {
     try {
       const drafts = parseImport(await file.text())
-      for (const draft of drafts) await store.create(draft)
+      for (const draft of drafts) await store.create({ ...draft, received: options.received ?? false })
       return { ok: true, imported: drafts.length }
     }
     catch (error) {

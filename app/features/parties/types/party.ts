@@ -25,6 +25,8 @@ export interface Party {
   readonly image: string | null
   /** An optional related link (e.g. a Spotify playlist), normalised to a URL. */
   readonly link: string | null
+  /** `true` for an invitation received from someone else; `false` for own parties. */
+  readonly received: boolean
   /** Embedded sub-collections; empty arrays when unused. */
   readonly guests: readonly Guest[]
   readonly shopping: readonly ShoppingItem[]
@@ -48,6 +50,7 @@ export interface CreateParty {
   readonly color?: string | null
   readonly image?: string | null
   readonly link?: string | null
+  readonly received?: boolean
   readonly guests?: readonly Guest[]
   readonly shopping?: readonly ShoppingItem[]
 }

@@ -1,3 +1,6 @@
+/** JPEG quality for the downscaled badge image — small file, still legible. */
+const JPEG_QUALITY = 0.82
+
 /**
  * Read a picked image file and return a downscaled JPEG data URL. Keeping the
  * badge image small (max edge {@link maxSize}px) matters because it is stored
@@ -19,7 +22,7 @@ export async function readImageAsDataUrl(file: File, maxSize = 512): Promise<str
   if (!context) return original
 
   context.drawImage(image, 0, 0, width, height)
-  return canvas.toDataURL('image/jpeg', 0.82)
+  return canvas.toDataURL('image/jpeg', JPEG_QUALITY)
 }
 
 function fileToDataUrl(file: File): Promise<string> {

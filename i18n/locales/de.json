@@ -16,7 +16,9 @@
   },
   "invitations": {
     "title": "Einladungen",
-    "placeholder": "Hier verwaltest du bald deine Einladungen."
+    "import": "Einladung importieren",
+    "imported": "{count} Einladungen importiert",
+    "none": "Noch keine Einladungen erhalten."
   },
   "importExport": {
     "title": "Import / Export",

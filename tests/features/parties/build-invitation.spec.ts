@@ -31,6 +31,7 @@ const base: Party = {
   color: null,
   image: null,
   link: null,
+  received: false,
   guests: [],
   shopping: [],
   createdAt: '',
