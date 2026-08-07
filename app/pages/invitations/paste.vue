@@ -2,18 +2,55 @@
 import PartyForm from '~/features/parties/components/PartyForm.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { parseInvitationText } from '~/features/parties/services/parse-invitation'
+import { readClipboard } from '~/shared/clipboard/read-clipboard'
 import type { CreateParty } from '~/features/parties/types/party'
 
 definePageMeta({ layout: 'modal' })
 
 const { t } = useI18n()
 const store = usePartiesStore()
+const pasteSource = useState<string>('paste-source', () => '')
 
 const text = ref('')
 const draft = ref<CreateParty | null>(null)
+const empty = ref(false)
+
+function parse(source: string): void {
+  if (source.trim()) {
+    draft.value = parseInvitationText(source)
+    empty.value = false
+  }
+  else {
+    empty.value = true
+  }
+}
+
+onMounted(() => {
+  // The tab tap read the clipboard for us — parse it straight away.
+  if (pasteSource.value) {
+    text.value = pasteSource.value
+    parse(pasteSource.value)
+    pasteSource.value = ''
+  }
+})
+
+async function fromClipboard(): Promise<void> {
+  const clip = await readClipboard()
+  if (clip.trim()) {
+    text.value = clip
+    parse(clip)
+  }
+  else {
+    empty.value = true
+  }
+}
+
+function onClipboard(): void {
+  void fromClipboard()
+}
 
 function onParse(): void {
-  if (text.value.trim()) draft.value = parseInvitationText(text.value)
+  parse(text.value)
 }
 
 async function create(data: CreateParty): Promise<void> {
@@ -42,15 +79,37 @@ function onCancel(): void {
         <p class="intro">
           {{ t('invitations.paste.intro') }}
         </p>
+
+        <BaseButton
+          block
+          data-testid="paste-clipboard"
+          @click="onClipboard"
+        >
+          {{ t('invitations.paste.clipboard') }}
+        </BaseButton>
+
+        <p
+          v-if="empty"
+          class="empty"
+          role="status"
+          data-testid="paste-empty"
+        >
+          {{ t('invitations.paste.empty') }}
+        </p>
+
+        <p class="or">
+          {{ t('invitations.paste.or') }}
+        </p>
         <textarea
           v-model="text"
           :placeholder="t('invitations.paste.placeholder')"
-          rows="8"
+          rows="7"
           class="paste"
           data-testid="paste-input"
         />
         <BaseButton
           block
+          variant="ghost"
           :disabled="!text.trim()"
           data-testid="paste-parse"
           @click="onParse"
@@ -75,15 +134,32 @@ function onCancel(): void {
 </template>
 
 <style scoped>
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
 .intro {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }
 
+.empty {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  text-align: center;
+}
+
+.or {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
 .paste {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  margin-block: var(--space-4);
   font-size: var(--font-size-base);
   color: var(--color-text);
   background-color: var(--surface-card);

@@ -22,6 +22,9 @@
     "paste": {
       "action": "Paste invitation",
       "intro": "Paste the message you received — we'll try to detect the date, time and location automatically.",
+      "clipboard": "Paste from clipboard",
+      "empty": "Clipboard is empty — paste the message below.",
+      "or": "or",
       "placeholder": "Paste the message here …",
       "parse": "Read it",
       "review": "Please check the detected details and fill in anything that's missing.",
