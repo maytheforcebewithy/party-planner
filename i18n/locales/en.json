@@ -92,6 +92,18 @@
     "showMore": "+{count} more",
     "showLess": "Show less"
   },
+  "share": {
+    "action": "Share",
+    "copied": "Invitation copied to clipboard",
+    "unavailable": "Sharing isn't available on this device",
+    "invitation": {
+      "title": "Invitation to {name}",
+      "heading": "🎉 You're invited: {name}",
+      "date": "📅 {value}",
+      "time": "🕒 {value}",
+      "location": "📍 {value}"
+    }
+  },
   "form": {
     "name": {
       "label": "Name",
