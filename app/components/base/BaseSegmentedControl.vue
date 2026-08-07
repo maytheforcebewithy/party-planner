@@ -4,7 +4,7 @@ interface Segment {
   label: string
 }
 
-defineProps<{ options: readonly Segment[] }>()
+defineProps<{ options: readonly Segment[], testIdPrefix?: string }>()
 
 const model = defineModel<string>({ required: true })
 </script>
@@ -18,6 +18,7 @@ const model = defineModel<string>({ required: true })
       class="segmented__option"
       :class="{ 'segmented__option--active': model === option.value }"
       :aria-pressed="model === option.value"
+      :data-testid="testIdPrefix ? `${testIdPrefix}-${option.value}` : undefined"
       @click="model = option.value"
     >
       {{ option.label }}

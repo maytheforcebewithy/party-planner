@@ -100,6 +100,15 @@
       "bread": "Brot & Dips",
       "drinks": "Getränke",
       "tableware": "Servietten & Teller"
+    },
+    "invitation": {
+      "name": "Claras Geburtstag",
+      "location": "Bei Clara zu Hause",
+      "description": "Kleine Feier mit Kuchen und Musik. Komm gern vorbei!",
+      "bring": {
+        "dessert": "Veganer Nachtisch",
+        "drinks": "Alkoholfreie Getränke"
+      }
     }
   },
   "create": {
@@ -125,6 +134,12 @@
       "from": "ab {start} Uhr",
       "until": "bis {end} Uhr"
     }
+  },
+  "attendance": {
+    "title": "Deine Zusage",
+    "yes": "Ich komme",
+    "maybe": "Vielleicht",
+    "no": "Abgesagt"
   },
   "guests": {
     "title": "Gäste",

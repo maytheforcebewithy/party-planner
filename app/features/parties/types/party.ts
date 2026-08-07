@@ -1,5 +1,11 @@
 import type { Guest, ShoppingItem } from './party-lists'
 
+/** Your own reply to a received invitation; `null` until you answer. */
+export type Attendance = 'yes' | 'maybe' | 'no'
+
+/** Display order of the reply options in the UI. */
+export const ATTENDANCE_OPTIONS: readonly Attendance[] = ['yes', 'maybe', 'no']
+
 /**
  * A locally-stored party/event. Every field lives on-device; the `id` is a
  * locally generated UUID so an imported copy can be safely re-keyed (see the
@@ -27,6 +33,8 @@ export interface Party {
   readonly link: string | null
   /** `true` for an invitation received from someone else; `false` for own parties. */
   readonly received: boolean
+  /** Your own reply to a received invitation; `null` until answered. */
+  readonly attendance: Attendance | null
   /** Embedded sub-collections; empty arrays when unused. */
   readonly guests: readonly Guest[]
   readonly shopping: readonly ShoppingItem[]
@@ -51,6 +59,7 @@ export interface CreateParty {
   readonly image?: string | null
   readonly link?: string | null
   readonly received?: boolean
+  readonly attendance?: Attendance | null
   readonly guests?: readonly Guest[]
   readonly shopping?: readonly ShoppingItem[]
 }

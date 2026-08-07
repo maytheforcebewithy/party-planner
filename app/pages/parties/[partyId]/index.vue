@@ -3,6 +3,7 @@ import PartyHero from '~/features/parties/components/PartyHero.vue'
 import PartyInfoCard from '~/features/parties/components/PartyInfoCard.vue'
 import PartyGuestList from '~/features/parties/components/PartyGuestList.vue'
 import PartyShoppingList from '~/features/parties/components/PartyShoppingList.vue'
+import PartyAttendance from '~/features/parties/components/PartyAttendance.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
@@ -156,6 +157,10 @@ function onDelete(): void {
           {{ $t('detail.openLink', { host: linkLabel }) }}
         </BaseButton>
 
+        <PartyAttendance
+          v-if="party.received"
+          :party-id="party.id"
+        />
         <PartyGuestList
           v-if="!party.received"
           :party-id="party.id"

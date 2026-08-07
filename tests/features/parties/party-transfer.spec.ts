@@ -54,6 +54,14 @@ describe('parseImport', () => {
     })
   })
 
+  it('round-trips a known attendance and drops an unknown one', () => {
+    const [kept] = parseImport(serializeParties([party({ attendance: 'yes' })], 'now'))
+    expect(kept?.attendance).toBe('yes')
+
+    const doc = JSON.stringify({ format: EXPORT_FORMAT, version: 1, parties: [{ name: 'X', attendance: 'going' }] })
+    expect(parseImport(doc)[0]?.attendance).toBeNull()
+  })
+
   it('throws on non-JSON and on a document with the wrong format', () => {
     expect(() => parseImport('not json')).toThrow(InvalidImportError)
     expect(() => parseImport('{"parties":[]}')).toThrow(InvalidImportError)
