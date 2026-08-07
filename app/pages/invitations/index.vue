@@ -39,18 +39,40 @@ function onImport(event: Event): void {
       </h1>
 
       <div class="actions">
-        <label class="upload">
+        <NuxtLink
+          to="/invitations/paste"
+          class="action action--primary"
+          data-testid="invite-paste"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="action__icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 4h6a1 1 0 0 1 1 1v1H8V5a1 1 0 0 1 1-1ZM7 6h10a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
+            />
+          </svg>
+          {{ t('invitations.paste.action') }}
+        </NuxtLink>
+
+        <label class="action">
           <input
             type="file"
             accept="application/json,.json"
-            class="upload__input"
+            class="action__input"
             data-testid="invite-import"
             @change="onImport"
           >
           <svg
             aria-hidden="true"
             viewBox="0 0 24 24"
-            class="upload__icon"
+            class="action__icon"
           >
             <path
               fill="none"
@@ -112,9 +134,11 @@ function onImport(event: Event): void {
 
 .actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
-.upload {
+.action {
   display: inline-flex;
   gap: var(--space-2);
   align-items: center;
@@ -127,12 +151,18 @@ function onImport(event: Event): void {
   border-radius: var(--radius-pill);
 }
 
-.upload__icon {
+.action--primary {
+  color: var(--color-primary-contrast);
+  background-color: var(--color-primary);
+  border-color: transparent;
+}
+
+.action__icon {
   width: 1.05rem;
   height: 1.05rem;
 }
 
-.upload__input {
+.action__input {
   position: absolute;
   width: 1px;
   height: 1px;
