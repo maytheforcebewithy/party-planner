@@ -70,6 +70,27 @@ pnpm exec cap add ios
 pnpm capacitor:ios       # öffnet das Projekt in Xcode
 ```
 
+## Lokale Datenhaltung
+
+Alle fachlichen Daten liegen **ausschließlich lokal auf dem Gerät**. Die App ist
+offline-first und funktioniert ohne Internet.
+
+- **Warum SQLite?** Party-Daten wachsen (Listen, Aufgaben, Gäste, Budget,
+  Ablauf) und brauchen strukturierte, abfragbare Speicherung. SQLite (über das
+  Plugin `@capacitor-community/sqlite`) ist dafür robuster als `LocalStorage`
+  oder Preferences. Preferences sind später nur für einfache Einstellungen
+  vorgesehen, nicht für fachliche Daten.
+- **Warum keine Cloud?** Privatsphäre ist ein Kernmerkmal: keine Accounts, keine
+  zentrale Speicherung, keine Synchronisierung. Die Daten gehören dem Nutzer und
+  bleiben auf seinem Gerät. Geteilt wird nur bewusst (Einladung/Export).
+- **Warum keine REST-API?** Ohne Cloud und ohne geteilten Zustand gibt es nichts
+  serverseitig zu bedienen. Der Kern kommt vollständig ohne Netzwerk aus.
+
+Der Zugriff ist gekapselt: `Page → Composable/Store → Repository-Interface →
+Persistence Layer`. Komponenten kennen weder SQLite noch Capacitor. SQLite läuft
+nur in der **nativen** App; im Browser (Entwicklung/Tests) wird ein nicht
+persistierender In-Memory-Treiber genutzt (siehe Pull-Request-Hinweise).
+
 ## Hinweis
 
 Die Anwendung ist ausschließlich als mobile Capacitor-App gedacht. Es ist keine

@@ -42,4 +42,12 @@ export default withNuxt(
       '@typescript-eslint/require-await': 'error',
     },
   },
+  {
+    // The logger is the single sanctioned place for direct console output.
+    // Placed last so it wins over the project-wide no-console rule.
+    files: ['app/shared/logger.ts'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
 )

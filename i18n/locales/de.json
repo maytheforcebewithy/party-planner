@@ -1,0 +1,145 @@
+{
+  "app": {
+    "title": "Party Planner"
+  },
+  "ads": {
+    "placeholder": "Werbung"
+  },
+  "nav": {
+    "back": "Zurück",
+    "tabs": {
+      "parties": "Partys",
+      "invitations": "Einladungen",
+      "importExport": "Import/Export",
+      "settings": "Einstellungen"
+    }
+  },
+  "invitations": {
+    "title": "Einladungen",
+    "placeholder": "Hier verwaltest du bald deine Einladungen."
+  },
+  "importExport": {
+    "title": "Import / Export",
+    "placeholder": "Bald kannst du hier ganze Partys als Datei sichern und wieder importieren."
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "placeholder": "Einstellungen folgen in einem späteren Schritt."
+  },
+  "list": {
+    "title": "Meine Partys",
+    "new": "Neue Party",
+    "tabs": {
+      "upcoming": "Kommende",
+      "past": "Vergangene"
+    },
+    "none": {
+      "upcoming": "Keine kommenden Partys.",
+      "past": "Keine vergangenen Partys."
+    },
+    "empty": {
+      "title": "Noch keine Partys",
+      "cta": "Feier planen"
+    }
+  },
+  "create": {
+    "title": "Neue Party",
+    "submit": "Party erstellen"
+  },
+  "edit": {
+    "title": "Party bearbeiten",
+    "submit": "Änderungen speichern",
+    "notFound": "Diese Party gibt es nicht (mehr)."
+  },
+  "detail": {
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirm": "Diese Party wirklich löschen?",
+    "notFound": "Diese Party gibt es nicht (mehr).",
+    "noDate": "Kein Datum festgelegt",
+    "time": {
+      "range": "{start} – {end} Uhr",
+      "from": "ab {start} Uhr",
+      "until": "bis {end} Uhr"
+    }
+  },
+  "guests": {
+    "title": "Gäste",
+    "count": "{yes} von {total} zugesagt",
+    "empty": "Noch keine Gäste.",
+    "add": "Gast hinzufügen …",
+    "addAction": "Gast hinzufügen",
+    "remove": "{name} entfernen",
+    "rsvpToggle": "{name}: {status} – tippen zum Ändern",
+    "rsvp": {
+      "yes": "Zugesagt",
+      "pending": "Offen",
+      "no": "Abgesagt"
+    }
+  },
+  "shopping": {
+    "title": "Einkaufsliste",
+    "count": "{done} von {total} besorgt",
+    "empty": "Noch nichts auf der Liste.",
+    "add": "Eintrag hinzufügen …",
+    "addAction": "Eintrag hinzufügen",
+    "remove": "{name} entfernen",
+    "toggle": "{name} als erledigt markieren",
+    "assign": "Wer bringt es mit?",
+    "assignNone": "Offen"
+  },
+  "lists": {
+    "showMore": "+{count} weitere",
+    "showLess": "Weniger anzeigen"
+  },
+  "form": {
+    "name": {
+      "label": "Name",
+      "placeholder": "z. B. Sommerfest",
+      "required": "Bitte gib einen Namen ein."
+    },
+    "date": {
+      "label": "Datum"
+    },
+    "startTime": {
+      "label": "Startzeit"
+    },
+    "endTime": {
+      "label": "Endzeit"
+    },
+    "location": {
+      "label": "Ort",
+      "placeholder": "z. B. Park"
+    },
+    "description": {
+      "label": "Beschreibung",
+      "placeholder": "Details zur Feier …"
+    },
+    "hinweise": {
+      "label": "Hinweise",
+      "placeholder": "z. B. bitte Snacks mitbringen …"
+    },
+    "optional": "optional",
+    "appearance": {
+      "icon": "Symbol",
+      "color": "Farbe",
+      "icons": {
+        "cake": "Kuchen",
+        "gift": "Geschenk",
+        "balloon": "Luftballon",
+        "music": "Musik",
+        "star": "Stern",
+        "heart": "Herz"
+      },
+      "colors": {
+        "green": "Grün",
+        "amber": "Gelb",
+        "sky": "Blau",
+        "pink": "Pink",
+        "purple": "Lila",
+        "orange": "Orange"
+      }
+    },
+    "cancel": "Abbrechen"
+  }
+}

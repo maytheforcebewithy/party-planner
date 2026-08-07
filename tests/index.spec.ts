@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import IndexPage from '~/pages/index.vue'
 
-describe('app setup', () => {
-  it('renders the minimal start view', async () => {
+describe('parties index page', () => {
+  it('offers a way to create a new party', async () => {
     const wrapper = await mountSuspended(IndexPage)
 
-    expect(wrapper.text()).toContain('Party Planner')
-    expect(wrapper.text()).toContain('App setup successful')
+    const hrefs = wrapper.findAll('a').map(anchor => anchor.attributes('href'))
+    expect(hrefs).toContain('/parties/create')
   })
 })

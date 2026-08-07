@@ -1,0 +1,145 @@
+{
+  "app": {
+    "title": "Party Planner"
+  },
+  "ads": {
+    "placeholder": "Advertisement"
+  },
+  "nav": {
+    "back": "Back",
+    "tabs": {
+      "parties": "Parties",
+      "invitations": "Invitations",
+      "importExport": "Import/Export",
+      "settings": "Settings"
+    }
+  },
+  "invitations": {
+    "title": "Invitations",
+    "placeholder": "You'll manage your invitations here soon."
+  },
+  "importExport": {
+    "title": "Import / Export",
+    "placeholder": "Soon you'll be able to back up whole parties as a file and import them again."
+  },
+  "settings": {
+    "title": "Settings",
+    "placeholder": "Settings are coming in a later step."
+  },
+  "list": {
+    "title": "My parties",
+    "new": "New party",
+    "tabs": {
+      "upcoming": "Upcoming",
+      "past": "Past"
+    },
+    "none": {
+      "upcoming": "No upcoming parties.",
+      "past": "No past parties."
+    },
+    "empty": {
+      "title": "No parties yet",
+      "cta": "Plan a party"
+    }
+  },
+  "create": {
+    "title": "New party",
+    "submit": "Create party"
+  },
+  "edit": {
+    "title": "Edit party",
+    "submit": "Save changes",
+    "notFound": "This party no longer exists."
+  },
+  "detail": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Really delete this party?",
+    "notFound": "This party no longer exists.",
+    "noDate": "No date set",
+    "time": {
+      "range": "{start} – {end}",
+      "from": "from {start}",
+      "until": "until {end}"
+    }
+  },
+  "guests": {
+    "title": "Guests",
+    "count": "{yes} of {total} confirmed",
+    "empty": "No guests yet.",
+    "add": "Add guest …",
+    "addAction": "Add guest",
+    "remove": "Remove {name}",
+    "rsvpToggle": "{name}: {status} – tap to change",
+    "rsvp": {
+      "yes": "Confirmed",
+      "pending": "Pending",
+      "no": "Declined"
+    }
+  },
+  "shopping": {
+    "title": "Shopping list",
+    "count": "{done} of {total} bought",
+    "empty": "Nothing on the list yet.",
+    "add": "Add item …",
+    "addAction": "Add item",
+    "remove": "Remove {name}",
+    "toggle": "Mark {name} as done",
+    "assign": "Who brings it?",
+    "assignNone": "Open"
+  },
+  "lists": {
+    "showMore": "+{count} more",
+    "showLess": "Show less"
+  },
+  "form": {
+    "name": {
+      "label": "Name",
+      "placeholder": "e.g. Summer party",
+      "required": "Please enter a name."
+    },
+    "date": {
+      "label": "Date"
+    },
+    "startTime": {
+      "label": "Start time"
+    },
+    "endTime": {
+      "label": "End time"
+    },
+    "location": {
+      "label": "Location",
+      "placeholder": "e.g. Park"
+    },
+    "description": {
+      "label": "Description",
+      "placeholder": "Details about the celebration …"
+    },
+    "hinweise": {
+      "label": "Notes",
+      "placeholder": "e.g. please bring snacks …"
+    },
+    "optional": "optional",
+    "appearance": {
+      "icon": "Icon",
+      "color": "Colour",
+      "icons": {
+        "cake": "Cake",
+        "gift": "Gift",
+        "balloon": "Balloon",
+        "music": "Music",
+        "star": "Star",
+        "heart": "Heart"
+      },
+      "colors": {
+        "green": "Green",
+        "amber": "Yellow",
+        "sky": "Blue",
+        "pink": "Pink",
+        "purple": "Purple",
+        "orange": "Orange"
+      }
+    },
+    "cancel": "Cancel"
+  }
+}
