@@ -56,4 +56,26 @@ describe('useExportImport', () => {
     expect(createObjectURL).toHaveBeenCalledOnce()
     vi.unstubAllGlobals()
   })
+
+  it('exports a single party as a party-planner document', async () => {
+    const store = usePartiesStore()
+    const party = await store.create({ name: 'Gartenparty' })
+    let captured: Blob | undefined
+    vi.stubGlobal('URL', {
+      createObjectURL: (blob: Blob) => {
+        captured = blob
+        return 'blob:x'
+      },
+      revokeObjectURL: vi.fn(),
+    })
+
+    const { exportParty } = useExportImport()
+    exportParty(party)
+
+    expect(captured).toBeDefined()
+    const text = await (captured as Blob).text()
+    expect(text).toContain('party-planner')
+    expect(text).toContain('Gartenparty')
+    vi.unstubAllGlobals()
+  })
 })

@@ -90,6 +90,7 @@
     "notFound": "This party no longer exists.",
     "noDate": "No date set",
     "openLink": "Open link · {host}",
+    "export": "Export as file",
     "time": {
       "range": "{start} – {end}",
       "from": "from {start}",
@@ -131,7 +132,7 @@
     "unavailable": "Sharing isn't available on this device",
     "invitation": {
       "title": "Invitation to {name}",
-      "heading": "🎉 You're invited: {name}",
+      "heading": "You're invited: {name}",
       "date": "📅 {value}",
       "time": "🕒 {value}",
       "location": "📍 {value}",

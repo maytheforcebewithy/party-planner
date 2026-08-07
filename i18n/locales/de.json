@@ -90,6 +90,7 @@
     "notFound": "Diese Party gibt es nicht (mehr).",
     "noDate": "Kein Datum festgelegt",
     "openLink": "Link öffnen · {host}",
+    "export": "Als Datei exportieren",
     "time": {
       "range": "{start} – {end} Uhr",
       "from": "ab {start} Uhr",
@@ -131,7 +132,7 @@
     "unavailable": "Teilen ist auf diesem Gerät nicht möglich",
     "invitation": {
       "title": "Einladung zu {name}",
-      "heading": "🎉 Einladung: {name}",
+      "heading": "Einladung: {name}",
       "date": "📅 {value}",
       "time": "🕒 {value}",
       "location": "📍 {value}",
