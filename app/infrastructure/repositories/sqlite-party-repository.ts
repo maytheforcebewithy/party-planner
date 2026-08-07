@@ -6,7 +6,7 @@ import type { Database } from '~/infrastructure/database/database'
 import { createId } from '~/shared/utils/id'
 
 /** Column list shared by SELECT/INSERT; order matches {@link PartyRow}. */
-const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, guests, shopping, created_at, updated_at'
+const COLUMNS = 'id, name, date, location, description, start_time, end_time, hinweise, icon, color, image, link, guests, shopping, created_at, updated_at'
 
 const RSVP_VALUES: readonly GuestRsvp[] = ['yes', 'pending', 'no']
 
@@ -22,6 +22,8 @@ interface PartyRow {
   readonly hinweise: string | null
   readonly icon: string | null
   readonly color: string | null
+  readonly image: string | null
+  readonly link: string | null
   /** JSON-encoded sub-collections; `null` for rows created before v4. */
   readonly guests: string | null
   readonly shopping: string | null
@@ -77,6 +79,8 @@ function toParty(row: PartyRow): Party {
     hinweise: row.hinweise,
     icon: row.icon,
     color: row.color,
+    image: row.image,
+    link: row.link,
     guests: parseGuests(row.guests),
     shopping: parseShopping(row.shopping),
     createdAt: row.created_at,
@@ -124,13 +128,15 @@ export class SqlitePartyRepository implements PartyRepository {
       hinweise: data.hinweise ?? null,
       icon: data.icon ?? null,
       color: data.color ?? null,
+      image: data.image ?? null,
+      link: data.link ?? null,
       guests: data.guests ?? [],
       shopping: data.shopping ?? [],
       createdAt: now,
       updatedAt: now,
     }
     await this.#database.execute(
-      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO parties (${COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         party.id,
         party.name,
@@ -142,6 +148,8 @@ export class SqlitePartyRepository implements PartyRepository {
         party.hinweise,
         party.icon,
         party.color,
+        party.image,
+        party.link,
         serialize(party.guests),
         serialize(party.shopping),
         party.createdAt,
@@ -166,12 +174,14 @@ export class SqlitePartyRepository implements PartyRepository {
       hinweise: changes.hinweise === undefined ? existing.hinweise : changes.hinweise,
       icon: changes.icon === undefined ? existing.icon : changes.icon,
       color: changes.color === undefined ? existing.color : changes.color,
+      image: changes.image === undefined ? existing.image : changes.image,
+      link: changes.link === undefined ? existing.link : changes.link,
       guests: changes.guests === undefined ? existing.guests : changes.guests,
       shopping: changes.shopping === undefined ? existing.shopping : changes.shopping,
       updatedAt: new Date().toISOString(),
     }
     await this.#database.execute(
-      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
+      'UPDATE parties SET name = ?, date = ?, location = ?, description = ?, start_time = ?, end_time = ?, hinweise = ?, icon = ?, color = ?, image = ?, link = ?, guests = ?, shopping = ?, updated_at = ? WHERE id = ?;',
       [
         updated.name,
         updated.date,
@@ -182,6 +192,8 @@ export class SqlitePartyRepository implements PartyRepository {
         updated.hinweise,
         updated.icon,
         updated.color,
+        updated.image,
+        updated.link,
         serialize(updated.guests),
         serialize(updated.shopping),
         updated.updatedAt,

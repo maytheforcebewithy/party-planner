@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PartyAppearancePicker from './PartyAppearancePicker.vue'
 import { DEFAULT_COLOR, DEFAULT_ICON, resolveColor, resolveIcon } from '../config/party-appearance'
+import { normalizeLink } from '../services/party-link'
 import type { CreateParty, Party } from '../types/party'
 
 const props = defineProps<{
@@ -24,6 +25,8 @@ const description = ref(props.initial?.description ?? '')
 const hinweise = ref(props.initial?.hinweise ?? '')
 const icon = ref<string>(props.initial ? resolveIcon(props.initial.icon) : DEFAULT_ICON)
 const color = ref<string>(props.initial ? resolveColor(props.initial.color) : DEFAULT_COLOR)
+const image = ref<string>(props.initial?.image ?? '')
+const link = ref(props.initial?.link ?? '')
 const error = ref('')
 
 function onSubmit() {
@@ -43,6 +46,8 @@ function onSubmit() {
     hinweise: hinweise.value.trim() || null,
     icon: icon.value,
     color: color.value,
+    image: image.value || null,
+    link: normalizeLink(link.value),
   })
 }
 </script>
@@ -63,6 +68,7 @@ function onSubmit() {
     <PartyAppearancePicker
       v-model:icon="icon"
       v-model:color="color"
+      v-model:image="image"
     />
     <BaseField
       v-model="date"
@@ -103,6 +109,13 @@ function onSubmit() {
       :placeholder="t('form.hinweise.placeholder')"
       optional
       multiline
+    />
+    <BaseField
+      v-model="link"
+      :label="t('form.link.label')"
+      :placeholder="t('form.link.placeholder')"
+      type="url"
+      optional
     />
 
     <div class="form__actions">

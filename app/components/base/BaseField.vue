@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   label: string
-  type?: 'text' | 'date' | 'time'
+  type?: 'text' | 'date' | 'time' | 'url'
   placeholder?: string
   required?: boolean
   optional?: boolean

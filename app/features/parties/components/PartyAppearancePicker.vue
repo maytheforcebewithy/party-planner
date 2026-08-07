@@ -2,13 +2,31 @@
 import PartyIcon from './PartyIcon.vue'
 import PartyIconTile from './PartyIconTile.vue'
 import { COLOR_KEYS, ICON_KEYS } from '../config/party-appearance'
+import { readImageAsDataUrl } from '../services/read-image'
 
 const icon = defineModel<string>('icon', { required: true })
 const color = defineModel<string>('color', { required: true })
+const image = defineModel<string>('image', { required: true })
 
 const { t } = useI18n()
 
 const iconTint = computed(() => ({ color: `var(--party-${color.value})` }))
+
+async function applyImage(file: File, input: HTMLInputElement): Promise<void> {
+  try {
+    image.value = await readImageAsDataUrl(file)
+  }
+  finally {
+    // Reset so picking the same file again still fires change.
+    input.value = ''
+  }
+}
+
+function onFile(event: Event): void {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) void applyImage(file, input)
+}
 </script>
 
 <template>
@@ -17,11 +35,37 @@ const iconTint = computed(() => ({ color: `var(--party-${color.value})` }))
       <PartyIconTile
         :icon="icon"
         :color="color"
+        :image="image || null"
         size="lg"
       />
     </div>
 
-    <fieldset class="appearance__group">
+    <div class="appearance__image">
+      <label class="appearance__upload">
+        <input
+          type="file"
+          accept="image/*"
+          class="appearance__file"
+          data-testid="image-input"
+          @change="onFile"
+        >
+        {{ image ? t('form.appearance.imageChange') : t('form.appearance.imageAdd') }}
+      </label>
+      <button
+        v-if="image"
+        type="button"
+        class="appearance__remove"
+        data-testid="image-remove"
+        @click="image = ''"
+      >
+        {{ t('form.appearance.imageRemove') }}
+      </button>
+    </div>
+
+    <fieldset
+      v-if="!image"
+      class="appearance__group"
+    >
       <legend class="appearance__legend">
         {{ t('form.appearance.icon') }}
       </legend>
@@ -45,7 +89,10 @@ const iconTint = computed(() => ({ color: `var(--party-${color.value})` }))
       </div>
     </fieldset>
 
-    <fieldset class="appearance__group">
+    <fieldset
+      v-if="!image"
+      class="appearance__group"
+    >
       <legend class="appearance__legend">
         {{ t('form.appearance.color') }}
       </legend>
@@ -77,6 +124,39 @@ const iconTint = computed(() => ({ color: `var(--party-${color.value})` }))
 .appearance__preview {
   display: flex;
   justify-content: center;
+}
+
+.appearance__image {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+}
+
+.appearance__upload {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-text);
+  cursor: pointer;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.appearance__file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.appearance__remove {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  cursor: pointer;
+  background: none;
+  border: 0;
 }
 
 .appearance__group {

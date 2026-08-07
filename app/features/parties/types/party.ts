@@ -21,6 +21,10 @@ export interface Party {
   /** Chosen icon/colour keys for the party's badge; `null` uses the defaults. */
   readonly icon: string | null
   readonly color: string | null
+  /** A custom badge image as a data URL; when set it replaces the icon tile. */
+  readonly image: string | null
+  /** An optional related link (e.g. a Spotify playlist), normalised to a URL. */
+  readonly link: string | null
   /** Embedded sub-collections; empty arrays when unused. */
   readonly guests: readonly Guest[]
   readonly shopping: readonly ShoppingItem[]
@@ -42,6 +46,8 @@ export interface CreateParty {
   readonly hinweise?: string | null
   readonly icon?: string | null
   readonly color?: string | null
+  readonly image?: string | null
+  readonly link?: string | null
   readonly guests?: readonly Guest[]
   readonly shopping?: readonly ShoppingItem[]
 }

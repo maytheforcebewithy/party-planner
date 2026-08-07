@@ -28,6 +28,8 @@ describe('PartyForm', () => {
       hinweise: null,
       icon: 'cake',
       color: 'green',
+      image: null,
+      link: null,
     })
   })
 
@@ -62,6 +64,8 @@ describe('PartyForm', () => {
           hinweise: 'Dress code: green',
           icon: 'star',
           color: 'sky',
+          image: null,
+          link: 'https://open.spotify.com/x',
           guests: [],
           shopping: [],
           createdAt: '',
@@ -88,5 +92,15 @@ describe('PartyForm', () => {
       icon: 'balloon',
       color: 'pink',
     })
+  })
+
+  it('normalises the link on submit', async () => {
+    const wrapper = await mountSuspended(PartyForm, { props: { submitLabel: 'Save' } })
+
+    await wrapper.find('input').setValue('Picnic')
+    await wrapper.find('input[type="url"]').setValue('open.spotify.com/x')
+    await wrapper.find('form').trigger('submit.prevent')
+
+    expect(wrapper.emitted('submit')?.[0]?.[0]).toMatchObject({ link: 'https://open.spotify.com/x' })
   })
 })

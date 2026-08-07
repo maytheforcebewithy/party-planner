@@ -6,6 +6,7 @@ import PartyShoppingList from '~/features/parties/components/PartyShoppingList.v
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
+import { linkHost } from '~/features/parties/services/party-link'
 import type { Party } from '~/features/parties/types/party'
 
 const route = useRoute()
@@ -19,6 +20,7 @@ const party = computed(() => store.findById(partyId.value))
 const timeLabel = computed(() =>
   party.value ? displayTime(party.value.startTime, party.value.endTime) : null,
 )
+const linkLabel = computed(() => (party.value?.link ? linkHost(party.value.link) : ''))
 const confirming = ref(false)
 const confirmPanel = ref<HTMLElement | null>(null)
 const shareNotice = ref('')
@@ -76,6 +78,7 @@ function onDelete(): void {
           :time-label="timeLabel"
           :icon="party.icon"
           :color="party.color"
+          :image="party.image"
         />
 
         <div class="detail__cards">
@@ -109,6 +112,30 @@ function onDelete(): void {
             :value="party.hinweise"
           />
         </div>
+
+        <BaseButton
+          v-if="party.link"
+          :href="party.link"
+          variant="ghost"
+          block
+          data-testid="open-link"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="detail__link-icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"
+            />
+          </svg>
+          {{ $t('detail.openLink', { host: linkLabel }) }}
+        </BaseButton>
 
         <PartyGuestList :party-id="party.id" />
         <PartyShoppingList :party-id="party.id" />
@@ -215,7 +242,8 @@ function onDelete(): void {
   gap: var(--space-3);
 }
 
-.detail__share-icon {
+.detail__share-icon,
+.detail__link-icon {
   width: 1.2rem;
   height: 1.2rem;
 }
