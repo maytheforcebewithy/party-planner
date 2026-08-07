@@ -45,4 +45,14 @@ describe('saveOrShareFile', () => {
     expect(share).not.toHaveBeenCalled()
     vi.unstubAllGlobals()
   })
+
+  it('downloads with the given mime type', async () => {
+    const createObjectURL = vi.fn(() => 'blob:x')
+    vi.stubGlobal('URL', { createObjectURL, revokeObjectURL: vi.fn() })
+
+    await saveOrShareFile('BEGIN:VCALENDAR', 'event.ics', 'text/calendar')
+
+    expect((createObjectURL.mock.calls[0]?.[0] as Blob).type).toBe('text/calendar')
+    vi.unstubAllGlobals()
+  })
 })
