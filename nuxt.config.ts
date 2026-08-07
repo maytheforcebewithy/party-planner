@@ -20,6 +20,10 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: 'Party Planner',
+      // Static default so the shell has a lang from first paint; app.vue keeps
+      // it in sync with the active locale.
+      htmlAttrs: { lang: 'de' },
       // viewport-fit=cover is required for the CSS safe-area insets (notch,
       // home indicator) to resolve to non-zero values inside the webview.
       viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
