@@ -9,7 +9,6 @@ definePageMeta({ layout: 'modal' })
 
 const { t } = useI18n()
 const store = usePartiesStore()
-const pasteSource = useState<string>('paste-source', () => '')
 
 const text = ref('')
 const draft = ref<CreateParty | null>(null)
@@ -24,15 +23,6 @@ function parse(source: string): void {
     empty.value = true
   }
 }
-
-onMounted(() => {
-  // The tab tap read the clipboard for us — parse it straight away.
-  if (pasteSource.value) {
-    text.value = pasteSource.value
-    parse(pasteSource.value)
-    pasteSource.value = ''
-  }
-})
 
 async function fromClipboard(): Promise<void> {
   const clip = await readClipboard()

@@ -3,24 +3,10 @@ import PartyListItem from '~/features/parties/components/PartyListItem.vue'
 import { useParties } from '~/features/parties/composables/use-parties'
 import { useExportImport } from '~/features/parties/composables/use-export-import'
 import { partitionParties } from '~/features/parties/services/partition-parties'
-import { readClipboard } from '~/shared/clipboard/read-clipboard'
 
 const { t } = useI18n()
 const store = useParties()
 const { importParties } = useExportImport()
-
-// Carries the clipboard text to the paste page so one tap goes straight to the
-// pre-filled form.
-const pasteSource = useState<string>('paste-source', () => '')
-
-async function goPaste(): Promise<void> {
-  pasteSource.value = await readClipboard()
-  await navigateTo('/invitations/paste')
-}
-
-function onPaste(): void {
-  void goPaste()
-}
 
 const today = todayIso()
 const received = computed(() => {
@@ -53,11 +39,10 @@ function onImport(event: Event): void {
       </h1>
 
       <div class="actions">
-        <button
-          type="button"
+        <NuxtLink
+          to="/invitations/paste"
           class="action action--primary"
           data-testid="invite-paste"
-          @click="onPaste"
         >
           <svg
             aria-hidden="true"
@@ -74,9 +59,9 @@ function onImport(event: Event): void {
             />
           </svg>
           {{ t('invitations.paste.action') }}
-        </button>
+        </NuxtLink>
 
-        <label class="action">
+        <label class="action action--import">
           <input
             type="file"
             accept="application/json,.json"
@@ -149,27 +134,38 @@ function onImport(event: Event): void {
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-3);
+  align-items: stretch;
 }
 
 .action {
   display: inline-flex;
   gap: var(--space-2);
   align-items: center;
-  padding: var(--space-2) var(--space-4);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-primary-text);
   cursor: pointer;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
 }
 
+/* The primary "paste" action is the important one: wider and filled. */
 .action--primary {
+  flex: 1;
   color: var(--color-primary-contrast);
   background-color: var(--color-primary);
   border-color: transparent;
+}
+
+/* Import is the smaller, secondary action. */
+.action--import {
+  flex: 0 0 auto;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 .action__icon {
