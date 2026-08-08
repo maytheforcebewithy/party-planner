@@ -227,54 +227,57 @@ function onDelete(): void {
           {{ $t('detail.export') }}
         </BaseButton>
 
-        <BaseButton
+        <div
           v-if="party.date"
-          :variant="hasReminder ? 'primary' : 'ghost'"
-          block
-          :aria-pressed="hasReminder"
-          data-testid="reminder-toggle"
-          @click="onToggleReminder"
+          class="detail__schedule"
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="detail__share-icon"
+          <BaseButton
+            :variant="hasReminder ? 'primary' : 'ghost'"
+            :aria-pressed="hasReminder"
+            :aria-label="hasReminder ? $t('reminder.on') : $t('reminder.off')"
+            :title="hasReminder ? $t('reminder.on') : $t('reminder.off')"
+            data-testid="reminder-toggle"
+            @click="onToggleReminder"
           >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"
-            />
-          </svg>
-          {{ hasReminder ? $t('reminder.on') : $t('reminder.off') }}
-        </BaseButton>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="detail__schedule-icon"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"
+              />
+            </svg>
+          </BaseButton>
 
-        <BaseButton
-          v-if="party.date"
-          variant="ghost"
-          block
-          data-testid="add-to-calendar"
-          @click="onAddToCalendar"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="detail__share-icon"
+          <BaseButton
+            variant="ghost"
+            :aria-label="$t('detail.addToCalendar')"
+            :title="$t('detail.addToCalendar')"
+            data-testid="add-to-calendar"
+            @click="onAddToCalendar"
           >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M7 4v3m10-3v3M4 8h16M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"
-            />
-          </svg>
-          {{ $t('detail.addToCalendar') }}
-        </BaseButton>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="detail__schedule-icon"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 4v3m10-3v3M4 8h16M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"
+              />
+            </svg>
+          </BaseButton>
+        </div>
 
         <div class="detail__actions">
           <BaseButton
@@ -350,6 +353,21 @@ function onDelete(): void {
 .detail__link-icon {
   width: 1.2rem;
   height: 1.2rem;
+}
+
+/* Reminder + calendar sit side by side as icon-only actions (labels via aria). */
+.detail__schedule {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.detail__schedule > * {
+  flex: 1;
+}
+
+.detail__schedule-icon {
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
 .detail__share-notice {
