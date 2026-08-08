@@ -130,7 +130,9 @@
     "noDate": "No date set",
     "openLink": "Open link · {host}",
     "export": "Export as file",
+    "exportShort": "Export",
     "addToCalendar": "Add to calendar",
+    "calendar": "Calendar",
     "time": {
       "range": "{start} – {end}",
       "from": "from {start}",
@@ -193,6 +195,7 @@
     }
   },
   "reminder": {
+    "label": "Reminder",
     "on": "Reminder on",
     "off": "Set reminder",
     "title": "Party reminder",
