@@ -54,3 +54,17 @@ a {
     max(var(--space-5), var(--safe-area-inset-left))
     max(var(--space-5), var(--safe-area-inset-right));
 }
+
+/* Page heading (the h1 at the top of a flat page). */
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+/* Centred, muted status line (e.g. "exported 3 parties"). */
+.notice {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
