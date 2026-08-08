@@ -6,6 +6,13 @@ import { Share } from '@capacitor/share'
 const DEFAULT_MIME_TYPE = 'application/json'
 
 /**
+ * Delay before releasing the blob URL. Revoking it synchronously after `click()`
+ * can cancel the download before the browser has started reading the blob, so we
+ * defer to a later task; a small window is enough and never user-perceptible.
+ */
+const OBJECT_URL_REVOKE_DELAY_MS = 1000
+
+/**
  * Persist a text file and hand it to the user. On a device it is written to the
  * shareable cache directory and offered through the OS share sheet; in the
  * browser it is downloaded with the given mime type.
@@ -36,6 +43,9 @@ function downloadInBrowser(content: string, filename: string, mimeType: string):
   const anchor = document.createElement('a')
   anchor.href = url
   anchor.download = filename
+  // Firefox only triggers the download for an anchor that is in the document.
+  document.body.append(anchor)
   anchor.click()
-  URL.revokeObjectURL(url)
+  anchor.remove()
+  setTimeout(() => URL.revokeObjectURL(url), OBJECT_URL_REVOKE_DELAY_MS)
 }
