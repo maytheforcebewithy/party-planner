@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { readStoredLanguage } from '~/composables/use-settings'
+import { FIRST_RUN_LANGUAGE, readStoredLanguage, useLanguage } from '~/composables/use-language'
 
-// Apply a persisted language override on start so the whole app renders in the
-// chosen language; with none stored, i18n's auto-detection stands.
+// Apply the persisted language on start; on a fresh install none is stored, so
+// the app renders in the first-run language and the picker below gates it until
+// the user chooses.
 const { locale, setLocale } = useI18n()
-const stored = readStoredLanguage()
-if (stored) void setLocale(stored)
+const { hasChosenLanguage } = useLanguage()
+
+void setLocale(readStoredLanguage() ?? FIRST_RUN_LANGUAGE)
 
 // Reflect the active locale on <html lang> for accessibility.
 useHead({ htmlAttrs: { lang: locale } })
@@ -15,4 +17,5 @@ useHead({ htmlAttrs: { lang: locale } })
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <AppLanguagePicker v-if="!hasChosenLanguage" />
 </template>

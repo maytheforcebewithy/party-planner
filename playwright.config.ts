@@ -15,9 +15,11 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: BASE_URL,
-    // Pin the locale so i18n renders the primary German UI deterministically
-    // (the app auto-detects browser language otherwise).
     locale: 'de-DE',
+    // Seed a chosen language so the specs start on the German app, past the
+    // first-run language picker. The picker's own spec overrides this to an
+    // empty state to exercise a fresh install.
+    storageState: './e2e/support/storage-state.json',
     trace: 'on-first-retry',
   },
   // The product is mobile-only; drive a mobile viewport so e2e matches reality.
