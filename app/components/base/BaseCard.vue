@@ -30,7 +30,8 @@ defineProps<{ title?: string }>()
   font-weight: var(--font-weight-semibold);
 }
 
-/* Muted body copy inside the card. Slotted, so it needs `:deep`. */
+/* Muted body copy: slot a `<p class="card__text">` — `:deep` reaches the
+   slotted node, and scoping under `.card` keeps the style card-only. */
 .card :deep(.card__text) {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
