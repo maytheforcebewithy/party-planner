@@ -43,4 +43,13 @@ describe('InvitationImageCard', () => {
     expect(wrapper.find('.invite__notes').exists()).toBe(false)
     expect(wrapper.text()).not.toContain('Stadtpark')
   })
+
+  it('drops the date row entirely for a dateless party (no fallback label)', async () => {
+    const wrapper = await mountSuspended(InvitationImageCard, {
+      props: { party: { ...party, date: null } },
+    })
+
+    expect(wrapper.findAll('.invite__fact')).toHaveLength(1)
+    expect(wrapper.text()).not.toContain('August')
+  })
 })

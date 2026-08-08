@@ -8,7 +8,8 @@ const props = defineProps<{ party: Party }>()
 const { t } = useI18n()
 const { displayDate, displayTime } = usePartyFormatting()
 
-const dateLabel = computed(() => displayDate(props.party.date))
+// Empty (not the "no date" fallback) when unset, so the row drops off the image.
+const dateLabel = computed(() => (props.party.date ? displayDate(props.party.date) : ''))
 const timeLabel = computed(() => displayTime(props.party.startTime, props.party.endTime))
 </script>
 

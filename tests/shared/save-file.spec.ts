@@ -77,6 +77,7 @@ describe('saveOrShareFile', () => {
 
   it('writes the raw base64 bytes and shares the image on a device', async () => {
     isNativePlatform.mockReturnValue(true)
+    getUri.mockResolvedValueOnce({ uri: 'file:///cache/invite.png' })
 
     await saveOrShareImage(PNG_DATA_URL, 'invite.png')
 
@@ -84,7 +85,7 @@ describe('saveOrShareFile', () => {
     expect(write).toMatchObject({ path: 'invite.png', directory: 'CACHE', data: 'QUJD' })
     // No encoding → Filesystem writes the base64 payload as binary, not UTF-8 text.
     expect(write).not.toHaveProperty('encoding')
-    expect(share).toHaveBeenCalledWith({ title: 'invite.png', files: ['file:///cache/export.json'] })
+    expect(share).toHaveBeenCalledWith({ title: 'invite.png', files: ['file:///cache/invite.png'] })
   })
 
   it('downloads the decoded image with its mime type in the browser', async () => {
