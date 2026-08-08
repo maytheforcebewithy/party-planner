@@ -6,8 +6,12 @@ html {
   font-size: var(--font-size-base);
   color: var(--color-text);
   background-color: var(--color-bg);
-  /* Dark-first: UA renders native controls/scrollbars dark unless the OS prefers light. */
-  color-scheme: dark light;
+  /* Match native controls/scrollbars to the active theme (set by use-theme.ts). */
+  color-scheme: dark;
+}
+
+html[data-theme='light'] {
+  color-scheme: light;
 }
 
 body {
