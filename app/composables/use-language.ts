@@ -31,8 +31,8 @@ export interface LanguageOption {
 
 /**
  * Language state for the app: the active locale (i18n is the source of truth),
- * the on-device persisted choice, and whether the first-run picker still needs
- * to be shown. Backed so the choice survives a restart.
+ * the on-device choice persisted to localStorage so it survives a restart, and
+ * whether the first-run picker still needs to be shown.
  */
 export function useLanguage() {
   const { locale, locales, setLocale } = useI18n()
