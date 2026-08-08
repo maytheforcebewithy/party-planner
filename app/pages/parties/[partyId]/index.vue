@@ -455,11 +455,6 @@ function onDelete(): void {
   text-align: center;
 }
 
-.detail__actions {
-  display: flex;
-  gap: var(--space-3);
-}
-
 .detail__confirm {
   display: flex;
   flex-direction: column;
