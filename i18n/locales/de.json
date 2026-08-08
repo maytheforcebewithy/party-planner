@@ -189,11 +189,14 @@
   },
   "share": {
     "action": "Teilen",
+    "shareImage": "Als Bild teilen",
+    "imagePending": "Bild wird erstellt …",
     "copied": "Einladung in die Zwischenablage kopiert",
     "unavailable": "Teilen ist auf diesem Gerät nicht möglich",
     "invitation": {
       "title": "Einladung zu {name}",
       "heading": "Einladung: {name}",
+      "eyebrow": "Du bist eingeladen",
       "date": "📅 {value}",
       "time": "🕒 {value}",
       "location": "📍 {value}",

@@ -189,11 +189,14 @@
   },
   "share": {
     "action": "Share",
+    "shareImage": "Share as image",
+    "imagePending": "Creating image …",
     "copied": "Invitation copied to clipboard",
     "unavailable": "Sharing isn't available on this device",
     "invitation": {
       "title": "Invitation to {name}",
       "heading": "You're invited: {name}",
+      "eyebrow": "You're invited",
       "date": "📅 {value}",
       "time": "🕒 {value}",
       "location": "📍 {value}",
