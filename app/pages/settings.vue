@@ -177,12 +177,6 @@ function onShareApp(): void {
   gap: var(--space-4);
 }
 
-.title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-}
-
 .version {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
@@ -210,11 +204,5 @@ function onShareApp(): void {
   display: flex;
   gap: var(--space-3);
   justify-content: flex-end;
-}
-
-.notice {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  text-align: center;
 }
 </style>

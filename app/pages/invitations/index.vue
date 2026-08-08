@@ -126,12 +126,6 @@ function onImport(event: Event): void {
   gap: var(--space-4);
 }
 
-.title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-}
-
 .actions {
   display: flex;
   gap: var(--space-3);
@@ -196,12 +190,6 @@ function onImport(event: Event): void {
 
 .none {
   padding-block: var(--space-10);
-  color: var(--color-text-muted);
-  text-align: center;
-}
-
-.notice {
-  font-size: var(--font-size-sm);
   color: var(--color-text-muted);
   text-align: center;
 }
