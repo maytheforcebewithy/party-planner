@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
-import { useSettings } from '~/composables/use-settings'
+import { useLanguage } from '~/composables/use-language'
 import { useShareApp } from '~/composables/use-share-app'
 import { shareNoticeKey } from '~/shared/sharing/share-text'
 import { APP_STORE_LINKS } from '~/config/app-store'
 
 const { t } = useI18n()
 const store = usePartiesStore()
-const { language } = useSettings()
+const { language, options: languageOptions } = useLanguage()
 const { shareApp } = useShareApp()
 
 const appVersion = useRuntimeConfig().public.appVersion
@@ -16,11 +16,6 @@ const storeLinks = APP_STORE_LINKS
 const confirming = ref(false)
 const cleared = ref(false)
 const shareNotice = ref('')
-
-const languageOptions = computed(() => [
-  { value: 'de', label: t('settings.language.de') },
-  { value: 'en', label: t('settings.language.en') },
-])
 
 onMounted(() => {
   void store.ensureLoaded()
@@ -60,6 +55,7 @@ function onShareApp(): void {
         <BaseSegmentedControl
           v-model="language"
           :options="languageOptions"
+          test-id-prefix="settings-language"
         />
       </section>
 

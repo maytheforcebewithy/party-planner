@@ -2,6 +2,10 @@
   "app": {
     "title": "Party Planner"
   },
+  "welcome": {
+    "title": "Sprache wählen",
+    "subtitle": "Du kannst das später in den Einstellungen ändern."
+  },
   "ads": {
     "placeholder": "Werbung"
   },
@@ -50,9 +54,7 @@
   "settings": {
     "title": "Einstellungen",
     "language": {
-      "title": "Sprache",
-      "de": "Deutsch",
-      "en": "English"
+      "title": "Sprache"
     },
     "data": {
       "title": "Daten",

@@ -1,0 +1,11 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:3001",
+      "localStorage": [
+        { "name": "party-planner.language", "value": "de" }
+      ]
+    }
+  ]
+}
