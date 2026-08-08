@@ -65,6 +65,7 @@ describe('saveOrShareFile', () => {
 
     expect(revokeObjectURL).not.toHaveBeenCalled()
     vi.runAllTimers()
+    expect(revokeObjectURL).toHaveBeenCalledTimes(1)
     expect(revokeObjectURL).toHaveBeenCalledWith('blob:x')
 
     vi.unstubAllGlobals()
