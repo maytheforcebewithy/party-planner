@@ -85,7 +85,33 @@ function onDelete(): void {
 
 <template>
   <div class="screen">
-    <AppBar :back-to="backTo" />
+    <AppBar :back-to="backTo">
+      <template #action>
+        <NuxtLink
+          v-if="party"
+          :to="`/parties/${party.id}/edit`"
+          class="detail__edit"
+          :aria-label="$t('detail.edit')"
+          :title="$t('detail.edit')"
+          data-testid="edit"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="detail__edit-icon"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17 3a2.83 2.83 0 0 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"
+            />
+          </svg>
+        </NuxtLink>
+      </template>
+    </AppBar>
 
     <main class="page">
       <article
@@ -204,37 +230,13 @@ function onDelete(): void {
           </p>
         </template>
 
-        <BaseButton
-          variant="ghost"
-          block
-          data-testid="export-party"
-          @click="onExport"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            class="detail__share-icon"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 3v12m0 0-4-4m4 4 4-4M5 17v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2"
-            />
-          </svg>
-          {{ $t('detail.export') }}
-        </BaseButton>
-
-        <div
-          v-if="party.date"
-          class="detail__schedule"
-        >
-          <BaseButton
-            :variant="hasReminder ? 'primary' : 'ghost'"
+        <div class="detail__tools">
+          <button
+            v-if="party.date"
+            type="button"
+            class="detail__tool"
+            :class="{ 'detail__tool--active': hasReminder }"
             :aria-pressed="hasReminder"
-            :aria-label="hasReminder ? $t('reminder.on') : $t('reminder.off')"
             :title="hasReminder ? $t('reminder.on') : $t('reminder.off')"
             data-testid="reminder-toggle"
             @click="onToggleReminder"
@@ -242,7 +244,7 @@ function onDelete(): void {
             <svg
               aria-hidden="true"
               viewBox="0 0 24 24"
-              class="detail__schedule-icon"
+              class="detail__tool-icon"
             >
               <path
                 fill="none"
@@ -253,11 +255,13 @@ function onDelete(): void {
                 d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"
               />
             </svg>
-          </BaseButton>
+            <span class="detail__tool-label">{{ $t('reminder.label') }}</span>
+          </button>
 
-          <BaseButton
-            variant="ghost"
-            :aria-label="$t('detail.addToCalendar')"
+          <button
+            v-if="party.date"
+            type="button"
+            class="detail__tool"
             :title="$t('detail.addToCalendar')"
             data-testid="add-to-calendar"
             @click="onAddToCalendar"
@@ -265,7 +269,7 @@ function onDelete(): void {
             <svg
               aria-hidden="true"
               viewBox="0 0 24 24"
-              class="detail__schedule-icon"
+              class="detail__tool-icon"
             >
               <path
                 fill="none"
@@ -276,27 +280,43 @@ function onDelete(): void {
                 d="M7 4v3m10-3v3M4 8h16M5 6h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Z"
               />
             </svg>
-          </BaseButton>
+            <span class="detail__tool-label">{{ $t('detail.calendar') }}</span>
+          </button>
+
+          <button
+            type="button"
+            class="detail__tool"
+            :title="$t('detail.export')"
+            data-testid="export-party"
+            @click="onExport"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="detail__tool-icon"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 3v12m0 0-4-4m4 4 4-4M5 17v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2"
+              />
+            </svg>
+            <span class="detail__tool-label">{{ $t('detail.exportShort') }}</span>
+          </button>
         </div>
 
-        <div class="detail__actions">
-          <BaseButton
-            :to="`/parties/${party.id}/edit`"
-            variant="ghost"
-            data-testid="edit"
-          >
-            {{ $t('detail.edit') }}
-          </BaseButton>
-
-          <BaseButton
-            v-if="!confirming"
-            variant="danger"
-            data-testid="delete"
-            @click="onConfirm"
-          >
-            {{ $t('detail.delete') }}
-          </BaseButton>
-        </div>
+        <button
+          v-if="!confirming"
+          type="button"
+          class="detail__delete"
+          data-testid="delete"
+          @click="onConfirm"
+        >
+          {{ $t('detail.delete') }}
+        </button>
 
         <div
           v-if="confirming"
@@ -355,19 +375,78 @@ function onDelete(): void {
   height: 1.2rem;
 }
 
-/* Reminder + calendar sit side by side as icon-only actions (labels via aria). */
-.detail__schedule {
+/* Edit lives in the app bar, so the detail footer stays a single primary CTA. */
+.detail__edit {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--color-primary-text);
+}
+
+.detail__edit-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* Reminder / calendar / export as one compact icon-and-label toolbar. */
+.detail__tools {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
-.detail__schedule > * {
+.detail__tool {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  color: var(--color-text);
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-.detail__schedule-icon {
-  width: 1.4rem;
-  height: 1.4rem;
+.detail__tool:hover {
+  background-color: var(--surface-sunken);
+}
+
+.detail__tool--active {
+  color: var(--color-primary-text);
+}
+
+.detail__tool-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.detail__tool-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+.detail__tool--active .detail__tool-label {
+  color: var(--color-primary-text);
+}
+
+/* Destructive action stays quiet at the very bottom. */
+.detail__delete {
+  align-self: center;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-danger);
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.detail__delete:hover {
+  text-decoration: underline;
 }
 
 .detail__share-notice {

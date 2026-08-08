@@ -128,7 +128,9 @@
     "noDate": "Kein Datum festgelegt",
     "openLink": "Link öffnen · {host}",
     "export": "Als Datei exportieren",
+    "exportShort": "Export",
     "addToCalendar": "Zum Kalender hinzufügen",
+    "calendar": "Kalender",
     "time": {
       "range": "{start} – {end} Uhr",
       "from": "ab {start} Uhr",
@@ -191,6 +193,7 @@
     }
   },
   "reminder": {
+    "label": "Erinnerung",
     "on": "Erinnerung aktiv",
     "off": "Erinnerung setzen",
     "title": "Party-Erinnerung",
