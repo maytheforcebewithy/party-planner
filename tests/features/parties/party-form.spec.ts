@@ -25,7 +25,7 @@ describe('PartyForm', () => {
       endTime: null,
       location: null,
       description: null,
-      hinweise: null,
+      notes: null,
       icon: 'cake',
       color: 'green',
       image: null,
@@ -33,7 +33,7 @@ describe('PartyForm', () => {
     })
   })
 
-  it('emits the time and hinweise fields when they are filled', async () => {
+  it('emits the time and notes fields when they are filled', async () => {
     const wrapper = await mountSuspended(PartyForm, { props: { submitLabel: 'Save' } })
 
     await wrapper.find('input').setValue('Picnic')
@@ -45,7 +45,7 @@ describe('PartyForm', () => {
     expect(wrapper.emitted('submit')?.[0]?.[0]).toMatchObject({
       startTime: '18:00',
       endTime: '23:30',
-      hinweise: 'Bring a blanket',
+      notes: 'Bring a blanket',
     })
   })
 
@@ -61,7 +61,7 @@ describe('PartyForm', () => {
           description: 'Notes',
           startTime: '19:00',
           endTime: null,
-          hinweise: 'Dress code: green',
+          notes: 'Dress code: green',
           icon: 'star',
           color: 'sky',
           image: null,

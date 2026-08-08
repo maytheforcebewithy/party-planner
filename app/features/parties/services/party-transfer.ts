@@ -48,7 +48,7 @@ function toCreateParty(entry: unknown): CreateParty[] {
     description: asString(entry.description),
     startTime: asString(entry.startTime),
     endTime: asString(entry.endTime),
-    hinweise: asString(entry.hinweise),
+    notes: asString(entry.notes),
     icon: asString(entry.icon),
     color: asString(entry.color),
     image: asString(entry.image),

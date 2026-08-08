@@ -98,7 +98,7 @@ function eventDates(date: DateParts, party: Party): string[] {
 
 /** The DESCRIPTION value: description, notes and link, whichever are set. */
 function eventDescription(party: Party): string | null {
-  const parts = [party.description, party.hinweise, party.link].filter((part): part is string => Boolean(part))
+  const parts = [party.description, party.notes, party.link].filter((part): part is string => Boolean(part))
   return parts.length ? parts.join('\n\n') : null
 }
 

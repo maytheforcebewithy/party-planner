@@ -14,7 +14,7 @@ const base: Party = {
   description: null,
   startTime: null,
   endTime: null,
-  hinweise: null,
+  notes: null,
   icon: null,
   color: null,
   image: null,

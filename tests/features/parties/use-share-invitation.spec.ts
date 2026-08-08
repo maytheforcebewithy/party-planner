@@ -16,7 +16,7 @@ const party: Party = {
   description: null,
   startTime: '18:00',
   endTime: null,
-  hinweise: null,
+  notes: null,
   icon: null,
   color: null,
   image: null,

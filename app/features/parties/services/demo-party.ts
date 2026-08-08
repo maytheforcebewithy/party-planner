@@ -33,7 +33,7 @@ export function buildDemoParty(t: (key: string) => string, now: Date): CreatePar
     endTime: '22:00',
     location: t('demo.location'),
     description: t('demo.description'),
-    hinweise: t('demo.hinweise'),
+    notes: t('demo.notes'),
     icon: 'balloon',
     color: 'amber',
     link: 'https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd',

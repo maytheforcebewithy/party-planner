@@ -10,7 +10,7 @@ const base: Party = {
   description: null,
   startTime: null,
   endTime: null,
-  hinweise: null,
+  notes: null,
   icon: null,
   color: null,
   image: null,
@@ -94,7 +94,7 @@ describe('buildCalendarEvent', () => {
       date: '2026-08-20',
       location: 'Stadtpark',
       description: 'Grillen',
-      hinweise: 'Decke mitbringen',
+      notes: 'Decke mitbringen',
       link: 'https://open.spotify.com/x',
     })
     expect(prop(ics, 'LOCATION')).toBe('LOCATION:Stadtpark')

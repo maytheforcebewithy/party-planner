@@ -153,9 +153,9 @@ function onDelete(): void {
           />
 
           <PartyInfoCard
-            v-if="party.hinweise"
-            :label="$t('form.hinweise.label')"
-            :value="party.hinweise"
+            v-if="party.notes"
+            :label="$t('form.notes.label')"
+            :value="party.notes"
           />
         </div>
 
