@@ -54,32 +54,23 @@ function onShareApp(): void {
         {{ t('settings.title') }}
       </h1>
 
-      <section class="card">
-        <h2 class="card__title">
-          {{ t('settings.language.title') }}
-        </h2>
+      <BaseCard :title="t('settings.language.title')">
         <BaseSegmentedControl
           v-model="language"
           :options="languageOptions"
           test-id-prefix="settings-language"
         />
-      </section>
+      </BaseCard>
 
-      <section class="card">
-        <h2 class="card__title">
-          {{ t('settings.theme.title') }}
-        </h2>
+      <BaseCard :title="t('settings.theme.title')">
         <BaseSegmentedControl
           v-model="themeMode"
           :options="themeOptions"
           test-id-prefix="settings-theme"
         />
-      </section>
+      </BaseCard>
 
-      <section class="card">
-        <h2 class="card__title">
-          {{ t('settings.data.title') }}
-        </h2>
+      <BaseCard :title="t('settings.data.title')">
         <p class="card__text">
           {{ t('settings.data.text') }}
         </p>
@@ -128,12 +119,9 @@ function onShareApp(): void {
         >
           {{ t('settings.data.cleared') }}
         </p>
-      </section>
+      </BaseCard>
 
-      <section class="card">
-        <h2 class="card__title">
-          {{ t('app.title') }}
-        </h2>
+      <BaseCard :title="t('app.title')">
         <p class="card__text">
           {{ t('settings.about.text') }}
         </p>
@@ -177,7 +165,7 @@ function onShareApp(): void {
         >
           {{ shareNotice }}
         </p>
-      </section>
+      </BaseCard>
     </main>
   </div>
 </template>
@@ -193,26 +181,6 @@ function onShareApp(): void {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-5);
-  background-color: var(--surface-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-}
-
-.card__title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-}
-
-.card__text {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
 }
 
 .version {

@@ -42,10 +42,7 @@ function onImport(event: Event): void {
         {{ t('importExport.title') }}
       </h1>
 
-      <section class="card">
-        <h2 class="card__title">
-          {{ t('importExport.export.title') }}
-        </h2>
+      <BaseCard :title="t('importExport.export.title')">
         <p class="card__text">
           {{ t('importExport.export.text') }}
         </p>
@@ -57,12 +54,9 @@ function onImport(event: Event): void {
         >
           {{ t('importExport.export.action', { count: store.partyCount }) }}
         </BaseButton>
-      </section>
+      </BaseCard>
 
-      <section class="card">
-        <h2 class="card__title">
-          {{ t('importExport.import.title') }}
-        </h2>
+      <BaseCard :title="t('importExport.import.title')">
         <p class="card__text">
           {{ t('importExport.import.text') }}
         </p>
@@ -76,7 +70,7 @@ function onImport(event: Event): void {
           >
           {{ t('importExport.import.action') }}
         </label>
-      </section>
+      </BaseCard>
 
       <p
         v-if="notice"
@@ -101,26 +95,6 @@ function onImport(event: Event): void {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding: var(--space-5);
-  background-color: var(--surface-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-}
-
-.card__title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-}
-
-.card__text {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
 }
 
 .upload {
