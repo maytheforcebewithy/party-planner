@@ -23,7 +23,7 @@ const startTime = ref(props.initial?.startTime ?? '')
 const endTime = ref(props.initial?.endTime ?? '')
 const location = ref(props.initial?.location ?? '')
 const description = ref(props.initial?.description ?? '')
-const hinweise = ref(props.initial?.hinweise ?? '')
+const notes = ref(props.initial?.notes ?? '')
 const icon = ref<string>(props.initial ? resolveIcon(props.initial.icon ?? null) : DEFAULT_ICON)
 const color = ref<string>(props.initial ? resolveColor(props.initial.color ?? null) : DEFAULT_COLOR)
 const image = ref<string>(props.initial?.image ?? '')
@@ -44,7 +44,7 @@ function onSubmit() {
     endTime: endTime.value || null,
     location: location.value.trim() || null,
     description: description.value.trim() || null,
-    hinweise: hinweise.value.trim() || null,
+    notes: notes.value.trim() || null,
     icon: icon.value,
     color: color.value,
     image: image.value || null,
@@ -105,9 +105,9 @@ function onSubmit() {
       multiline
     />
     <BaseField
-      v-model="hinweise"
-      :label="t('form.hinweise.label')"
-      :placeholder="t('form.hinweise.placeholder')"
+      v-model="notes"
+      :label="t('form.notes.label')"
+      :placeholder="t('form.notes.placeholder')"
       optional
       multiline
     />

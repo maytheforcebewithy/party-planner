@@ -100,7 +100,7 @@
     "name": "Sommerfest im Garten",
     "location": "Stadtpark, große Wiese",
     "description": "Entspanntes Gartenfest mit Musik, vegetarischem Grillen und Lagerfeuer am Abend.",
-    "hinweise": "Bitte eine Decke und gute Laune mitbringen. Parkplätze sind begrenzt – am besten mit dem Rad kommen.",
+    "notes": "Bitte eine Decke und gute Laune mitbringen. Parkplätze sind begrenzt – am besten mit dem Rad kommen.",
     "shopping": {
       "skewers": "Gemüse-Spieße",
       "halloumi": "Halloumi zum Grillen",
@@ -230,7 +230,7 @@
       "label": "Beschreibung",
       "placeholder": "Details zur Feier …"
     },
-    "hinweise": {
+    "notes": {
       "label": "Hinweise",
       "placeholder": "z. B. bitte Snacks mitbringen …"
     },

@@ -26,7 +26,7 @@ const base: Party = {
   description: null,
   startTime: null,
   endTime: null,
-  hinweise: null,
+  notes: null,
   icon: null,
   color: null,
   image: null,
@@ -45,14 +45,14 @@ describe('buildInvitationText', () => {
     expect(buildInvitationText(base, ctx)).toBe('Einladung: Gartenparty')
   })
 
-  it('assembles every field in order with hinweise after a blank line', () => {
+  it('assembles every field in order with notes after a blank line', () => {
     const party: Party = {
       ...base,
       date: '2026-08-20',
       startTime: '18:00',
       endTime: '23:30',
       location: 'Stadtpark',
-      hinweise: 'Bitte eine Decke mitbringen.',
+      notes: 'Bitte eine Decke mitbringen.',
     }
 
     const text = buildInvitationText(party, ctx)

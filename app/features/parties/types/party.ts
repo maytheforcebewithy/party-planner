@@ -23,7 +23,8 @@ export interface Party {
   readonly description: string | null
   readonly startTime: string | null
   readonly endTime: string | null
-  readonly hinweise: string | null
+  /** Free-form notes/instructions for guests (stored in the legacy `hinweise` column). */
+  readonly notes: string | null
   /** Chosen icon/colour keys for the party's badge; `null` uses the defaults. */
   readonly icon: string | null
   readonly color: string | null
@@ -53,7 +54,7 @@ export interface CreateParty {
   readonly description?: string | null
   readonly startTime?: string | null
   readonly endTime?: string | null
-  readonly hinweise?: string | null
+  readonly notes?: string | null
   readonly icon?: string | null
   readonly color?: string | null
   readonly image?: string | null

@@ -94,7 +94,7 @@ describe('SqlitePartyRepository', () => {
       description: 'Bring salad',
       startTime: '18:00',
       endTime: '23:30',
-      hinweise: 'No glass bottles',
+      notes: 'No glass bottles',
       icon: 'star',
       color: 'sky',
       image: null,
@@ -128,7 +128,7 @@ describe('SqlitePartyRepository', () => {
       name: 'Picnic',
       startTime: '18:00',
       endTime: '23:30',
-      hinweise: 'No glass bottles',
+      notes: 'No glass bottles',
     })
 
     const insert = database.executed.at(-1)
@@ -188,7 +188,7 @@ describe('SqlitePartyRepository', () => {
     expect(updated.date).toBe('2026-08-15')
     expect(updated.startTime).toBe('18:00')
     expect(updated.endTime).toBe('23:30')
-    expect(updated.hinweise).toBe('No glass bottles')
+    expect(updated.notes).toBe('No glass bottles')
     const update = database.executed.at(-1)
     expect(update?.sql).toContain('UPDATE parties')
     expect(update?.params.at(-1)).toBe('party-1')

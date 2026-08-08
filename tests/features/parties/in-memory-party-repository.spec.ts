@@ -15,7 +15,7 @@ describe('InMemoryPartyRepository', () => {
     expect(party.description).toBeNull()
     expect(party.startTime).toBeNull()
     expect(party.endTime).toBeNull()
-    expect(party.hinweise).toBeNull()
+    expect(party.notes).toBeNull()
     expect(party.createdAt).toBe(party.updatedAt)
     expect(await repository.findById(party.id)).toEqual(party)
   })
@@ -30,7 +30,7 @@ describe('InMemoryPartyRepository', () => {
       description: 'Bring salad',
       startTime: '18:00',
       endTime: '23:30',
-      hinweise: 'No glass bottles',
+      notes: 'No glass bottles',
     })
 
     expect(party).toMatchObject({
@@ -39,7 +39,7 @@ describe('InMemoryPartyRepository', () => {
       description: 'Bring salad',
       startTime: '18:00',
       endTime: '23:30',
-      hinweise: 'No glass bottles',
+      notes: 'No glass bottles',
     })
   })
 
@@ -59,7 +59,7 @@ describe('InMemoryPartyRepository', () => {
       date: '2026-09-01',
       startTime: '18:00',
       endTime: '22:00',
-      hinweise: 'Bring ID',
+      notes: 'Bring ID',
     })
 
     expect(updated.name).toBe('Final')
@@ -67,7 +67,7 @@ describe('InMemoryPartyRepository', () => {
     expect(updated.location).toBe('Home')
     expect(updated.startTime).toBe('18:00')
     expect(updated.endTime).toBe('22:00')
-    expect(updated.hinweise).toBe('Bring ID')
+    expect(updated.notes).toBe('Bring ID')
     expect(updated.createdAt).toBe(created.createdAt)
   })
 

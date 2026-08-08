@@ -100,7 +100,7 @@
     "name": "Summer garden party",
     "location": "City park, big lawn",
     "description": "A relaxed garden party with music, a vegetarian barbecue and a campfire in the evening.",
-    "hinweise": "Please bring a blanket and good vibes. Parking is limited — best to come by bike.",
+    "notes": "Please bring a blanket and good vibes. Parking is limited — best to come by bike.",
     "shopping": {
       "skewers": "Veggie skewers",
       "halloumi": "Halloumi for grilling",
@@ -230,7 +230,7 @@
       "label": "Description",
       "placeholder": "Details about the celebration …"
     },
-    "hinweise": {
+    "notes": {
       "label": "Notes",
       "placeholder": "e.g. please bring snacks …"
     },

@@ -18,7 +18,7 @@ function invitationTime(party: Party, t: InvitationContext['t']): string | null 
 
 /**
  * Compose a shareable, plain-text invitation for a party. Only the fields that
- * are set appear; free-form hinweise are appended after a blank line. The label
+ * are set appear; free-form notes are appended after a blank line. The label
  * lines (and any emoji) come from the locale files so both languages stay in
  * control of the wording.
  */
@@ -33,7 +33,7 @@ export function buildInvitationText(party: Party, ctx: InvitationContext): strin
 
   if (party.location) lines.push(t('share.invitation.location', { value: party.location }))
   if (party.link) lines.push(t('share.invitation.link', { value: party.link }))
-  if (party.hinweise) lines.push('', party.hinweise)
+  if (party.notes) lines.push('', party.notes)
 
   return lines.join('\n')
 }

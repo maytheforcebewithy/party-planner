@@ -18,6 +18,7 @@ interface PartyRow {
   readonly description: string | null
   readonly start_time: string | null
   readonly end_time: string | null
+  /** Legacy column name for the domain's `notes` field; kept to avoid a migration. */
   readonly hinweise: string | null
   readonly icon: string | null
   readonly color: string | null
@@ -59,7 +60,7 @@ function toParty(row: PartyRow): Party {
     description: row.description,
     startTime: row.start_time,
     endTime: row.end_time,
-    hinweise: row.hinweise,
+    notes: row.hinweise,
     icon: row.icon,
     color: row.color,
     image: row.image,
@@ -110,7 +111,7 @@ export class SqlitePartyRepository implements PartyRepository {
       description: data.description ?? null,
       startTime: data.startTime ?? null,
       endTime: data.endTime ?? null,
-      hinweise: data.hinweise ?? null,
+      notes: data.notes ?? null,
       icon: data.icon ?? null,
       color: data.color ?? null,
       image: data.image ?? null,
@@ -132,7 +133,7 @@ export class SqlitePartyRepository implements PartyRepository {
         party.description,
         party.startTime,
         party.endTime,
-        party.hinweise,
+        party.notes,
         party.icon,
         party.color,
         party.image,
@@ -160,7 +161,7 @@ export class SqlitePartyRepository implements PartyRepository {
       description: changes.description === undefined ? existing.description : changes.description,
       startTime: changes.startTime === undefined ? existing.startTime : changes.startTime,
       endTime: changes.endTime === undefined ? existing.endTime : changes.endTime,
-      hinweise: changes.hinweise === undefined ? existing.hinweise : changes.hinweise,
+      notes: changes.notes === undefined ? existing.notes : changes.notes,
       icon: changes.icon === undefined ? existing.icon : changes.icon,
       color: changes.color === undefined ? existing.color : changes.color,
       image: changes.image === undefined ? existing.image : changes.image,
@@ -180,7 +181,7 @@ export class SqlitePartyRepository implements PartyRepository {
         updated.description,
         updated.startTime,
         updated.endTime,
-        updated.hinweise,
+        updated.notes,
         updated.icon,
         updated.color,
         updated.image,
