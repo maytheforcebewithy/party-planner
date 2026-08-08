@@ -55,4 +55,19 @@ describe('saveOrShareFile', () => {
     expect((createObjectURL.mock.calls[0]?.[0] as Blob).type).toBe('text/calendar')
     vi.unstubAllGlobals()
   })
+
+  it('defers revoking the object URL so the download can start first', async () => {
+    vi.useFakeTimers()
+    const revokeObjectURL = vi.fn()
+    vi.stubGlobal('URL', { createObjectURL: vi.fn(() => 'blob:x'), revokeObjectURL })
+
+    await saveOrShareFile('{"a":1}', 'export.json')
+
+    expect(revokeObjectURL).not.toHaveBeenCalled()
+    vi.runAllTimers()
+    expect(revokeObjectURL).toHaveBeenCalledWith('blob:x')
+
+    vi.unstubAllGlobals()
+    vi.useRealTimers()
+  })
 })
