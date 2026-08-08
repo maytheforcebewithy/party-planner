@@ -49,10 +49,12 @@
     "@nuxt/test-utils": "^3.19.0",
     "@nuxtjs/i18n": "^10.6.0",
     "@playwright/test": "^1.62.1",
+    "@types/sql.js": "^1.4.11",
     "@vitest/coverage-v8": "^4.0.0",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^9.0.0",
     "happy-dom": "^20.11.1",
+    "sql.js": "^1.14.1",
     "typescript": "^5.6.0",
     "vitest": "^4.0.0",
     "vue-tsc": "^3.0.0"
