@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { useLanguage } from '~/composables/use-language'
+import { useTheme } from '~/composables/use-theme'
 import { useShareApp } from '~/composables/use-share-app'
 import { shareNoticeKey } from '~/shared/sharing/share-text'
 import { APP_STORE_LINKS } from '~/config/app-store'
@@ -8,7 +9,12 @@ import { APP_STORE_LINKS } from '~/config/app-store'
 const { t } = useI18n()
 const store = usePartiesStore()
 const { language, options: languageOptions } = useLanguage()
+const { mode: themeMode, modes: themeModes } = useTheme()
 const { shareApp } = useShareApp()
+
+const themeOptions = computed(() =>
+  themeModes.map(value => ({ value, label: t(`settings.theme.${value}`) })),
+)
 
 const appVersion = useRuntimeConfig().public.appVersion
 const storeLinks = APP_STORE_LINKS
@@ -56,6 +62,17 @@ function onShareApp(): void {
           v-model="language"
           :options="languageOptions"
           test-id-prefix="settings-language"
+        />
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">
+          {{ t('settings.theme.title') }}
+        </h2>
+        <BaseSegmentedControl
+          v-model="themeMode"
+          :options="themeOptions"
+          test-id-prefix="settings-theme"
         />
       </section>
 

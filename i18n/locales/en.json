@@ -56,6 +56,12 @@
     "language": {
       "title": "Language"
     },
+    "theme": {
+      "title": "Appearance",
+      "auto": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
     "data": {
       "title": "Data",
       "text": "All parties live on this device only. You can delete them permanently.",

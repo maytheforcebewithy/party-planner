@@ -56,6 +56,12 @@
     "language": {
       "title": "Sprache"
     },
+    "theme": {
+      "title": "Erscheinungsbild",
+      "auto": "System",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
     "data": {
       "title": "Daten",
       "text": "Alle Partys liegen nur auf diesem Gerät. Du kannst sie unwiderruflich löschen.",
