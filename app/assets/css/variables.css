@@ -9,7 +9,9 @@
   /* Brand — vibrant green */
   --color-primary: #22c55e;
   --color-primary-hover: #1aa54c;
-  --color-primary-contrast: #ffffff;
+  /* Dark text ON the vibrant green: white fails WCAG on such a light green, so
+     filled buttons/pills use a near-black green (≈7:1) and keep the identity. */
+  --color-primary-contrast: #08240f;
   /* Green for text/icons ON a dark surface (dates, line icons) — brighter for contrast. */
   --color-primary-text: #4ade80;
   /* Soft green wash behind icon tiles / active pills. */
@@ -105,8 +107,9 @@
 :root[data-theme='light'] {
   --color-primary: #16a34a;
   --color-primary-hover: #15803d;
-  --color-primary-contrast: #ffffff;
-  --color-primary-text: #15803d;
+  --color-primary-contrast: #08240f;
+  /* Slightly deeper so the green reads ≥4.5:1 as text on the soft-tint chips. */
+  --color-primary-text: #147a38;
   --color-primary-soft: rgb(22 163 74 / 10%);
 
   /* Darker icon tints so the badge stays legible on the pale tile. */
@@ -123,7 +126,8 @@
   --party-orange: #c2410c;
   --party-orange-soft: rgb(234 88 12 / 14%);
 
-  --color-danger: #dc2626;
+  /* Deeper red so it reads ≥4.5:1 as text on the soft-tint decline chip. */
+  --color-danger: #c81e1e;
   --color-danger-hover: #b91c1c;
   --color-danger-contrast: #ffffff;
   --color-danger-soft: rgb(220 38 38 / 10%);
