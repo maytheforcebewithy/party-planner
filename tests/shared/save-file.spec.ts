@@ -16,6 +16,9 @@ vi.mock('@capacitor/filesystem', () => ({
 const { share } = vi.hoisted(() => ({ share: vi.fn(() => Promise.resolve()) }))
 vi.mock('@capacitor/share', () => ({ Share: { share } }))
 
+const { logError } = vi.hoisted(() => ({ logError: vi.fn() }))
+vi.mock('~/shared/logger', () => ({ logger: { error: logError, debug: vi.fn() } }))
+
 const { saveOrShareFile, saveOrShareImage } = await import('~/shared/files/save-file')
 
 // 'QUJD' is base64 for the bytes 'ABC'.
@@ -26,7 +29,8 @@ describe('saveOrShareFile', () => {
     isNativePlatform.mockReset().mockReturnValue(false)
     writeFile.mockClear()
     getUri.mockClear().mockResolvedValue({ uri: 'file:///cache/export.json' })
-    share.mockClear()
+    share.mockClear().mockResolvedValue(undefined)
+    logError.mockClear()
   })
 
   it('writes to the cache directory and shares the file on a device', async () => {
@@ -36,6 +40,22 @@ describe('saveOrShareFile', () => {
 
     expect(writeFile.mock.calls[0]?.[0]).toMatchObject({ path: 'export.json', directory: 'CACHE' })
     expect(share).toHaveBeenCalledWith({ title: 'export.json', files: ['file:///cache/export.json'] })
+  })
+
+  it('treats a dismissed share sheet as a no-op — no throw, no log', async () => {
+    isNativePlatform.mockReturnValue(true)
+    share.mockRejectedValueOnce(Object.assign(new Error('Share canceled'), { name: 'AbortError' }))
+
+    await expect(saveOrShareFile('{"a":1}', 'export.json')).resolves.toBeUndefined()
+    expect(logError).not.toHaveBeenCalled()
+  })
+
+  it('logs but does not throw when sharing genuinely fails', async () => {
+    isNativePlatform.mockReturnValue(true)
+    share.mockRejectedValueOnce(new Error('no activity found to handle intent'))
+
+    await expect(saveOrShareFile('{"a":1}', 'export.json')).resolves.toBeUndefined()
+    expect(logError).toHaveBeenCalled()
   })
 
   it('downloads in the browser when not on a device', async () => {
