@@ -68,6 +68,10 @@ const timeLabel = computed(() => displayTime(props.party.startTime, props.party.
   width: 22rem;
   padding: var(--space-8) var(--space-6);
   text-align: center;
+  /* Re-resolve the text colour from this subtree's tokens: when the card is
+     forced to light inside a dark app, inheriting the app's computed colour
+     would leave the (unstyled) name/date near-invisible. */
+  color: var(--color-text);
   background-color: var(--color-bg);
 }
 
