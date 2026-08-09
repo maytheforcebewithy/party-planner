@@ -4,9 +4,11 @@ import PartyInfoCard from '~/features/parties/components/PartyInfoCard.vue'
 import PartyGuestList from '~/features/parties/components/PartyGuestList.vue'
 import PartyShoppingList from '~/features/parties/components/PartyShoppingList.vue'
 import PartyAttendance from '~/features/parties/components/PartyAttendance.vue'
+import InvitationImageCard from '~/features/parties/components/InvitationImageCard.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
 import { usePartyFormatting } from '~/features/parties/composables/use-party-formatting'
 import { useShareInvitation } from '~/features/parties/composables/use-share-invitation'
+import { useShareInvitationImage } from '~/features/parties/composables/use-share-invitation-image'
 import { useExportImport } from '~/features/parties/composables/use-export-import'
 import { useCalendarExport } from '~/features/parties/composables/use-calendar-export'
 import { useReminders } from '~/features/parties/composables/use-reminders'
@@ -18,6 +20,7 @@ const route = useRoute()
 const store = usePartiesStore()
 const { displayDate, displayTime } = usePartyFormatting()
 const { shareInvitation } = useShareInvitation()
+const { shareInvitationImage, generating: generatingImage } = useShareInvitationImage()
 const { exportParty } = useExportImport()
 const { exportToCalendar } = useCalendarExport()
 const reminders = useReminders()
@@ -34,6 +37,7 @@ const hasReminder = computed(() => (party.value ? reminders.has(party.value.id) 
 const backTo = computed(() => (party.value?.received ? '/invitations' : '/'))
 const confirming = ref(false)
 const confirmPanel = ref<HTMLElement | null>(null)
+const inviteCapture = ref<HTMLElement | null>(null)
 const shareNotice = ref('')
 
 onMounted(() => {
@@ -47,6 +51,12 @@ async function share(target: Party): Promise<void> {
 
 function onShare(): void {
   if (party.value) void share(party.value)
+}
+
+function onShareImage(): void {
+  if (party.value && inviteCapture.value) {
+    void shareInvitationImage(inviteCapture.value, party.value)
+  }
 }
 
 function onExport(): void {
@@ -228,6 +238,40 @@ function onDelete(): void {
           >
             {{ shareNotice }}
           </p>
+
+          <BaseButton
+            variant="ghost"
+            block
+            :disabled="generatingImage"
+            data-testid="share-image"
+            @click="onShareImage"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="detail__share-icon"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm-1 12 5-5 4 4 3-3 5 5"
+              />
+            </svg>
+            {{ generatingImage ? $t('share.imagePending') : $t('share.shareImage') }}
+          </BaseButton>
+
+          <!-- Off-screen source node for the PNG render; kept in layout so
+               html-to-image can measure it (display:none would break capture). -->
+          <div
+            ref="inviteCapture"
+            class="detail__capture"
+            aria-hidden="true"
+          >
+            <InvitationImageCard :party="party" />
+          </div>
         </template>
 
         <div class="detail__tools">
@@ -373,6 +417,14 @@ function onDelete(): void {
 .detail__link-icon {
   width: 1.2rem;
   height: 1.2rem;
+}
+
+/* Rendered but parked off-screen: it is only a source for the PNG capture. */
+.detail__capture {
+  position: fixed;
+  top: 0;
+  left: -9999px;
+  pointer-events: none;
 }
 
 /* Edit lives in the app bar, so the detail footer stays a single primary CTA. */

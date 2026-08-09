@@ -23,22 +23,51 @@ export async function saveOrShareFile(
   mimeType: string = DEFAULT_MIME_TYPE,
 ): Promise<void> {
   if (Capacitor.isNativePlatform()) {
-    await Filesystem.writeFile({
-      path: filename,
-      data: content,
-      directory: Directory.Cache,
-      encoding: Encoding.UTF8,
-    })
-    const { uri } = await Filesystem.getUri({ path: filename, directory: Directory.Cache })
-    await Share.share({ title: filename, files: [uri] })
+    await writeToCacheAndShare(filename, content, Encoding.UTF8)
     return
   }
-
-  downloadInBrowser(content, filename, mimeType)
+  triggerBrowserDownload(new Blob([content], { type: mimeType }), filename)
 }
 
-function downloadInBrowser(content: string, filename: string, mimeType: string): void {
-  const blob = new Blob([content], { type: mimeType })
+/**
+ * Persist a binary image from a `data:` URL (e.g. a rendered PNG invitation) and
+ * hand it to the user, mirroring {@link saveOrShareFile} but writing raw bytes.
+ */
+export async function saveOrShareImage(dataUrl: string, filename: string): Promise<void> {
+  const { base64, mimeType } = parseDataUrl(dataUrl)
+  if (Capacitor.isNativePlatform()) {
+    // Omitting the encoding makes Filesystem treat the data as base64 bytes.
+    await writeToCacheAndShare(filename, base64)
+    return
+  }
+  triggerBrowserDownload(base64ToBlob(base64, mimeType), filename)
+}
+
+async function writeToCacheAndShare(filename: string, data: string, encoding?: Encoding): Promise<void> {
+  await Filesystem.writeFile({
+    path: filename,
+    data,
+    directory: Directory.Cache,
+    ...(encoding ? { encoding } : {}),
+  })
+  const { uri } = await Filesystem.getUri({ path: filename, directory: Directory.Cache })
+  await Share.share({ title: filename, files: [uri] })
+}
+
+function parseDataUrl(dataUrl: string): { base64: string, mimeType: string } {
+  const match = /^data:(?<mime>[^;]+);base64,(?<data>.*)$/s.exec(dataUrl)
+  if (!match?.groups) throw new Error('Expected a base64 data URL')
+  return { base64: match.groups.data ?? '', mimeType: match.groups.mime ?? DEFAULT_MIME_TYPE }
+}
+
+function base64ToBlob(base64: string, mimeType: string): Blob {
+  const binary = atob(base64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+  return new Blob([bytes], { type: mimeType })
+}
+
+function triggerBrowserDownload(blob: Blob, filename: string): void {
   const url = URL.createObjectURL(blob)
   const anchor = document.createElement('a')
   anchor.href = url

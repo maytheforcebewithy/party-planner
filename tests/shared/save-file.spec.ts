@@ -16,7 +16,10 @@ vi.mock('@capacitor/filesystem', () => ({
 const { share } = vi.hoisted(() => ({ share: vi.fn(() => Promise.resolve()) }))
 vi.mock('@capacitor/share', () => ({ Share: { share } }))
 
-const { saveOrShareFile } = await import('~/shared/files/save-file')
+const { saveOrShareFile, saveOrShareImage } = await import('~/shared/files/save-file')
+
+// 'QUJD' is base64 for the bytes 'ABC'.
+const PNG_DATA_URL = 'data:image/png;base64,QUJD'
 
 describe('saveOrShareFile', () => {
   beforeEach(() => {
@@ -70,5 +73,34 @@ describe('saveOrShareFile', () => {
 
     vi.unstubAllGlobals()
     vi.useRealTimers()
+  })
+
+  it('writes the raw base64 bytes and shares the image on a device', async () => {
+    isNativePlatform.mockReturnValue(true)
+    getUri.mockResolvedValueOnce({ uri: 'file:///cache/invite.png' })
+
+    await saveOrShareImage(PNG_DATA_URL, 'invite.png')
+
+    const write = writeFile.mock.calls[0]?.[0]
+    expect(write).toMatchObject({ path: 'invite.png', directory: 'CACHE', data: 'QUJD' })
+    // No encoding → Filesystem writes the base64 payload as binary, not UTF-8 text.
+    expect(write).not.toHaveProperty('encoding')
+    expect(share).toHaveBeenCalledWith({ title: 'invite.png', files: ['file:///cache/invite.png'] })
+  })
+
+  it('downloads the decoded image with its mime type in the browser', async () => {
+    const createObjectURL = vi.fn(() => 'blob:img')
+    vi.stubGlobal('URL', { createObjectURL, revokeObjectURL: vi.fn() })
+
+    await saveOrShareImage(PNG_DATA_URL, 'invite.png')
+
+    expect(createObjectURL).toHaveBeenCalledOnce()
+    expect((createObjectURL.mock.calls[0]?.[0] as Blob).type).toBe('image/png')
+    expect(writeFile).not.toHaveBeenCalled()
+    vi.unstubAllGlobals()
+  })
+
+  it('rejects a value that is not a base64 data URL', async () => {
+    await expect(saveOrShareImage('not-a-data-url', 'invite.png')).rejects.toThrow('base64 data URL')
   })
 })
