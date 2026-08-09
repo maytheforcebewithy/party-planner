@@ -65,7 +65,7 @@ function onImport(event: Event): void {
           <input
             type="file"
             accept="application/json,.json"
-            class="action__input"
+            class="visually-hidden"
             data-testid="invite-import"
             :aria-label="t('invitations.import')"
             @change="onImport"
@@ -170,14 +170,6 @@ function onImport(event: Event): void {
 .action__icon {
   width: 1.05rem;
   height: 1.05rem;
-}
-
-.action__input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
 }
 
 .list {

@@ -55,6 +55,16 @@ a {
     max(var(--space-5), var(--safe-area-inset-right));
 }
 
+/* Visually hide an element while keeping it in the accessibility tree — used to
+   overlay a native file <input> behind a styled label. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
 /* Page heading (the h1 at the top of a flat page). */
 .title {
   font-size: var(--font-size-2xl);

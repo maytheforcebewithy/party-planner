@@ -6,11 +6,13 @@ const DEMO_LEAD_DAYS = 21
 /** Days out for the demo received invitation (sooner than the own party). */
 const DEMO_INVITATION_LEAD_DAYS = 10
 
-/** ISO `yyyy-mm-dd` for a date `days` from `now`. */
+/** ISO `yyyy-mm-dd` for a date `days` from `now`, in local time (not UTC). */
 function isoDaysFromNow(now: Date, days: number): string {
   const date = new Date(now)
   date.setDate(date.getDate() + days)
-  return date.toISOString().slice(0, 10)
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${date.getFullYear()}-${month}-${day}`
 }
 
 /**

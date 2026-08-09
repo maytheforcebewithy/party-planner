@@ -107,11 +107,19 @@ describe('buildCalendarEvent', () => {
     expect(prop(ics, 'DESCRIPTION')).toBe('DESCRIPTION:Zeile 1\\nZeile 2')
   })
 
-  it('folds long lines at 75 octets with space-prefixed continuations', () => {
-    const ics = build({ date: '2026-08-20', description: 'x'.repeat(200) })
+  it('folds long lines at 75 octets, never splitting a multibyte character', () => {
+    const encoder = new TextEncoder()
+    const ics = build({ date: '2026-08-20', name: '🎉'.repeat(60), description: 'x'.repeat(200) })
     const lines = ics.split('\r\n')
-    for (const line of lines) expect(line.length).toBeLessThanOrEqual(75)
+
+    // Every physical line is within the 75-octet limit (measured in UTF-8 bytes).
+    for (const line of lines) expect(encoder.encode(line).byteLength).toBeLessThanOrEqual(75)
+
     const descIndex = lines.findIndex(line => line.startsWith('DESCRIPTION:'))
     expect(lines[descIndex + 1]?.startsWith(' ')).toBe(true)
+
+    // Unfolding (drop CRLF + the continuation space) rebuilds the emoji summary
+    // intact — proving no surrogate pair was cut mid-character.
+    expect(ics.replace(/\r\n /g, '')).toContain(`SUMMARY:${'🎉'.repeat(60)}`)
   })
 })
