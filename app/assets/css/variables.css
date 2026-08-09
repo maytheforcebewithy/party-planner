@@ -1,9 +1,11 @@
 /**
  * Design tokens — dark-first green identity (matches the reference mockups).
- * Dark is the default (`:root`); the light counterpart applies under
- * `:root[data-theme='light']`, set by the theme toggle (see `use-theme.ts`),
- * which resolves the "System" choice to the OS scheme. Surface tokens are always
- * opaque so cards/overlays stay readable in both schemes.
+ * Dark is the default (`:root`); the light counterpart applies to any element
+ * carrying `[data-theme='light']` — usually `<html>` (set by the theme toggle,
+ * see `use-theme.ts`), but also a subtree that opts into light explicitly (e.g.
+ * the shared invitation image, which stays light regardless of the app theme).
+ * Custom properties inherit, so the light values cascade into that subtree.
+ * Surface tokens are always opaque so cards/overlays stay readable in both.
  */
 :root {
   /* Brand — vibrant green */
@@ -104,7 +106,7 @@
   --safe-area-inset-left: env(safe-area-inset-left, 0px);
 }
 
-:root[data-theme='light'] {
+[data-theme='light'] {
   --color-primary: #16a34a;
   --color-primary-hover: #15803d;
   --color-primary-contrast: #08240f;

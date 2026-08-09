@@ -133,10 +133,13 @@ function onDelete(): void {
       </BaseButton>
 
       <!-- Off-screen source node for the PNG render; kept in layout so
-           html-to-image can measure it (display:none would break capture). -->
+           html-to-image can measure it (display:none would break capture).
+           Forced to the light theme so the shared image looks consistent and
+           bright regardless of the app's current light/dark setting. -->
       <div
         ref="inviteCapture"
         class="actions__capture"
+        data-theme="light"
         aria-hidden="true"
       >
         <InvitationImageCard :party="party" />
