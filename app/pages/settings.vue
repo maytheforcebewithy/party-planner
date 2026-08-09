@@ -4,7 +4,7 @@ import { useLanguage } from '~/composables/use-language'
 import { useTheme } from '~/composables/use-theme'
 import { useShareApp } from '~/composables/use-share-app'
 import { shareNoticeKey } from '~/shared/sharing/share-text'
-import { APP_STORE_LINKS } from '~/config/app-store'
+import { APP_STORE_LINKS, SUPPORT_URL } from '~/config/app-store'
 
 const { t } = useI18n()
 const store = usePartiesStore()
@@ -18,6 +18,7 @@ const themeOptions = computed(() =>
 
 const appVersion = useRuntimeConfig().public.appVersion
 const storeLinks = APP_STORE_LINKS
+const supportUrl = SUPPORT_URL
 
 const confirming = ref(false)
 const confirmPanel = ref<HTMLElement | null>(null)
@@ -152,6 +153,15 @@ function onShareApp(): void {
           @click="onShareApp"
         >
           {{ t('settings.about.share') }}
+        </BaseButton>
+
+        <BaseButton
+          variant="ghost"
+          block
+          :href="supportUrl"
+          data-testid="support-link"
+        >
+          {{ t('settings.about.support') }}
         </BaseButton>
 
         <div class="stores">
