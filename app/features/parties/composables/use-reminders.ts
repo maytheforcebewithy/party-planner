@@ -1,7 +1,10 @@
-import { Capacitor } from '@capacitor/core'
-import { LocalNotifications } from '@capacitor/local-notifications'
 import { reminderAt, reminderId } from '../services/reminder'
 import type { Party } from '../types/party'
+import {
+  cancelNotification,
+  ensureNotificationPermission,
+  scheduleNotification,
+} from '~/shared/notifications/local-notifications'
 
 const STORAGE_KEY = 'party-planner.reminders'
 
@@ -18,9 +21,9 @@ function readIds(): string[] {
 
 /**
  * Per-party reminder toggle. On a device it schedules/cancels a local
- * notification (Capacitor) one day before the party; in the browser it just
- * remembers the preference (no scheduling). Which parties have a reminder is
- * persisted in localStorage so the toggle survives a restart.
+ * notification (via `shared/notifications`) one day before the party; in the
+ * browser it just remembers the preference (no scheduling). Which parties have a
+ * reminder is persisted in localStorage so the toggle survives a restart.
  */
 export function useReminders() {
   const { t } = useI18n()
@@ -39,28 +42,21 @@ export function useReminders() {
   async function enable(party: Party): Promise<boolean> {
     const at = reminderAt(party, new Date())
     if (!at) return false
+    if (!await ensureNotificationPermission()) return false
 
-    if (Capacitor.isNativePlatform()) {
-      const permission = await LocalNotifications.requestPermissions()
-      if (permission.display !== 'granted') return false
-      await LocalNotifications.schedule({
-        notifications: [{
-          id: reminderId(party.id),
-          title: t('reminder.title'),
-          body: t('reminder.body', { name: party.name }),
-          schedule: { at },
-        }],
-      })
-    }
+    await scheduleNotification({
+      id: reminderId(party.id),
+      title: t('reminder.title'),
+      body: t('reminder.body', { name: party.name }),
+      at,
+    })
 
     if (!has(party.id)) persist([...ids.value, party.id])
     return true
   }
 
   async function disable(party: Party): Promise<void> {
-    if (Capacitor.isNativePlatform()) {
-      await LocalNotifications.cancel({ notifications: [{ id: reminderId(party.id) }] })
-    }
+    await cancelNotification(reminderId(party.id))
     persist(ids.value.filter(id => id !== party.id))
   }
 
