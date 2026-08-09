@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.0.0",
     "@nuxt/eslint": "^1.0.0",
     "@nuxt/test-utils": "^3.19.0",
