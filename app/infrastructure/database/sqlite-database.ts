@@ -51,8 +51,13 @@ export class SqliteDatabase implements Database {
 
   async execute(sql: string, params: readonly SqlValue[] = []): Promise<void> {
     const db = this.#requireDb()
-    if (params.length > 0) await db.run(sql, [...params])
-    else await db.execute(sql)
+    // `transaction: false` disables the plugin's per-call auto-commit wrapper so
+    // the migration runner can own explicit BEGIN/COMMIT/ROLLBACK. Without this,
+    // running `BEGIN;` inside the plugin's implicit transaction throws "cannot
+    // start a transaction within a transaction" on the first-launch migration.
+    // A lone INSERT/UPDATE stays atomic via SQLite autocommit.
+    if (params.length > 0) await db.run(sql, [...params], false)
+    else await db.execute(sql, false)
   }
 
   async query<TRow>(sql: string, params: readonly SqlValue[] = []): Promise<readonly TRow[]> {
