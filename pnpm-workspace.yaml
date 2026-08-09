@@ -7,4 +7,5 @@ shamefullyHoist: true
 # Allow the native/binary packages that legitimately need install scripts.
 allowBuilds:
   esbuild: true
+  sharp: true
   unrs-resolver: true
