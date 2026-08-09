@@ -83,4 +83,36 @@ describe('parseImport', () => {
     const drafts = parseImport(doc)
     expect(drafts[0]?.guests).toEqual([{ id: 'g1', name: 'Ok', rsvp: 'pending' }])
   })
+
+  it('preserves each party\'s own received flag across a backup round-trip', () => {
+    const doc = serializeParties([party({ received: true }), party({ name: 'Own', received: false })], 'now')
+    const drafts = parseImport(doc)
+
+    expect(drafts.find(d => d.name === 'Gartenparty')?.received).toBe(true)
+    expect(drafts.find(d => d.name === 'Own')?.received).toBe(false)
+  })
+
+  it('never imports a link as an executable non-http scheme', () => {
+    const doc = JSON.stringify({
+      format: EXPORT_FORMAT,
+      version: 1,
+      parties: [{ name: 'X', link: 'javascript:alert(document.cookie)' }],
+    })
+    const link = parseImport(doc)[0]?.link ?? ''
+    expect(link.startsWith('javascript:')).toBe(false)
+    expect(link.startsWith('https://')).toBe(true)
+  })
+
+  it('keeps a data: image but drops a remote image URL on import', () => {
+    const dataUrl = 'data:image/png;base64,QUJD'
+    const kept = parseImport(serializeParties([party({ image: dataUrl })], 'now'))
+    expect(kept[0]?.image).toBe(dataUrl)
+
+    const remote = JSON.stringify({
+      format: EXPORT_FORMAT,
+      version: 1,
+      parties: [{ name: 'X', image: 'http://evil.example/pixel.png' }],
+    })
+    expect(parseImport(remote)[0]?.image).toBeNull()
+  })
 })

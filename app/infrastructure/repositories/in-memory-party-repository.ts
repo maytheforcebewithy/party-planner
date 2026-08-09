@@ -17,7 +17,9 @@ export class InMemoryPartyRepository implements PartyRepository {
   }
 
   findAll(): Promise<readonly Party[]> {
-    return Promise.resolve([...this.#parties.values()])
+    // Newest first, matching the SQLite repo's `ORDER BY created_at DESC` so the
+    // two drivers list parties identically (this one backs the browser + tests).
+    return Promise.resolve([...this.#parties.values()].reverse())
   }
 
   create(data: CreateParty): Promise<Party> {
