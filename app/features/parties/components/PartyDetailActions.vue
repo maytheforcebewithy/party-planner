@@ -35,8 +35,14 @@ function onShare(): void {
   void runShare()
 }
 
+async function runShareImage(): Promise<void> {
+  if (!inviteCapture.value) return
+  const ok = await shareInvitationImage(inviteCapture.value, props.party)
+  shareNotice.value = ok ? '' : t('share.imageError')
+}
+
 function onShareImage(): void {
-  if (inviteCapture.value) void shareInvitationImage(inviteCapture.value, props.party)
+  void runShareImage()
 }
 
 function onExport(): void {
@@ -53,9 +59,11 @@ function onToggleReminder(): void {
 
 async function startConfirm(): Promise<void> {
   confirming.value = true
-  // Reveal the confirmation, which renders below the fold on longer parties.
+  // Reveal the confirmation (it renders below the fold on longer parties) and
+  // move focus to it so keyboard/screen-reader users land on the prompt.
   await nextTick()
   confirmPanel.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  confirmPanel.value?.focus()
 }
 
 function onConfirm(): void {
@@ -238,6 +246,7 @@ function onDelete(): void {
       v-if="confirming"
       ref="confirmPanel"
       class="actions__confirm"
+      tabindex="-1"
       data-testid="delete-confirm-panel"
     >
       <p class="actions__confirm-text">
