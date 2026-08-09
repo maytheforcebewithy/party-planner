@@ -1,6 +1,7 @@
 import { Capacitor } from '@capacitor/core'
 import { Directory, Encoding, Filesystem } from '@capacitor/filesystem'
 import { Share } from '@capacitor/share'
+import { logger } from '~/shared/logger'
 
 /** Default download mime type — the app's exports are JSON unless stated otherwise. */
 const DEFAULT_MIME_TYPE = 'application/json'
@@ -51,7 +52,19 @@ async function writeToCacheAndShare(filename: string, data: string, encoding?: E
     ...(encoding ? { encoding } : {}),
   })
   const { uri } = await Filesystem.getUri({ path: filename, directory: Directory.Cache })
-  await Share.share({ title: filename, files: [uri] })
+  try {
+    await Share.share({ title: filename, files: [uri] })
+  }
+  catch (error) {
+    // Dismissing the share sheet rejects (AbortError / "canceled") — that's a
+    // normal no-op, not a failure. Anything else we log, rather than let a
+    // fire-and-forget caller leak it as an unhandled rejection.
+    const name = error instanceof Error ? error.name : ''
+    const message = error instanceof Error ? error.message : ''
+    if (name !== 'AbortError' && !/cancel/i.test(message)) {
+      logger.error('Sharing the file failed', error)
+    }
+  }
 }
 
 function parseDataUrl(dataUrl: string): { base64: string, mimeType: string } {

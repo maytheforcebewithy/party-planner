@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import PartyForm from '~/features/parties/components/PartyForm.vue'
 import { usePartiesStore } from '~/features/parties/stores/parties-store'
+import { useReminders } from '~/features/parties/composables/use-reminders'
 import type { UpdateParty } from '~/features/parties/types/party'
 
 definePageMeta({ layout: 'modal' })
 
 const route = useRoute()
 const store = usePartiesStore()
+const reminders = useReminders()
 
 const partyId = computed(() => String(route.params.partyId))
 const party = computed(() => store.findById(partyId.value))
@@ -16,7 +18,13 @@ onMounted(() => {
 })
 
 async function save(data: UpdateParty): Promise<void> {
-  await store.update(partyId.value, data)
+  const updated = await store.update(partyId.value, data)
+  // Keep an active reminder in sync with an edited date/time: re-schedule it, or
+  // drop it if the date was removed (enable() bails when there's no future date).
+  if (reminders.has(updated.id)) {
+    await reminders.disable(updated)
+    await reminders.enable(updated)
+  }
   await navigateTo(`/parties/${partyId.value}`)
 }
 
