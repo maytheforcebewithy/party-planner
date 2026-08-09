@@ -1,0 +1,24 @@
+{
+  "format": "party-planner",
+  "version": 1,
+  "exportedAt": "2026-01-01T00:00:00.000Z",
+  "parties": [
+    {
+      "name": "E2E Imported Party",
+      "date": "2026-12-24",
+      "location": "Festhalle",
+      "description": null,
+      "startTime": "18:00",
+      "endTime": null,
+      "notes": null,
+      "icon": "star",
+      "color": "sky",
+      "image": null,
+      "link": null,
+      "received": false,
+      "attendance": null,
+      "guests": [],
+      "shopping": []
+    }
+  ]
+}
