@@ -56,9 +56,9 @@ function stubImage(width: number, height: number, options: { fail?: boolean } = 
   vi.stubGlobal('Image', FakeImage)
 }
 
-function stubCanvas(context: unknown, toDataUrl = 'data:image/jpeg;base64,SCALED'): void {
+function stubCanvas(context: unknown, dataUrl = 'data:image/jpeg;base64,SCALED'): void {
   const original = document.createElement.bind(document)
-  const canvas = { width: 0, height: 0, getContext: () => context, toDataURL: () => toDataUrl }
+  const canvas = { width: 0, height: 0, getContext: () => context, toDataURL: () => dataUrl }
   vi.spyOn(document, 'createElement').mockImplementation((tag: string) =>
     (tag === 'canvas' ? (canvas as unknown as HTMLCanvasElement) : original(tag)),
   )

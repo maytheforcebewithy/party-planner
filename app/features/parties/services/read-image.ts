@@ -2,12 +2,6 @@
 const JPEG_QUALITY = 0.82
 
 /**
- * Read a picked image file and return a downscaled JPEG data URL. Keeping the
- * badge image small (max edge {@link maxSize}px) matters because it is stored
- * inline in the local party record. Browser-only (canvas/FileReader); the app
- * is a client-rendered SPA so this always runs on the device.
- */
-/**
  * Fit `width`×`height` within `maxSize` on the longest edge without upscaling,
  * clamped so neither edge rounds down to 0.
  */
@@ -19,6 +13,12 @@ export function scaledDimensions(width: number, height: number, maxSize: number)
   }
 }
 
+/**
+ * Read a picked image file and return a downscaled JPEG data URL. Keeping the
+ * badge image small (max edge {@link maxSize}px) matters because it is stored
+ * inline in the local party record. Browser-only (canvas/FileReader); the app
+ * is a client-rendered SPA so this always runs on the device.
+ */
 export async function readImageAsDataUrl(file: File, maxSize = 512): Promise<string> {
   const original = await fileToDataUrl(file)
   const image = await loadImage(original)
