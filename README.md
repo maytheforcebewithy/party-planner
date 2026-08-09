@@ -4,6 +4,26 @@ App for organising private events. **A mobile-only app for Android and iOS**,
 shipped as a native Capacitor app. There is no public web version — the browser
 is only used for local development.
 
+## Features
+
+- **Plan a party** — name, date, time, location, description and free-form notes,
+  plus a custom badge (icon + colour, or your own image) and a related link.
+- **Guests** — a guest list with RSVP replies (yes / maybe / no) and a live count.
+- **Shopping list** — items with per-guest assignment; for a received invitation
+  it becomes a "what to bring" list instead.
+- **Invitations inbox** — paste a message you received and the date, time and
+  location are detected automatically; reply with your attendance.
+- **Share** — send an invitation through the OS share sheet as text, or as a
+  rendered **PNG image** (a clean, always-light card).
+- **Reminders & calendar** — a per-party reminder (local notification the day
+  before) and export to the phone calendar as an `.ics` event.
+- **Import / export** — back up all parties, or a single party, as a file and
+  import them again as fresh local copies.
+- **Appearance & language** — light / dark / system theme, and a first-run
+  language picker (English · German), changeable any time in settings.
+- **Local-first & private** — everything lives on the device, works fully
+  offline, no accounts and no cloud. Sharing only happens when you choose to.
+
 ## Stack
 
 Nuxt 4 · Vue 3 · TypeScript · Capacitor · Pinia · VueUse · ESLint · Vitest ·
