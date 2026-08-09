@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent } from 'vue'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import type { Party } from '~/features/parties/types/party'
+import { reminderId } from '~/features/parties/services/reminder'
 
 const { isNativePlatform } = vi.hoisted(() => ({ isNativePlatform: vi.fn(() => false) }))
 vi.mock('@capacitor/core', () => ({ Capacitor: { isNativePlatform } }))
@@ -87,6 +88,9 @@ describe('useReminders', () => {
 
     expect(await reminders.enable(futureParty('p3'))).toBe(true)
     expect(schedule).toHaveBeenCalledOnce()
+    expect(schedule).toHaveBeenCalledWith({
+      notifications: [expect.objectContaining({ id: reminderId('p3') })],
+    })
     expect(reminders.has('p3')).toBe(true)
   })
 
@@ -110,6 +114,7 @@ describe('useReminders', () => {
     await reminders.disable(party)
 
     expect(cancel).toHaveBeenCalledOnce()
+    expect(cancel).toHaveBeenCalledWith({ notifications: [{ id: reminderId('p5') }] })
     expect(reminders.has('p5')).toBe(false)
   })
 })
