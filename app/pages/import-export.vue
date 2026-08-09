@@ -65,6 +65,7 @@ function onImport(event: Event): void {
             type="file"
             accept="application/json,.json"
             class="upload__input"
+            :aria-label="t('importExport.import.action')"
             data-testid="import-input"
             @change="onImport"
           >

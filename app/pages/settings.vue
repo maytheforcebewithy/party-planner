@@ -20,12 +20,24 @@ const appVersion = useRuntimeConfig().public.appVersion
 const storeLinks = APP_STORE_LINKS
 
 const confirming = ref(false)
+const confirmPanel = ref<HTMLElement | null>(null)
 const cleared = ref(false)
 const shareNotice = ref('')
 
 onMounted(() => {
   void store.ensureLoaded()
 })
+
+async function startConfirm(): Promise<void> {
+  confirming.value = true
+  // Move focus to the confirmation so keyboard/screen-reader users land on it.
+  await nextTick()
+  confirmPanel.value?.focus()
+}
+
+function onConfirm(): void {
+  void startConfirm()
+}
 
 async function deleteAll(): Promise<void> {
   await store.clearAll()
@@ -81,14 +93,16 @@ function onShareApp(): void {
           block
           :disabled="store.partyCount === 0"
           data-testid="delete-all"
-          @click="confirming = true"
+          @click="onConfirm"
         >
           {{ t('settings.data.action', { count: store.partyCount }) }}
         </BaseButton>
 
         <div
           v-else
+          ref="confirmPanel"
           class="confirm"
+          tabindex="-1"
           data-testid="delete-all-confirm"
         >
           <p class="confirm__text">

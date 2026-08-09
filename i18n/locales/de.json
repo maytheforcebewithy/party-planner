@@ -191,6 +191,7 @@
     "action": "Teilen",
     "shareImage": "Als Bild teilen",
     "imagePending": "Bild wird erstellt …",
+    "imageError": "Bild konnte nicht erstellt werden.",
     "copied": "Einladung in die Zwischenablage kopiert",
     "unavailable": "Teilen ist auf diesem Gerät nicht möglich",
     "invitation": {
