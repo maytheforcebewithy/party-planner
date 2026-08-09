@@ -6,9 +6,6 @@
     "title": "Sprache wählen",
     "subtitle": "Du kannst das später in den Einstellungen ändern."
   },
-  "ads": {
-    "placeholder": "Werbung"
-  },
   "nav": {
     "back": "Zurück",
     "tabs": {
@@ -74,6 +71,7 @@
       "text": "Party Planner ist lokal-first: keine Accounts, keine Cloud. Deine Daten bleiben auf deinem Gerät.",
       "version": "Version {version}",
       "share": "App teilen",
+      "support": "Spendier uns einen Kaffee ☕",
       "shareText": "Plane deine Partys mit Party Planner!\nAndroid: {android}\niOS: {ios}",
       "android": "Google Play",
       "ios": "App Store"

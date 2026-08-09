@@ -96,7 +96,6 @@
 
   /* Layout constants */
   --tab-bar-height: 3.5rem;
-  --ad-banner-height: 3rem;
 
   /* iOS safe areas (notch, home indicator). Resolve to 0 outside a device with
      insets; require `viewport-fit=cover` (set in nuxt.config). */
