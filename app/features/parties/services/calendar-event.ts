@@ -60,15 +60,32 @@ function escapeText(value: string): string {
     .replace(/\r?\n/g, '\\n')
 }
 
+/**
+ * Fold a content line to ≤75 **octets** per RFC 5545. Counts UTF-8 byte length
+ * and only ever breaks on a character boundary, so an emoji or accented name
+ * (common in party titles) can't be split mid-codepoint. Continuation lines
+ * begin with a space, which counts toward the limit.
+ */
 function foldLine(line: string): string {
-  if (line.length <= MAX_LINE_LENGTH) return line
-  const parts = [line.slice(0, MAX_LINE_LENGTH)]
-  let rest = line.slice(MAX_LINE_LENGTH)
-  while (rest.length > MAX_LINE_LENGTH - 1) {
-    parts.push(` ${rest.slice(0, MAX_LINE_LENGTH - 1)}`)
-    rest = rest.slice(MAX_LINE_LENGTH - 1)
+  const encoder = new TextEncoder()
+  if (encoder.encode(line).length <= MAX_LINE_LENGTH) return line
+
+  const parts: string[] = []
+  let current = ''
+  let bytes = 0
+  for (const char of line) {
+    const charBytes = encoder.encode(char).length
+    if (bytes + charBytes > MAX_LINE_LENGTH) {
+      parts.push(current)
+      current = ` ${char}`
+      bytes = 1 + charBytes
+    }
+    else {
+      current += char
+      bytes += charBytes
+    }
   }
-  if (rest.length) parts.push(` ${rest}`)
+  if (current) parts.push(current)
   return parts.join('\r\n')
 }
 

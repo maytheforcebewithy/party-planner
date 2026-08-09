@@ -45,7 +45,7 @@ function onFile(event: Event): void {
         <input
           type="file"
           accept="image/*"
-          class="appearance__file"
+          class="visually-hidden"
           data-testid="image-input"
           @change="onFile"
         >
@@ -141,14 +141,6 @@ function onFile(event: Event): void {
   cursor: pointer;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
-}
-
-.appearance__file {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
 }
 
 .appearance__remove {

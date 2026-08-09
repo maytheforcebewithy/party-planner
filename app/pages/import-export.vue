@@ -64,7 +64,7 @@ function onImport(event: Event): void {
           <input
             type="file"
             accept="application/json,.json"
-            class="upload__input"
+            class="visually-hidden"
             :aria-label="t('importExport.import.action')"
             data-testid="import-input"
             @change="onImport"
@@ -106,13 +106,5 @@ function onImport(event: Event): void {
   cursor: pointer;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
-}
-
-.upload__input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
 }
 </style>
