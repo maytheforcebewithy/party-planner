@@ -1,5 +1,6 @@
 import { coerceGuests, coerceShopping } from './party-lists'
 import { coerceAttendance } from './party-attendance'
+import { normalizeLink } from './party-link'
 import type { CreateParty, Party } from '../types/party'
 
 /**
@@ -33,6 +34,16 @@ function asString(value: unknown): string | null {
   return typeof value === 'string' && value.length > 0 ? value : null
 }
 
+/**
+ * Only accept an inline `data:image/…` URL for the badge image. A remote URL
+ * from an imported file would be an outbound request (privacy leak) and any
+ * other scheme is untrusted; the app only ever stores data URLs anyway.
+ */
+function asImageDataUrl(value: unknown): string | null {
+  const raw = asString(value)
+  return raw && /^data:image\//i.test(raw) ? raw : null
+}
+
 /** Serialise parties into a pretty-printed, versioned export document. */
 export function serializeParties(parties: readonly Party[], exportedAt: string): string {
   const payload: PartyExport = { format: EXPORT_FORMAT, version: EXPORT_VERSION, exportedAt, parties }
@@ -51,8 +62,11 @@ function toCreateParty(entry: unknown): CreateParty[] {
     notes: asString(entry.notes),
     icon: asString(entry.icon),
     color: asString(entry.color),
-    image: asString(entry.image),
-    link: asString(entry.link),
+    image: asImageDataUrl(entry.image),
+    // Normalise like the create form, so an imported `javascript:`/other-scheme
+    // link can never render as an executable href.
+    link: normalizeLink(asString(entry.link) ?? ''),
+    received: entry.received === true,
     attendance: coerceAttendance(entry.attendance),
     guests: coerceGuests(entry.guests),
     shopping: coerceShopping(entry.shopping),

@@ -37,7 +37,9 @@ export function useExportImport() {
   async function importParties(file: File, options: { received?: boolean } = {}): Promise<ImportResult> {
     try {
       const drafts = parseImport(await file.text())
-      for (const draft of drafts) await store.create({ ...draft, received: options.received ?? false })
+      // An explicit "import as invitation" wins; otherwise keep each party's own
+      // received flag from the backup so a plain restore doesn't reclassify them.
+      for (const draft of drafts) await store.create({ ...draft, received: options.received ?? draft.received ?? false })
       return { ok: true, imported: drafts.length }
     }
     catch (error) {

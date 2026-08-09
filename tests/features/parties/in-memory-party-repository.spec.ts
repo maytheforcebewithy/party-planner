@@ -50,6 +50,14 @@ describe('InMemoryPartyRepository', () => {
     expect(await repository.findAll()).toHaveLength(0)
   })
 
+  it('lists parties newest first (matching the SQLite repo order)', async () => {
+    const repository = new InMemoryPartyRepository()
+    const first = await repository.create({ name: 'First' })
+    const second = await repository.create({ name: 'Second' })
+
+    expect((await repository.findAll()).map(p => p.id)).toEqual([second.id, first.id])
+  })
+
   it('updates only the provided fields and refreshes updatedAt', async () => {
     const repository = new InMemoryPartyRepository()
     const created = await repository.create({ name: 'Draft', location: 'Home' })
