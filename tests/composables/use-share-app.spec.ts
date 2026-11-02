@@ -25,7 +25,7 @@ describe('useShareApp', () => {
     share.mockReset()
   })
 
-  it('shares the app text including both store links', async () => {
+  it('shares the app text including the project link', async () => {
     canShare.mockResolvedValue({ value: true })
     share.mockResolvedValue(undefined)
 
@@ -34,7 +34,6 @@ describe('useShareApp', () => {
 
     expect(result).toBe('shared')
     const text = (share.mock.calls[0]?.[0] as { text: string }).text
-    expect(text).toContain('play.google.com')
-    expect(text).toContain('apps.apple.com')
+    expect(text).toContain('github.com/maytheforcebewithy/party-planner')
   })
 })
