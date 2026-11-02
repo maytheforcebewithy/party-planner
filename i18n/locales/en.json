@@ -70,11 +70,9 @@
     "about": {
       "text": "Party Planner is local-first: no accounts, no cloud. Your data stays on your device.",
       "version": "Version {version}",
+      "source": "Source code on GitHub",
       "share": "Share app",
-      "support": "Buy us a coffee ☕",
-      "shareText": "Plan your parties with Party Planner!\nAndroid: {android}\niOS: {ios}",
-      "android": "Google Play",
-      "ios": "App Store"
+      "shareText": "Plan your parties with Party Planner!\n{url}"
     }
   },
   "list": {

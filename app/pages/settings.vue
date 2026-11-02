@@ -4,7 +4,7 @@ import { useLanguage } from '~/composables/use-language'
 import { useTheme } from '~/composables/use-theme'
 import { useShareApp } from '~/composables/use-share-app'
 import { shareNoticeKey } from '~/shared/sharing/share-text'
-import { APP_STORE_LINKS, SUPPORT_URL } from '~/config/app-store'
+import { PROJECT_URL } from '~/config/project'
 
 const { t } = useI18n()
 const store = usePartiesStore()
@@ -17,8 +17,7 @@ const themeOptions = computed(() =>
 )
 
 const appVersion = useRuntimeConfig().public.appVersion
-const storeLinks = APP_STORE_LINKS
-const supportUrl = SUPPORT_URL
+const projectUrl = PROJECT_URL
 
 const confirming = ref(false)
 const confirmPanel = ref<HTMLElement | null>(null)
@@ -158,28 +157,11 @@ function onShareApp(): void {
         <BaseButton
           variant="ghost"
           block
-          :href="supportUrl"
-          data-testid="support-link"
+          :href="projectUrl"
+          data-testid="project-link"
         >
-          {{ t('settings.about.support') }}
+          {{ t('settings.about.source') }}
         </BaseButton>
-
-        <div class="stores">
-          <BaseButton
-            variant="ghost"
-            block
-            :href="storeLinks.android"
-          >
-            {{ t('settings.about.android') }}
-          </BaseButton>
-          <BaseButton
-            variant="ghost"
-            block
-            :href="storeLinks.ios"
-          >
-            {{ t('settings.about.ios') }}
-          </BaseButton>
-        </div>
 
         <p
           v-if="shareNotice"
@@ -204,15 +186,6 @@ function onShareApp(): void {
 .version {
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
-}
-
-.stores {
-  display: flex;
-  gap: var(--space-3);
-}
-
-.stores > * {
-  flex: 1;
 }
 
 .confirm {

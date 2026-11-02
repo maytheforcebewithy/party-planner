@@ -116,7 +116,16 @@ non-persistent in-memory driver is used.
 ## Note
 
 The application is intended solely as a mobile Capacitor app. No website and no
-standalone web app is planned.
+standalone web app is planned. The app is not published in an app store; build
+it from source and install the APK on your device.
 
 The app ID is set centrally in `capacitor.config.ts`
 (`de.kikimika.partyplanner`) and overridable via `CAPACITOR_APP_ID`.
+
+## Privacy
+
+Everything stays on the device. The full policy is in [PRIVACY.md](PRIVACY.md).
+
+## License
+
+MIT © Kira Keil

@@ -1,8 +1,8 @@
 # Privacy Policy — Party Planner
 
-**Effective date:** 9 August 2026
+**Effective date:** 2 November 2026
 
-**Responsible (controller):** kikimika IT GbR · kikimikait@gmail.com
+**Responsible (controller):** Kira Keil, the author of this app. Contact via the issue tracker at https://github.com/maytheforcebewithy/party-planner/issues
 
 Party Planner is a **local-first, offline** app. It has **no accounts, no cloud,
 and no backend server**. This policy explains what that means for your data.
@@ -43,9 +43,8 @@ SDKs that collect data**.
 
 ## External links
 
-The app may link to the app stores and to an optional "buy us a coffee" page
-(Ko-fi). Opening such a link takes you to an external website governed by **that
-site's own privacy policy**, not this one.
+The app links to its source code on GitHub. Opening that link takes you to an
+external website governed by **that site's own privacy policy**, not this one.
 
 ## Deleting your data
 
@@ -59,9 +58,8 @@ The app collects no personal data from anyone, including children.
 
 ## App distribution
 
-If you obtained the app from an app store (e.g. Google Play), that store may
-process data related to the download and your account under **its own** privacy
-policy — this is outside our control and not something the app itself does.
+The app is not distributed through an app store. You build and install it from
+source yourself; nothing about that reaches us.
 
 ## Changes to this policy
 
@@ -69,15 +67,15 @@ We may update this policy; the "Effective date" above will change accordingly.
 
 ## Contact
 
-kikimika IT GbR — kikimikait@gmail.com
+Kira Keil — https://github.com/maytheforcebewithy/party-planner/issues
 
 ---
 
 # Datenschutzerklärung — Party Planner
 
-**Stand:** 9. August 2026
+**Stand:** 2. November 2026
 
-**Verantwortlicher:** kikimika IT GbR · kikimikait@gmail.com
+**Verantwortliche:** Kira Keil, die Autorin dieser App. Kontakt über den Issue-Tracker unter https://github.com/maytheforcebewithy/party-planner/issues
 
 Party Planner ist eine **lokale, offline** App. Es gibt **keine Accounts, keine
 Cloud und keinen Backend-Server**. Diese Erklärung beschreibt, was das für deine
@@ -124,9 +122,9 @@ Drittanbieter-SDKs, die Daten erheben**.
 
 ## Externe Links
 
-Die App kann auf die App-Stores und auf eine optionale „Buy us a coffee"-Seite
-(Ko-fi) verlinken. Das Öffnen eines solchen Links führt dich auf eine externe
-Website, für die **deren eigene Datenschutzerklärung** gilt, nicht diese.
+Die App verlinkt auf ihren Quellcode auf GitHub. Das Öffnen dieses Links führt
+dich auf eine externe Website, für die **deren eigene Datenschutzerklärung**
+gilt, nicht diese.
 
 ## Löschung deiner Daten
 
@@ -140,10 +138,8 @@ Die App erhebt von niemandem personenbezogene Daten, auch nicht von Kindern.
 
 ## Vertrieb der App
 
-Wenn du die App über einen Store (z. B. Google Play) bezogen hast, kann dieser
-Store im Zusammenhang mit dem Download und deinem Konto Daten nach **seiner
-eigenen** Datenschutzerklärung verarbeiten — das liegt außerhalb unseres
-Einflusses und tut die App selbst nicht.
+Die App wird nicht über einen Store vertrieben. Du baust und installierst sie
+selbst aus dem Quellcode; davon erfahren wir nichts.
 
 ## Änderungen dieser Erklärung
 
@@ -152,4 +148,4 @@ entsprechend.
 
 ## Kontakt
 
-kikimika IT GbR — kikimikait@gmail.com
+Kira Keil — https://github.com/maytheforcebewithy/party-planner/issues
