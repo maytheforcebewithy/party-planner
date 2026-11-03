@@ -122,6 +122,10 @@ it from source and install the APK on your device.
 The app ID is set centrally in `capacitor.config.ts`
 (`de.kikimika.partyplanner`) and overridable via `CAPACITOR_APP_ID`.
 
+## Roadmap
+
+See [ROADMAP.md](ROADMAP.md) for what is planned next, each item linked to an issue.
+
 ## Privacy
 
 Everything stays on the device. The full policy is in [PRIVACY.md](PRIVACY.md).
